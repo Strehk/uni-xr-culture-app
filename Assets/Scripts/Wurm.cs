@@ -1,4 +1,6 @@
 using System;
+using Oculus.Interaction;
+using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
@@ -41,6 +43,11 @@ public class Wurm : MonoBehaviour
         nodePlacement.performed += PlaceNode;
     }
 
+    private void OnMouseOver()
+    {
+        SetRandomColor();
+    }
+
     private void Setup()
     {
         gameObject.SetActive(false);
@@ -53,6 +60,10 @@ public class Wurm : MonoBehaviour
         gameObject.GetComponent<MeshFilter>().mesh = new Mesh();
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         meshCollider = gameObject.AddComponent<MeshCollider>();
+        ColliderSurface surface = gameObject.AddComponent<ColliderSurface>();
+        surface.InjectCollider(meshCollider);
+        RayInteractable rayInteractable = gameObject.AddComponent<RayInteractable>();
+        rayInteractable.InjectAllRayInteractable(surface);
     }
 
     private void Generate(InputAction.CallbackContext context)
@@ -113,7 +124,7 @@ public class Wurm : MonoBehaviour
             spline.Add(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
     }
 
-    public void setSplineNodes(Vector3[] nodes)
+    public void SetSplineNodes(Vector3[] nodes)
     {
         foreach (var node in nodes)
         {

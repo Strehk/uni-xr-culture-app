@@ -15,13 +15,6 @@ public class WurmButton : MonoBehaviour
 
     void Start()
     {
-        
-        mainButton.onClick.AddListener(OnMainButtonClick);
-        regenerateButton.onClick.AddListener(OnRegenerateButtonClick);
-        newArtObjectButton.onClick.AddListener(OnNewWormButtonClick);
-        viewNodeButton.onClick.AddListener(OnViewNodeButtonClick);
-
-        
         regenerateButton.gameObject.SetActive(false);
         newArtObjectButton.gameObject.SetActive(false);
         viewNodeButton.gameObject.SetActive(false);
@@ -29,7 +22,6 @@ public class WurmButton : MonoBehaviour
 
     public void OnMainButtonClick()
     {
-        
         mainButton.gameObject.SetActive(false);
 
         
@@ -43,7 +35,6 @@ public class WurmButton : MonoBehaviour
 
     public void OnRegenerateButtonClick()
     {
-        
         artObjectScript.OnButtonClick();
     }
 

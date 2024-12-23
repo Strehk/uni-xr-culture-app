@@ -1120,7 +1120,7 @@
                 {
                     "name": "",
                     "id": "885ff9b4-eb90-41a5-ab14-0d37e482eab7",
-                    "path": "<QuestProTouchController>/triggerPressed",
+                    "path": "<XRController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": ";XR",

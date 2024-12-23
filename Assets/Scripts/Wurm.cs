@@ -123,6 +123,7 @@ public class Wurm : MonoBehaviour
     private void Generate(InputAction.CallbackContext context)
     {
         spline.Clear();
+        ViewNodes(false);
         SetRandomSplineNodes();
         SetRandomRadius();
         //SetRandomPosition();
@@ -133,7 +134,6 @@ public class Wurm : MonoBehaviour
 
     public void OnHoverEnter()
     {
-        oldMaterial = meshRenderer.material;
         SetMaterial(new Material(Shader.Find(new String("Universal Render Pipeline/Lit")))
         {
             color = Color.blue
@@ -156,16 +156,40 @@ public class Wurm : MonoBehaviour
 
     public void OnUnselect()
     {
-        SetMaterial(oldMaterial);
+        Debug.Log("Unselect");
+    }
+
+    public void MoveNodes()
+    {
+        ViewNodes(true);
     }
     
     public void OnButtonClick()
     {
         Generate(default);
     }
-
-    private void MoveObject()
+    
+    private void ViewNodes(bool view)
     {
+        if (view)
+        {
+            foreach (var knot in spline.ToArray())
+            {
+                var node = new GameObject();
+                node.transform.position = knot.Position;
+                var scale = Convert.ToSingle(GetRadius() * 3);
+                node.transform.localScale = new Vector3(scale, scale, scale);
+                node.transform.SetParent(gameObject.transform, false);
+                var artNode = node.gameObject.AddComponent<ArtNode>();
+            }
+        }
+        else
+        {
+            foreach (var child in gameObject.GetComponentsInChildren<ArtNode>())
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
     
     private void MoveObject(InputAction.CallbackContext context)
@@ -178,20 +202,6 @@ public class Wurm : MonoBehaviour
     private void SelectObject(InputAction.CallbackContext context)
     {
         selected = !selected;
-    }
-
-    private void SetMaterial(Material newMaterial)
-    {
-        meshRenderer.material = newMaterial;
-    }
-
-    private void SetRandomColor()
-    {
-        SetMaterial(new Material(Shader.Find(new String("Universal Render Pipeline/Lit")))
-        {
-            color = Random.ColorHSV()
-        });
-        oldMaterial = meshRenderer.material;
     }
 
     private void NodePlacementMode()
@@ -211,13 +221,32 @@ public class Wurm : MonoBehaviour
         if (enableNodePlacement)
             spline.Add(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
     }
-
-    public void SetSplineNodes(Vector3[] nodes)
+    
+    private void SetMaterial(Material newMaterial)
     {
-        foreach (var node in nodes)
-        {
-            spline.Add(node);
-        }
+        meshRenderer.material = newMaterial;
+    }
+
+    public Material GetMaterial()
+    {
+        return meshRenderer.material;
+    }
+
+    private void SetRandomColor()
+    {
+        
+        meshRenderer.material.color = Random.ColorHSV();
+        oldMaterial = meshRenderer.material;
+    }
+
+    public void SetColor(Color color)
+    {
+        meshRenderer.material.color = color;
+    }
+
+    public Color GetColor()
+    {
+        return meshRenderer.material.color;
     }
 
     private void SetRandomSplineNodes()
@@ -226,9 +255,37 @@ public class Wurm : MonoBehaviour
             spline.Add(new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 2f), Random.Range(-1f, 1f)));
     }
 
+    public void SetNodes(Vector3[] nodes)
+    {
+        foreach (var node in nodes)
+        {
+            spline.Add(node);
+        }
+    }
+
+    public Vector3[] GetNodes()
+    {
+        var nodes = new Vector3[spline.Count];
+        for (int i = 0; i < spline.Count; i++)
+        {
+            nodes[i] = spline.ToArray()[i].Position;
+        }
+        return nodes;
+    }
+
     private void SetRandomRadius()
     {
         splineExtrude.Radius = Random.Range(0.01f, 0.1f);
+    }
+
+    public void SetRadius(float radius)
+    {
+        splineExtrude.Radius = radius;
+    }
+
+    public float GetRadius()
+    {
+        return splineExtrude.Radius;
     }
 
 

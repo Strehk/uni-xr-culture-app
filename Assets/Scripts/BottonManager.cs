@@ -13,12 +13,6 @@ public class BottonManager : MonoBehaviour
 
     void Start()
     {
-        
-        mainButton.onClick.AddListener(OnMainButtonClick);
-        regenerateButton.onClick.AddListener(OnRegenerateButtonClick);
-        newArtObjectButton.onClick.AddListener(OnNewWormButtonClick);
-
-        
         regenerateButton.gameObject.SetActive(false);
         newArtObjectButton.gameObject.SetActive(false);
     }

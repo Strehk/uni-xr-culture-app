@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Splines;
+﻿using UnityEngine;
 
 public class ArtNode : MonoBehaviour
 {
@@ -11,10 +9,13 @@ public class ArtNode : MonoBehaviour
         position = node;
     }
 
+    public void SetColor(Color color)
+    {
+        GetComponent<MeshRenderer>().material.color = color;
+    }
+
     private void Awake()
     {
-        var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.SetParent(gameObject.transform, false);
         
     }
 }

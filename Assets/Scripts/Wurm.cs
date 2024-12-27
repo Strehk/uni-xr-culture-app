@@ -11,7 +11,9 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Wurm : MonoBehaviour
 {
+    [SerializeField] private GameObject prenode;
     [SerializeField] public InputActionAsset controls;
+    
     [HideInInspector] [SerializeField] private Spline spline;
     [HideInInspector] [SerializeField] private SplineContainer splineContainer;
     [HideInInspector] [SerializeField] private SplineExtrude splineExtrude;
@@ -25,6 +27,7 @@ public class Wurm : MonoBehaviour
     [HideInInspector] [SerializeField] private Grabbable grabbable;
     [HideInInspector] [SerializeField] private HandGrabInteractable handGrab;
     [HideInInspector] [SerializeField] private GrabInteractable grabInteractable;
+
     
     [HideInInspector] [SerializeField] private bool selected;
     
@@ -175,12 +178,9 @@ public class Wurm : MonoBehaviour
         {
             foreach (var knot in spline.ToArray())
             {
-                var node = new GameObject();
-                node.transform.position = knot.Position;
+                var node = Instantiate(prenode, knot.Position, knot.Rotation, transform);
                 var scale = Convert.ToSingle(GetRadius() * 3);
                 node.transform.localScale = new Vector3(scale, scale, scale);
-                node.transform.SetParent(gameObject.transform, false);
-                var artNode = node.gameObject.AddComponent<ArtNode>();
             }
         }
         else

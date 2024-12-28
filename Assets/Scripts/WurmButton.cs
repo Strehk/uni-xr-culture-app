@@ -29,7 +29,7 @@ public class WurmButton : MonoBehaviour
         newArtObjectButton.gameObject.SetActive(true);
         viewNodeButton.gameObject.SetActive(true);
 
-        
+        CreateWorm();
         artObjectScript.OnButtonClick();
     }
 
@@ -40,9 +40,12 @@ public class WurmButton : MonoBehaviour
 
     public void OnNewWormButtonClick()
     {
-        // Create a new Wurm instance
-        GameObject newWurmObject = new GameObject();
-        Wurm newWurm = Instantiate(artObjectScript, newWurmObject.transform);
+        CreateWorm();
+    }
+
+    private void CreateWorm()
+    {
+        Wurm newWurm = Instantiate(artObjectScript);
         artObjectScript = newWurm;
         newWurm.OnButtonClick();
     }

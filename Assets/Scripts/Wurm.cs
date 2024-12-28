@@ -172,19 +172,30 @@ public class Wurm : MonoBehaviour
         Generate(default);
     }
     
+    [HideInInspector] [SerializeField] private GameObject nodes;
+    
     private void ViewNodes(bool view)
     {
+        if (nodes == null)
+        {
+            nodes = new GameObject("Nodes");
+            nodes.transform.SetParent(transform, false);
+        }
         if (view)
         {
             foreach (var knot in spline.ToArray())
             {
-                var node = Instantiate(prenode, knot.Position, knot.Rotation, transform);
+                var node = Instantiate(prenode, nodes.transform, false);
+                Vector3 position = knot.Position;
+                node.transform.position = nodes.GetComponentInParent<Transform>().position + position;
                 var scale = Convert.ToSingle(GetRadius() * 3);
                 node.transform.localScale = new Vector3(scale, scale, scale);
             }
         }
         else
         {
+            if (nodes != null)
+                Destroy(nodes.gameObject);
             foreach (var child in gameObject.GetComponentsInChildren<ArtNode>())
             {
                 Destroy(child.gameObject);

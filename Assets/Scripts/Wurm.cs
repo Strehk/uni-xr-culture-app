@@ -181,26 +181,42 @@ public class Wurm : MonoBehaviour
             nodes = new GameObject("Nodes");
             nodes.transform.SetParent(transform, false);
         }
-        if (view)
+        if (view && gameObject.GetComponentInChildren<ArtNode>() == null)
         {
+            var count = 0;
             foreach (var knot in spline.ToArray())
             {
+                Debug.Log(count + " Knoten: " + knot);
                 var node = Instantiate(prenode, nodes.transform, false);
-                Vector3 position = knot.Position;
-                node.transform.position = nodes.GetComponentInParent<Transform>().position + position;
+                node.transform.localPosition = knot.Position;
                 var scale = Convert.ToSingle(GetRadius() * 3);
                 node.transform.localScale = new Vector3(scale, scale, scale);
+                node.transform.hasChanged = false;
+                node.GetComponent<ArtNode>().SetIndex(count);
+                count++;
             }
         }
-        else
+        else if (!view)
         {
             if (nodes != null)
+            {
                 Destroy(nodes.gameObject);
+                return;
+            }
+
             foreach (var child in gameObject.GetComponentsInChildren<ArtNode>())
             {
                 Destroy(child.gameObject);
             }
         }
+    }
+
+    public void OnNodeChanged(ArtNode artNode)
+    {
+        var index = artNode.GetIndex();
+        var bezierKnot = spline[index];
+        bezierKnot.Position = artNode.transform.localPosition;
+        spline[index] = bezierKnot;
     }
     
     private void MoveObject(InputAction.CallbackContext context)

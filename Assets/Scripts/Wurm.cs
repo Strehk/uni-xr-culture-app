@@ -125,6 +125,8 @@ public class Wurm : MonoBehaviour
 
     private void Generate(InputAction.CallbackContext context)
     {
+        gameObject.SetActive(true);
+        NodePlacementMode(false);
         spline.Clear();
         ViewNodes(false);
         SetRandomSplineNodes();
@@ -231,15 +233,18 @@ public class Wurm : MonoBehaviour
         selected = !selected;
     }
 
-    private void NodePlacementMode()
+    public void NodePlacementMode(bool enable)
     {
-        if (enableNodePlacement)
-            enableNodePlacement = false;
-        else
+        if (enable)
         {
             enableNodePlacement = true;
-            gameObject.SetActive(false);
             spline.Clear();
+            transform.position = Vector3.zero;
+            transform.rotation = Quaternion.identity;
+        }
+        else
+        {
+            enableNodePlacement = false;
         }
     }
 

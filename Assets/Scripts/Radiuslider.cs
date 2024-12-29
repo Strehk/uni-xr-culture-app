@@ -1,4 +1,5 @@
 
+using Oculus.Interaction;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,22 +14,24 @@ public class Radiuslider : MonoBehaviour
         if (slider != null&& wurm != null)
         {
             slider.minValue = 0.0001f;
-            slider.maxValue = 0.6f;
+            slider.maxValue = 0.4f;
         }
     }
-    public void setstartvalue()
-    {
-         slider.value = wurm.GetRadius(); 
-    }
 
-    public void setWurm(BottonManager buttonmanager)
+    public void setWurm(Wurm newWurm)
     {
-        this.wurm = buttonmanager.GetWurm();
-        setstartvalue();
+        this.wurm = newWurm;
+        slider.value = wurm.GetRadius(); 
     }
 
     public void onValueChanged()
+{
+    if (wurm == null)
     {
-        wurm.SetRadius(slider.value);
+        Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
+        return;
     }
+
+    wurm.SetRadius(slider.value);
+}
 }

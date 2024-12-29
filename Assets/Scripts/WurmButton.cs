@@ -11,6 +11,8 @@ public class WurmButton : MonoBehaviour
     
     [SerializeField] private Wurm artObjectScript;
 
+    [SerializeField] [HideInInspector] private Wurm newWurm;
+
     [SerializeField] public InputActionAsset inputActionAsset;
 
     void Start()
@@ -22,6 +24,7 @@ public class WurmButton : MonoBehaviour
 
     public void OnMainButtonClick()
     {
+        Debug.Log("OnMainButtonClick");
         mainButton.gameObject.SetActive(false);
 
         
@@ -30,28 +33,30 @@ public class WurmButton : MonoBehaviour
         viewNodeButton.gameObject.SetActive(true);
 
         CreateWorm();
-        artObjectScript.OnButtonClick();
+        newWurm.OnButtonClick();
     }
 
     public void OnRegenerateButtonClick()
     {
-        artObjectScript.OnButtonClick();
+        Debug.Log("OnRegenerateButtonClick");
+        newWurm.OnButtonClick();
     }
 
     public void OnNewWormButtonClick()
     {
+        Debug.Log("OnNewWormButtonClick");
         CreateWorm();
     }
 
     private void CreateWorm()
     {
-        Wurm newWurm = Instantiate(artObjectScript);
-        artObjectScript = newWurm;
+        newWurm = Instantiate(artObjectScript);
         newWurm.OnButtonClick();
     }
 
     public void OnViewNodeButtonClick()
     {
-        artObjectScript.MoveNodes();
+        Debug.Log("OnViewNodeButtonClick");
+        newWurm.MoveNodes();
     }
 }

@@ -5,6 +5,7 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -27,6 +28,9 @@ public class Wurm : MonoBehaviour
     [HideInInspector] [SerializeField] private Grabbable grabbable;
     [HideInInspector] [SerializeField] private HandGrabInteractable handGrab;
     [HideInInspector] [SerializeField] private GrabInteractable grabInteractable;
+    
+    [HideInInspector] [SerializeField] private GameObject parentNode;
+    [HideInInspector] [SerializeField] private GameObject[] nodes;
 
     
     [HideInInspector] [SerializeField] private bool selected;
@@ -127,12 +131,13 @@ public class Wurm : MonoBehaviour
     {
         gameObject.SetActive(true);
         NodePlacementMode(false);
+        DeleteNodes();
         spline.Clear();
-        ViewNodes(false);
         SetRandomSplineNodes();
         SetRandomRadius();
         //SetRandomPosition();
         SetRandomColor();
+        CreateNodes();
     }
 
     private Material oldMaterial;
@@ -163,53 +168,66 @@ public class Wurm : MonoBehaviour
     {
         Debug.Log("Unselect");
     }
-
-    public void MoveNodes()
-    {
-        ViewNodes(true);
-    }
     
     public void OnButtonClick()
     {
         Generate(default);
     }
-    
-    [HideInInspector] [SerializeField] private GameObject nodes;
-    
-    private void ViewNodes(bool view)
+
+    private void CreateNodes()
     {
-        if (nodes == null)
+        if (parentNode == null)
         {
-            nodes = new GameObject("Nodes");
-            nodes.transform.SetParent(transform, false);
+            parentNode = new GameObject("Nodes");
+            parentNode.transform.SetParent(transform, false);
         }
-        if (view && gameObject.GetComponentInChildren<ArtNode>() == null)
+
+        if (gameObject.GetComponentInChildren<ArtNode>() == null && nodes == null)
         {
             var count = 0;
+            nodes = new GameObject[spline.Count];
             foreach (var knot in spline.ToArray())
             {
                 Debug.Log(count + " Knoten: " + knot);
-                var node = Instantiate(prenode, nodes.transform, false);
+                var node = Instantiate(prenode, parentNode.transform, false);
                 node.transform.localPosition = knot.Position;
                 var scale = Convert.ToSingle(GetRadius() * 3);
                 node.transform.localScale = new Vector3(scale, scale, scale);
                 node.transform.hasChanged = false;
                 node.GetComponent<ArtNode>().SetIndex(count);
+                nodes[count] = node;
                 count++;
             }
+            ViewNodes(false);
         }
-        else if (!view)
+    }
+    
+    private void DeleteNodes()
+    {
+        if (parentNode != null)
         {
-            if (nodes != null)
-            {
-                Destroy(nodes.gameObject);
-                return;
-            }
+            Destroy(parentNode.gameObject);
+            parentNode = null;
+            nodes = null;
+            return;
+        }
+        
+        foreach (var node in nodes)
+        {
+            Destroy(node.gameObject);
+        }
+        parentNode = null;
+        nodes = null;
+    }
 
-            foreach (var child in gameObject.GetComponentsInChildren<ArtNode>())
-            {
-                Destroy(child.gameObject);
-            }
+    public void ViewNodes(bool view)
+    {
+        if (view && nodes == null)
+            CreateNodes();
+        foreach (var node in nodes)
+        {
+            node.gameObject.SetActive(view);
+            node.transform.localScale = Vector3.one * Convert.ToSingle(GetRadius() * 3);
         }
     }
 
@@ -239,6 +257,7 @@ public class Wurm : MonoBehaviour
         {
             enableNodePlacement = true;
             spline.Clear();
+            DeleteNodes();
             transform.position = Vector3.zero;
             transform.rotation = Quaternion.identity;
         }

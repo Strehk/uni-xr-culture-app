@@ -67,6 +67,6 @@ public class WurmButton : MonoBehaviour
     public void OnViewNodeButtonClick()
     {
         Debug.Log("OnViewNodeButtonClick");
-        newWurm.MoveNodes();
+        newWurm.ViewNodes(true);
     }
 }

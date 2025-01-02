@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a18d7e21743b61bde98aa71c546dfe31
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/prefabs/decor/saltShaker.prefab
+  uploadId: 594439

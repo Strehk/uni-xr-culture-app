@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: adc9e2b6f1aafca46b7222a98a7c6861
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/decor/napkinRing/editableMaterials/napkinRingMaterial.mat
+  uploadId: 594439

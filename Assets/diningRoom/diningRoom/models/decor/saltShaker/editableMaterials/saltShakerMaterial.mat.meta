@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 61fd31d23f96e9ad5b5c59cc1566cea4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/decor/saltShaker/editableMaterials/saltShakerMaterial.mat
+  uploadId: 594439

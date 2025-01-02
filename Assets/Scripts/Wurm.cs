@@ -42,9 +42,7 @@ public class Wurm : MonoBehaviour
     public void Start()
     {
         var debugActionMap = controls.FindActionMap("Debug");
-        var generateInputAction = debugActionMap.FindAction("Generate");
-        generateInputAction.performed += Generate;
-
+        
         var playerActionMap = controls.FindActionMap("Player");
         var moveObjectInputAction = playerActionMap.FindAction("MoveObject");
         moveObjectInputAction.performed += MoveObject;
@@ -218,7 +216,7 @@ public class Wurm : MonoBehaviour
         bezierKnot.Position = artNode.transform.localPosition;
         spline[index] = bezierKnot;
     }
-    
+    */
     private void MoveObject(InputAction.CallbackContext context)
     {
         if (!selected) return;
@@ -288,6 +286,7 @@ public class Wurm : MonoBehaviour
         {
             spline.Add(node);
         }
+        
     }
 
     public Vector3[] GetNodes()
@@ -320,4 +319,6 @@ public class Wurm : MonoBehaviour
     void Update()
     {
     }
+
+    
 }

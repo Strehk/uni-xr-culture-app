@@ -44,7 +44,7 @@ public class cube : MonoBehaviour
         Debug.Log(message);
         Vector3[] list = formate(message); 
 
-        wurm.SetSplineNodes(list);
+        wurm.SetNodes(list);
     }
     private Vector3[] formate(string input)
     {

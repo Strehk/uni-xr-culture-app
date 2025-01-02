@@ -216,7 +216,7 @@ public class Wurm : MonoBehaviour
         bezierKnot.Position = artNode.transform.localPosition;
         spline[index] = bezierKnot;
     }
-    */
+   
     private void MoveObject(InputAction.CallbackContext context)
     {
         if (!selected) return;

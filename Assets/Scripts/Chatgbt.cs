@@ -6,10 +6,12 @@ using Newtonsoft.Json;
 using UnityEngine.InputSystem;
 using System.Runtime.CompilerServices;
 using System;
+using NaughtyAttributes;
 
 public class ChatGPT : MonoBehaviour
 {
-    [SerializeField] private string apiKey;
+
+    [ShowNonSerializedField] private string apiKey = "apikey";
     
     [SerializeField] private InputActionAsset controls;
     [SerializeField] private string apiUrl;
@@ -25,10 +27,22 @@ public class ChatGPT : MonoBehaviour
         StartCoroutine(SendRequest(userMessage));
        
     }
-
+    void OnValidate()
+    {
+        if (!string.IsNullOrEmpty(apiKey))
+        {
+            Debug.Log("ApiKey saved");
+            PlayerPrefs.SetString("ApiKey", apiKey);
+        }
+        else if(PlayerPrefs.HasKey("ApiKey"))
+        {
+            Debug.Log("ApiKey loaded");
+           apiKey = PlayerPrefs.GetString("ApiKey");
+        }
+    }
     void Start()
     {
-        
+        PlayerPrefs.SetString("ApiKey", "apikey");
         
     }
 

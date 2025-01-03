@@ -14,16 +14,18 @@ public class BottonManager : MonoBehaviour
     
     [SerializeField] private Wurm artObjectScript;
     [SerializeField] private Radiuslider radiuslider;
+    [SerializeField] private UnityEngine.UI.Slider slider;
 
     [SerializeField] public InputActionAsset inputActionAsset;
     
 
     private List<Wurm> worms = new List<Wurm>();
 
-
+    
 
     void Start()
-    {
+    {   
+        
         regenerateButton.gameObject.SetActive(false);
         newArtObjectButton.gameObject.SetActive(false);
         viewNodeButton.gameObject.SetActive(false);
@@ -47,8 +49,9 @@ public class BottonManager : MonoBehaviour
     {
         if (worms.Count > 0)
         {
-            Wurm lastWorm = worms[worms.Count - 1];
-            lastWorm.OnButtonClick();
+            //Wurm lastWorm = worms[worms.Count - 1];
+            //lastWorm.OnButtonClick();
+            artObjectScript.OnButtonClick();
         }
     }
 
@@ -68,16 +71,29 @@ public class BottonManager : MonoBehaviour
         radiuslider.setWurm(newWurm);
         InteractableUnityEventWrapper eventWrapper = newWurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(newWurm));
-        artObjectScript = newWurm;
+        OnSelect(newWurm);
     }
     public void OnSelect(Wurm wurm){
-        radiuslider.setWurm(wurm);
+        artObjectScript = wurm;
+        slider.value = wurm.GetRadius();
     }
 
     
-    public void OnViewNodeButtonClick()
+    public void OnViewNodeButtonClick(bool view)
     {
-        artObjectScript.MoveNodes();
+         Debug.Log("OnViewNodeButtonClick");
+        artObjectScript.ViewNodes(view);
+    }
+
+    public void onValueChanged()
+    {
+        if (artObjectScript == null)
+        {
+            Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
+            return;
+        }
+
+        artObjectScript.SetRadius(slider.value);
     }
 
     public Wurm GetWurm()

@@ -25,13 +25,13 @@ public class Radiuslider : MonoBehaviour
     }
 
     public void onValueChanged()
-{
-    if (wurm == null)
     {
-        Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
-        return;
-    }
+        if (wurm == null)
+        {
+            Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
+            return;
+        }
 
-    wurm.SetRadius(slider.value);
-}
+        wurm.SetRadius(slider.value);
+    }
 }

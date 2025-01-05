@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SceneUI : MonoBehaviour
 {
-    [SerializeField] BottonManager bottonManager;
+    [SerializeField] GameObject objectSettingsPage;
     [SerializeField] Button objects_Button;
 
     [SerializeField] Button object_Settings_Button;
@@ -15,11 +15,11 @@ public class SceneUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        bottonManager.gameObject.SetActive(false);
+        objectSettingsPage.SetActive(true);
         objects_Button.gameObject.SetActive(true);
         object_Settings_Button.gameObject.SetActive(true);
         generation_Button.gameObject.SetActive(true);
-        
+        OnObjectSettingsButtonClick();
     }
 
     public void OnObjectsButtonClick()
@@ -29,7 +29,6 @@ public class SceneUI : MonoBehaviour
             objects_Button.interactable = false;
             object_Settings_Button.interactable = true;
             generation_Button.interactable = true;
-            bottonManager.gameObject.SetActive(false);
         }
     }
     public void OnObjectSettingsButtonClick()
@@ -39,7 +38,6 @@ public class SceneUI : MonoBehaviour
             objects_Button.interactable = true;
             object_Settings_Button.interactable = false;
             generation_Button.interactable = true;
-            bottonManager.gameObject.SetActive(true);
         }
     }
 
@@ -50,7 +48,6 @@ public class SceneUI : MonoBehaviour
             objects_Button.interactable = true;
             object_Settings_Button.interactable = true;
             generation_Button.interactable = false;
-            bottonManager.gameObject.SetActive(false);
         }
     }
 }

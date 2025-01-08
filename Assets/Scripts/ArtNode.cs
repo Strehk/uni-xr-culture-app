@@ -1,11 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Splines;
 
 public class ArtNode : MonoBehaviour
 {
     [SerializeField] [HideInInspector] private Vector3 position;
     [SerializeField] [HideInInspector] private int index;
-    
+    [SerializeField] [HideInInspector] private Color color;
+
+    public void Start()
+    {
+        color = GetComponent<MeshRenderer>().material.color;
+    }
+
     public void SetPosition(Vector3 node)
     {
         position = node;
@@ -22,6 +29,16 @@ public class ArtNode : MonoBehaviour
     }
 
     public void SetColor(Color color)
+    {
+        GetComponent<MeshRenderer>().material.color = color;
+    }
+
+    public void OnHover()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.red;
+    }
+
+    public void OnUnHover()
     {
         GetComponent<MeshRenderer>().material.color = color;
     }

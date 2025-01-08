@@ -5,7 +5,6 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -18,6 +17,7 @@ public class Wurm : MonoBehaviour
     [HideInInspector] [SerializeField] private Spline spline;
     [HideInInspector] [SerializeField] private SplineContainer splineContainer;
     [HideInInspector] [SerializeField] private SplineExtrude splineExtrude;
+    [HideInInspector] [SerializeField] private SplineInstantiate splineInstantiate;
 
     [HideInInspector] [SerializeField] private MeshFilter meshFilter;
     [HideInInspector] [SerializeField] private MeshRenderer meshRenderer;
@@ -50,8 +50,6 @@ public class Wurm : MonoBehaviour
         generateInputAction.performed += Generate;
 
         var playerActionMap = controls.FindActionMap("Player");
-        var moveObjectInputAction = playerActionMap.FindAction("MoveObject");
-        moveObjectInputAction.performed += MoveObject;
 
         var selectObjectInputAction = playerActionMap.FindAction("SelectObject");
         selectObjectInputAction.performed += SelectObject;
@@ -81,6 +79,13 @@ public class Wurm : MonoBehaviour
         splineExtrude.Container = splineContainer;
         splineExtrude.RebuildOnSplineChange = true;
         splineExtrude.SegmentsPerUnit = 20;
+        
+        splineInstantiate = gameObject.GetComponent<SplineInstantiate>();
+        if (splineInstantiate != null)
+        {
+            splineInstantiate.Container = splineContainer;
+            splineInstantiate.enabled = false;
+        }
         
         meshFilter.mesh = new Mesh();
         meshCollider = gameObject.GetComponent<MeshCollider>();
@@ -195,11 +200,23 @@ public class Wurm : MonoBehaviour
                 node.transform.localScale = new Vector3(scale, scale, scale);
                 node.transform.hasChanged = false;
                 node.GetComponent<ArtNode>().SetIndex(count);
+                node.GetComponent<InteractableUnityEventWrapper>().WhenHover.AddListener(OnNodeHover);
+                node.GetComponent<InteractableUnityEventWrapper>().WhenUnhover.AddListener(OnNodeUnhover);
                 nodes[count] = node;
                 count++;
             }
             ViewNodes(false);
         }
+    }
+
+    private void OnNodeHover()
+    {
+        handGrab.enabled = false;
+    }
+
+    private void OnNodeUnhover()
+    {
+        handGrab.enabled = true;
     }
     
     private void DeleteNodes()
@@ -248,6 +265,7 @@ public class Wurm : MonoBehaviour
 
     private void SelectObject(InputAction.CallbackContext context)
     {
+        splineInstantiate.enabled = true;
         selected = !selected;
     }
 
@@ -270,7 +288,7 @@ public class Wurm : MonoBehaviour
     private void PlaceNode(InputAction.CallbackContext context)
     {
         if (enableNodePlacement)
-            spline.Add(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
+            spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
     }
     
     private void SetMaterial(Material newMaterial)

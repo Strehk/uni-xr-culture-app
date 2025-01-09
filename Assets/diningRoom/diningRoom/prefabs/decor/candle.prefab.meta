@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f761d75c1f0db96e7b10d5247e781766
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/prefabs/decor/candle.prefab
+  uploadId: 594439

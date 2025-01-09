@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: edf7c39136dda963faca033de8a1e6be
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/decor/candle/editableMaterials/candleBaseMaterial.mat
+  uploadId: 594439

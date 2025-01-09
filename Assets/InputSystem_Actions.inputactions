@@ -87,18 +87,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveObject",
-                    "type": "PassThrough",
-                    "id": "e09a1c6a-8c3e-4108-8276-c0e7d1accf9e",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "SelectObject",
+                    "name": "Generate",
                     "type": "Button",
-                    "id": "3a7d9805-15a5-419e-84de-ef1260b7f0c9",
+                    "id": "d4b52cbc-5f05-4729-942c-e0e47cfe1f4e",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -493,12 +484,12 @@
                 },
                 {
                     "name": "",
-                    "id": "a3124a08-c336-4bd1-8118-dd3cb2390501",
-                    "path": "<Mouse>/delta",
+                    "id": "1782b1d5-5929-4ca2-aa6c-db95593e981f",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "MoveObject",
+                    "groups": "",
+                    "action": "Generate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -508,8 +499,8 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "SelectObject",
+                    "groups": "",
+                    "action": "Generate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

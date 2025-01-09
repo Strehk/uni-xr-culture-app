@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8b4a972508b2f9506be999e829f09e2b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/lamps/coneLamps/editableMaterial/decorShadeMaterial.mat
+  uploadId: 594439

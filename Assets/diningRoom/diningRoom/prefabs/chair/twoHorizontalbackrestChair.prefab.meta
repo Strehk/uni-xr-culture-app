@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6dadfe2494a9016a083b6c970750a4f0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/prefabs/chair/twoHorizontalbackrestChair.prefab
+  uploadId: 594439

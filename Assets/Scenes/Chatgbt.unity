@@ -1625,6 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32c4fae57c9b914aacc8b692bf3125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prenode: {fileID: 0}
   controls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   spline:
     m_EditModeType: 1
@@ -1641,11 +1642,18 @@ MonoBehaviour:
       m_Data: []
   splineContainer: {fileID: 0}
   splineExtrude: {fileID: 0}
+  meshFilter: {fileID: 0}
   meshRenderer: {fileID: 0}
   meshCollider: {fileID: 0}
   rayInteractable: {fileID: 0}
+  colliderSurface: {fileID: 0}
+  rigidbodySpline: {fileID: 0}
+  grabbable: {fileID: 0}
+  handGrab: {fileID: 0}
+  grabInteractable: {fileID: 0}
   selected: 0
   enableNodePlacement: 0
+  nodes: {fileID: 0}
 --- !u!4 &784249765
 Transform:
   m_ObjectHideFlags: 0
@@ -2133,9 +2141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d2d3724baf66841949ce65ce0f08e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiKey: 
   controls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   apiUrl: https://api.openai.com/v1/chat/completions
+  setnewkey: 
 --- !u!1001 &1544191620
 PrefabInstance:
   m_ObjectHideFlags: 0

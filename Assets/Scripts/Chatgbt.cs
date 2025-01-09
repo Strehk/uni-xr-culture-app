@@ -11,10 +11,12 @@ using NaughtyAttributes;
 public class ChatGPT : MonoBehaviour
 {
 
-    [ShowNonSerializedField] private string apiKey = "apikey";
+    [ShowNonSerializedField] private string apiKey = "";
     
     [SerializeField] private InputActionAsset controls;
     [SerializeField] private string apiUrl;
+    [SerializeField] private string setnewkey;
+
     
     // Systemnachricht zur Festlegung des Assistenten-Charakters
     private string systemMessage = "The Platform the user is working with is unity. You are an Assitant, that provides the user with suitable data for the Objects the user want to generate in Unity. Your Output is  like this: atribute: amount; atribute:amount. You have no other output than the user is suggesting. You do not have any explaining sentence.";
@@ -29,12 +31,8 @@ public class ChatGPT : MonoBehaviour
     }
     void OnValidate()
     {
-        if (!string.IsNullOrEmpty(apiKey))
-        {
-            Debug.Log("ApiKey saved");
-            PlayerPrefs.SetString("ApiKey", apiKey);
-        }
-        else if(PlayerPrefs.HasKey("ApiKey"))
+       
+        if(PlayerPrefs.HasKey("ApiKey"))
         {
             Debug.Log("ApiKey loaded");
            apiKey = PlayerPrefs.GetString("ApiKey");
@@ -42,10 +40,17 @@ public class ChatGPT : MonoBehaviour
     }
     void Start()
     {
-        PlayerPrefs.SetString("ApiKey", "apikey");
-        
-    }
 
+        apiKey = PlayerPrefs.GetString("ApiKey");
+
+    }
+    [Button]
+    void SafeNewKey()
+    {
+        PlayerPrefs.SetString("ApiKey", setnewkey);
+        setnewkey = string.Empty;
+        Debug.Log($"ApiKey saved: {PlayerPrefs.GetString("ApiKey")}");
+    }
     
 
     private IEnumerator SendRequest(string userMessage)

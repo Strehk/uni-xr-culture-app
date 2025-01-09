@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 143a449f772be35599f036defd840a1f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/decor/candlestick/editableMaterial/candlestickMaterial.mat
+  uploadId: 594439

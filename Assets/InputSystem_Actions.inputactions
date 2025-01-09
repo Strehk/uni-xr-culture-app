@@ -505,7 +505,7 @@
                 {
                     "name": "",
                     "id": "64155c50-3fea-493d-b8b6-72d45f443e68",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -1124,17 +1124,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";XR",
-                    "action": "NodePlacement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a392123c-9192-4b47-9445-e846bf763adf",
-                    "path": "<Keyboard>/#(P)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
                     "action": "NodePlacement",
                     "isComposite": false,
                     "isPartOfComposite": false

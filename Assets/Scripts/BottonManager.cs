@@ -30,6 +30,7 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
+    private Wurm currentWorm;
 
     
 
@@ -49,7 +50,7 @@ public class BottonManager : MonoBehaviour
         {
             //Wurm lastWorm = worms[worms.Count - 1];
             //lastWorm.OnButtonClick();
-            artObjectScript.OnButtonClick();
+            currentWorm.OnButtonClick();
         }
     }
 
@@ -60,9 +61,9 @@ public class BottonManager : MonoBehaviour
 
     public void OnDeleteButtonClick()
     {
-        if (worms.Count > 0 && worms.Contains(artObjectScript))
+        if (worms.Count > 0 && worms.Contains(currentWorm))
         {
-            int i = worms.FindIndex(x => x == artObjectScript);
+            int i = worms.FindIndex(x => x == currentWorm);
             Destroy(worms[i].gameObject);
             worms.RemoveAt(i);
         }
@@ -71,8 +72,7 @@ public class BottonManager : MonoBehaviour
     private void CreateWorm()
     {
         Wurm newWurm = Instantiate(artObjectScript);
-
-        artObjectScript = newWurm;
+        currentWorm = newWurm;
 
         worms.Add(newWurm);
         
@@ -83,23 +83,23 @@ public class BottonManager : MonoBehaviour
         OnSelect(newWurm);
     }
     public void OnSelect(Wurm wurm){
-        Wurm oldWurm = artObjectScript;
+        Wurm oldWurm = currentWorm;
         if (IsConnectModeActive() == true)
         {
-            artObjectScript = wurm;
+            currentWorm = wurm;
             slider.value = wurm.GetRadius();
-            artObjectScript.ViewNodes(true);	
+            currentWorm.ViewNodes(true);	
             
             return;
         } else if (AreNodesVisible() == true)
         {   
             oldWurm.ViewNodes(false);
-            artObjectScript = wurm;
+            currentWorm = wurm;
             slider.value = wurm.GetRadius();
             OnViewNodeButtonClick(true);
         }else
         {
-            artObjectScript = wurm;
+            currentWorm = wurm;
             slider.value = wurm.GetRadius();
         }
         
@@ -111,19 +111,19 @@ public class BottonManager : MonoBehaviour
         viewNodeButton.gameObject.SetActive(false);
         exit_View_Nodes_Button.gameObject.SetActive(true);
         Debug.Log("OnViewNodeButtonClick");
-        artObjectScript.ViewNodes(view);
+        currentWorm.ViewNodes(view);
         
     }
 
     public void OnValueChanged()
     {
-        if (artObjectScript == null)
+        if (currentWorm == null)
         {
             Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
             return;
         }
 
-        artObjectScript.SetRadius(slider.value);
+        currentWorm.SetRadius(slider.value);
     }
     
     //methode um moove/viewNode Modus zu verlassen
@@ -132,7 +132,7 @@ public class BottonManager : MonoBehaviour
     public void OnExitViewNodeButtonClick()
     {
         
-            artObjectScript.ViewNodes(false);
+            currentWorm.ViewNodes(false);
             exit_View_Nodes_Button.gameObject.SetActive(false);
             viewNodeButton.gameObject.SetActive(true);
     }
@@ -149,7 +149,7 @@ public class BottonManager : MonoBehaviour
     }
 
     public void ConnectMode(){
-        artObjectScript.ViewNodes(true);
+        currentWorm.ViewNodes(true);
         connect_Worms_Button.gameObject.SetActive(false);
         DeaktivateButtons();
         exit_Connect_Worms_Button.gameObject.SetActive(true);
@@ -176,7 +176,7 @@ public class BottonManager : MonoBehaviour
 
     public Wurm GetWurm()
     {
-        return artObjectScript;
+        return currentWorm;
     }
 
     private void DeaktivateButtons()

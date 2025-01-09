@@ -206,6 +206,12 @@ public class Wurm : MonoBehaviour
             ViewNodes(false);
         }
     }
+	
+	
+	public GameObject[] getNodes()
+	{
+		return nodes;
+	}
 
     private void OnNodeHover()
     {

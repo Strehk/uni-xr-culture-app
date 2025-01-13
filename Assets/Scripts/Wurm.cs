@@ -315,6 +315,7 @@ public class Wurm : MonoBehaviour
     public void SetColor(Color color)
     {
         meshRenderer.material.color = color;
+        oldMaterial = meshRenderer.material;
     }
 
     public Color GetColor()

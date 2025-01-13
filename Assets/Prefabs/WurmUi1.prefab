@@ -6115,6 +6115,9 @@ MonoBehaviour:
   exit_View_Nodes_Button: {fileID: 0}
   connect_Worms_Button: {fileID: 0}
   exit_Connect_Worms_Button: {fileID: 0}
+  chatGPT: {fileID: 0}
+  gptGenerate_Button: {fileID: 0}
+  cam: {fileID: 0}
   artObjectScript: {fileID: 0}
   slider: {fileID: 0}
   SmothnesSlider: {fileID: 0}

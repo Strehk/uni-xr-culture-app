@@ -330,11 +330,13 @@ public class Wurm : MonoBehaviour
 
     public void SetNodes(Vector3[] nodes)
     {
+        spline.Clear();
         foreach (var node in nodes)
         {
             spline.Add(node);
         }
         
+
     }
 
     public Vector3[] GetNodes()

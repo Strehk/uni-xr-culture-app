@@ -2865,7 +2865,6 @@ GameObject:
   - component: {fileID: 1862276234}
   - component: {fileID: 1862276237}
   - component: {fileID: 1862276236}
-  - component: {fileID: 1862276239}
   - component: {fileID: 1862276235}
   - component: {fileID: 1862276238}
   m_Layer: 0
@@ -2884,8 +2883,8 @@ Transform:
   m_GameObject: {fileID: 1862276233}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.94, y: 2, z: -0.46}
-  m_LocalScale: {x: 6.176309, y: 2.7241793, z: 5.065191}
+  m_LocalPosition: {x: 4.43, y: 2, z: -0.46}
+  m_LocalScale: {x: 3.0464027, y: 1.3436742, z: 2.4983547}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 646425186}
@@ -2977,31 +2976,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatGPT: {fileID: 1531730310}
-  message: "Der Spline soll m\xF6glichst dynamisch und organisch verlaufen, dabei
-    d\xFCrfen die Grenzen nie \xFCberschritten werden. Der Spline soll einen Wurm
-    darstellen. Erstelle mir eine Liste an Positionen, die die Position von Kugeln
-    darstellen sollen. Die Kugeln sollen entlang des Splines platziert werden in
-    einem Abstand von 4 Einheiten.Dein Output sind die Positionen der Kugeln. Beispiel
-    Output: -2.85, 0.5, 0.325; -1.96, 0.5, 0.324; -1.15,0.817, 0.325;-0.51, 0.817,
-    0.90;0.135, 0.817, 1.099;0.8,1.148,1,1;1.5, 1.33, 1,1;2,1.33,0.35;2.35, 1.41,
-    -0.3;2.35, 1.68, -1.Dein Output hat folgendes format: x,y,z;x,y,z;x,y,z. Tausche
-    dabei x, y und z durch die jeweiligen Koordinaten aus.Der Beispiel Output muss
-    nicht mit den Begrenzungs Parametern \xFCbereinstimmen. "
+  messageGenerate: "Der Spline soll m\xF6glichst dynamisch und organisch verlaufen,
+    dabei d\xFCrfen die Grenzen nie \xFCberschritten werden. Der Spline soll einen
+    Wurm darstellen. Erstelle mir eine Liste an Positionen, die die Position von
+    Kugeln darstellen sollen. Die Kugeln sollen entlang des Splines platziert werden
+    in einem Abstand von 4 Einheiten.Dein Output sind die Positionen der Kugeln.
+    Beispiel Output: -2.85, 0.5, 0.325; -1.96, 0.5, 0.324; -1.15,0.817, 0.325;-0.51,
+    0.817, 0.90;0.135, 0.817, 1.099;0.8,1.148,1,1;1.5, 1.33, 1,1;2,1.33,0.35;2.35,
+    1.41, -0.3;2.35, 1.68, -1.Dein Output hat folgendes format: x,y,z;x,y,z;x,y,z.
+    Tausche dabei x, y und z durch die jeweiligen Koordinaten aus.Der Beispiel Output
+    muss nicht mit den Begrenzungs Parametern \xFCbereinstimmen. "
+  messageConnect: 'Erstelle mir einen Spline der folgende zwei Splines miteinander
+    verbinden Soll: Wurm1: new Vector3(-2.46f, 1.33f, -1.71f), new Vector3(-2.06f,
+    1.33f, -0.90f), new Vector3(-1.66f, 1.33f, -0.09f), new Vector3(-1.26f, 1.50f,
+    0.72f), new Vector3(-0.86f, 1.50f, 1.52f), new Vector3(-0.46f, 1.50f, 0.99f)
+    Wurm2: new Vector3(1.40f, 1.33f, -1.71f), new Vector3(2.54f, 1.50f, -0.94f),
+    new Vector3(3.67f, 1.68f, -1.17f), new Vector3(4.80f, 1.86f, -0.39f). Der Spline
+    soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt
+    des anderen sollen verbunden sein.  Dein Output hat folgendes format: x,y,z;x,y,z;x,y,z.'
   wurm: {fileID: 784249764}
   controls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
---- !u!114 &1862276239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862276233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e866de8e4ee4464b9506abb51195722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spherePrefab: {fileID: 3140221080926649297, guid: cbd8a29c201855a418102a7e296c856d, type: 3}
 --- !u!1001 &1892421077
 PrefabInstance:
   m_ObjectHideFlags: 0

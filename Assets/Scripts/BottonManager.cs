@@ -67,10 +67,10 @@ public class BottonManager : MonoBehaviour
         newWurm.SetNodes(list);
         newWurm.SetRadius(0.05f);
         newWurm.SetColor(Color.blue);
+        newWurm.CreateNodes();
 
         InteractableUnityEventWrapper eventWrapper = newWurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(newWurm));
-
         currentWorm = newWurm;
         worms.Add(currentWorm);
     }
@@ -221,19 +221,17 @@ public class BottonManager : MonoBehaviour
             if (IsConnectModeActive() == true)
             {
                 currentWorm = wurm;
-                Vector3[] oldnodes = oldWurm.GetNodes();
-                Vector3[] newnodes = wurm.GetNodes();
-
+                GameObject[] oldnodes = oldWurm.getNodes();
+                GameObject[] newnodes = wurm.getNodes();
                 String nodes = " ";
-                foreach (Vector3 node in newnodes)
+                foreach (GameObject node in oldnodes)
                 {
-                    nodes += node + " ";
+                    nodes += node.transform.position + " ";
                 }
                 nodes += " ;";
-
-                foreach (Vector3 node in oldnodes)
+                foreach (GameObject node in newnodes)
                 {
-                    nodes += node + " ";
+                   nodes += node.transform.position + " ";
                 }
                 OnDeleteButtonClick();
                 OnDeleteButtonClick(oldWurm);

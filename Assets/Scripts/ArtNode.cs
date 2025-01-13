@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 
 public class ArtNode : MonoBehaviour
 {
-    [SerializeField] [HideInInspector] private Vector3 position;
+    [SerializeField] [HideInInspector] public Vector3 position;
     [SerializeField] [HideInInspector] private int index;
     [SerializeField] [HideInInspector] private Color color;
 

@@ -177,7 +177,7 @@ public class Wurm : MonoBehaviour
         Generate(default);
     }
 
-    private void CreateNodes()
+    public void CreateNodes()
     {
         if (parentNode == null)
         {

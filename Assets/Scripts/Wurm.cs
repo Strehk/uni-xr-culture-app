@@ -48,11 +48,6 @@ public class Wurm : MonoBehaviour
     {
         var debugActionMap = controls.FindActionMap("Debug");
         
-        var playerActionMap = controls.FindActionMap("Player");
-
-        var selectObjectInputAction = playerActionMap.FindAction("SelectObject");
-        selectObjectInputAction.performed += SelectObject;
-        
         var nodePlacement = debugActionMap.FindAction("NodePlacement");
         nodePlacement.performed += PlaceNode;
     }
@@ -307,7 +302,8 @@ public class Wurm : MonoBehaviour
 
     private void SetRandomColor()
     {
-        
+        if (meshRenderer.material == null)
+            meshRenderer.material = new Material(Shader.Find(new String("Universal Render Pipeline/Lit")));
         meshRenderer.material.color = Random.ColorHSV();
         oldMaterial = meshRenderer.material;
     }

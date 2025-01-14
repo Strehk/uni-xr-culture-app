@@ -56,6 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prenode: {fileID: 7119717884381108783, guid: 63c73eafeb3d4f3489c3120c7dbcbf15, type: 3}
   controls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  preWurm: {fileID: 182132336918577964}
   spline:
     m_EditModeType: 1
     m_Knots:

@@ -13,6 +13,7 @@ public class Wurm : MonoBehaviour
 {
     [SerializeField] private GameObject prenode;
     [SerializeField] public InputActionAsset controls;
+    [SerializeField] private Wurm preWurm;
     
     [HideInInspector] [SerializeField] private Spline spline;
     [HideInInspector] [SerializeField] private SplineContainer splineContainer;
@@ -277,17 +278,16 @@ public class Wurm : MonoBehaviour
     {
         if (enable)
         {
-            enableNodePlacement = true;
-            spline.Clear();
-            DeleteNodes();
-            transform.position = Vector3.zero;
-            transform.rotation = Quaternion.identity;
+            var newWurm = Instantiate(preWurm, Vector3.zero, Quaternion.identity);
+            newWurm.SetEnableNodePlacement(true);
         }
         else
         {
             enableNodePlacement = false;
         }
     }
+    
+    public void SetEnableNodePlacement(bool enable){ this.enableNodePlacement = enable; }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {

@@ -13,7 +13,6 @@ using System;
 public class BottonManager : MonoBehaviour
 {   
     [SerializeField] private Button deleteButton;
-    [SerializeField] private Toggle safe_Button;
     [SerializeField] private Button regenerateButton;
     [SerializeField] private Button generate_button;
     [SerializeField] private Toggle viewNodeButton;
@@ -23,6 +22,9 @@ public class BottonManager : MonoBehaviour
     [SerializeField] private ChatGPT chatGPT;
 
     [SerializeField] private Button gptGenerate_Button;
+    [SerializeField] private Button gpt_ReGen_Button;
+
+    [SerializeField] private Toggle start_draw_worm_Button;
 
     [SerializeField] private Camera cam;
     
@@ -350,10 +352,12 @@ public class BottonManager : MonoBehaviour
         exit_View_Nodes_Button.gameObject.SetActive(false);
         exit_Connect_Worms_Button.gameObject.SetActive(false);
         connect_Worms_Button.gameObject.SetActive(false);
-        safe_Button.gameObject.SetActive(false);
         slider.gameObject.SetActive(false);
         SmothnesSlider.gameObject.SetActive(false);
         deleteButton.gameObject.SetActive(false);
+        gpt_ReGen_Button.gameObject.SetActive(false);
+        gptGenerate_Button.gameObject.SetActive(false);
+        start_draw_worm_Button.gameObject.SetActive(false);	
     }
 
     private void AktivateButtons()
@@ -363,11 +367,13 @@ public class BottonManager : MonoBehaviour
         viewNodeButton.gameObject.SetActive(true);
         exit_View_Nodes_Button.gameObject.SetActive(false);
         connect_Worms_Button.gameObject.SetActive(true);
-        safe_Button.gameObject.SetActive(true);
         slider.gameObject.SetActive(true);
         SmothnesSlider.gameObject.SetActive(true);
         deleteButton.gameObject.SetActive(true);
         exit_Connect_Worms_Button.gameObject.SetActive(false);
+        gpt_ReGen_Button.gameObject.SetActive(true);
+        gptGenerate_Button.gameObject.SetActive(true);
+        start_draw_worm_Button.gameObject.SetActive(true);
     }
 }
 

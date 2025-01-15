@@ -204,7 +204,6 @@ public class BottonManager : MonoBehaviour
     private void CreateWorm()
     {
         Wurm newWurm = Instantiate(artObjectScript);
-        currentWorm = newWurm;
 
         worms.Add(newWurm);
         
@@ -215,45 +214,57 @@ public class BottonManager : MonoBehaviour
         OnSelect(newWurm);
     }
     public void OnSelect(Wurm wurm){
+        if (currentWorm != null)
+        {
             if (wurm != currentWorm)
             {
-            Wurm oldWurm = currentWorm;
-            if (IsConnectModeActive() == true)
-            {
-                currentWorm = wurm;
-                GameObject[] oldnodes = oldWurm.getNodes();
-                GameObject[] newnodes = wurm.getNodes();
-                String nodes = " ";
-                foreach (GameObject node in oldnodes)
+                currentWorm.EnableOutline(false);
+                Wurm oldWurm = currentWorm;
+                if (IsConnectModeActive() == true)
                 {
-                    nodes += node.transform.position + " ";
+                    currentWorm = wurm;
+                    currentWorm.EnableOutline(true);
+                    GameObject[] oldnodes = oldWurm.getNodes();
+                    GameObject[] newnodes = wurm.getNodes();
+                    String nodes = " ";
+                    foreach (GameObject node in oldnodes)
+                    {
+                        nodes += node.transform.position + " ";
+                    }
+
+                    nodes += " ;";
+                    foreach (GameObject node in newnodes)
+                    {
+                        nodes += node.transform.position + " ";
+                    }
+
+                    OnDeleteButtonClick();
+                    OnDeleteButtonClick(oldWurm);
+                    Connect(nodes);
+                    return;
                 }
-                nodes += " ;";
-                foreach (GameObject node in newnodes)
+                else if (AreNodesVisible() == true)
                 {
-                   nodes += node.transform.position + " ";
+                    oldWurm.ViewNodes(false);
+                    currentWorm = wurm;
+                    currentWorm.EnableOutline(true);
+                    slider.value = wurm.GetRadius();
+                    OnViewNodeButtonClick(true);
                 }
-                OnDeleteButtonClick();
-                OnDeleteButtonClick(oldWurm);
-                Connect(nodes);
-                return;
-            } else if (AreNodesVisible() == true)
-            {   
-                oldWurm.ViewNodes(false);
-                currentWorm = wurm;
-                slider.value = wurm.GetRadius();
-                OnViewNodeButtonClick(true);
-            }else
-            {
-                currentWorm = wurm;
-                slider.value = wurm.GetRadius();
+                else
+                {
+                    currentWorm = wurm;
+                    currentWorm.EnableOutline(true);
+                    slider.value = wurm.GetRadius();
+                }
             }
-        }else
+        }
+        else
         {
             currentWorm = wurm;
+            currentWorm.EnableOutline(true);
             slider.value = wurm.GetRadius();
         }
-        
     }
 
     

@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.Surfaces;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
@@ -13,6 +15,7 @@ public class Wurm : MonoBehaviour
 {
     [SerializeField] private GameObject prenode;
     [SerializeField] public InputActionAsset controls;
+    [SerializeField] private Wurm preWurm;
     
     [HideInInspector] [SerializeField] private Spline spline;
     [HideInInspector] [SerializeField] private SplineContainer splineContainer;
@@ -36,6 +39,9 @@ public class Wurm : MonoBehaviour
     [HideInInspector] [SerializeField] private bool selected;
     
     [HideInInspector] [SerializeField] private bool enableNodePlacement;
+    
+    [SerializeField] private Material outlineMaterial;
+    [SerializeField] private Material nullMaterial;
 
     private void Awake()
     {
@@ -47,11 +53,6 @@ public class Wurm : MonoBehaviour
     {
         var debugActionMap = controls.FindActionMap("Debug");
         
-        var playerActionMap = controls.FindActionMap("Player");
-
-        var selectObjectInputAction = playerActionMap.FindAction("SelectObject");
-        selectObjectInputAction.performed += SelectObject;
-        
         var nodePlacement = debugActionMap.FindAction("NodePlacement");
         nodePlacement.performed += PlaceNode;
     }
@@ -61,6 +62,13 @@ public class Wurm : MonoBehaviour
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         if (meshRenderer == null)
             meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshRenderer.materials[0] = nullMaterial;
+        if (meshRenderer.materials[1] == null)
+        {
+            var materials = meshRenderer.materials;
+            materials[1] = new Material(Shader.Find(new String("Universal Render Pipeline/Lit")));
+            meshRenderer.materials = materials;
+        }
         
         meshFilter = gameObject.GetComponent<MeshFilter>();
         if (meshFilter == null)
@@ -143,20 +151,14 @@ public class Wurm : MonoBehaviour
         CreateNodes();
     }
 
-    private Material oldMaterial;
+    private Color oldColor;
 
     public void OnHoverEnter()
     {
-        SetMaterial(new Material(Shader.Find(new String("Universal Render Pipeline/Lit")))
-        {
-            color = Color.blue
-        });
-        
     }
 
     public void OnHoverExit()
     {
-        SetMaterial(oldMaterial);
     }
 
     public void OnSelect()
@@ -277,17 +279,16 @@ public class Wurm : MonoBehaviour
     {
         if (enable)
         {
-            enableNodePlacement = true;
-            spline.Clear();
-            DeleteNodes();
-            transform.position = Vector3.zero;
-            transform.rotation = Quaternion.identity;
+            var newWurm = Instantiate(preWurm, Vector3.zero, Quaternion.identity);
+            newWurm.SetEnableNodePlacement(true);
         }
         else
         {
             enableNodePlacement = false;
         }
     }
+    
+    public void SetEnableNodePlacement(bool enable){ this.enableNodePlacement = enable; }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
@@ -297,30 +298,45 @@ public class Wurm : MonoBehaviour
     
     private void SetMaterial(Material newMaterial)
     {
-        meshRenderer.material = newMaterial;
+        var materials = meshRenderer.materials;
+        materials[1] = newMaterial;
+        meshRenderer.materials = materials;
     }
 
-    public Material GetMaterial()
+    private Material GetMaterial()
     {
-        return meshRenderer.material;
+        return meshRenderer.materials[1];
     }
 
     private void SetRandomColor()
     {
-        
-        meshRenderer.material.color = Random.ColorHSV();
-        oldMaterial = meshRenderer.material;
+        var materials = meshRenderer.materials;
+        materials[1].color = Random.ColorHSV();
+        oldColor = materials[1].color;
+        meshRenderer.materials = materials;
     }
 
     public void SetColor(Color color)
     {
-        meshRenderer.material.color = color;
-        oldMaterial = meshRenderer.material;
+        var materials = meshRenderer.materials;
+        materials[1].color = color;
+        oldColor = materials[1].color;
+        meshRenderer.materials = materials;
+    }
+
+    public void EnableOutline(bool enable)
+    {
+        var materials = meshRenderer.materials;
+        if (enable)
+            materials[0] = outlineMaterial;
+        else
+            materials[0] = nullMaterial;
+        meshRenderer.materials = materials;
     }
 
     public Color GetColor()
     {
-        return meshRenderer.material.color;
+        return meshRenderer.materials[1].color;
     }
 
     private void SetRandomSplineNodes()

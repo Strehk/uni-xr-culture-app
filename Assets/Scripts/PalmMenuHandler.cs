@@ -5,7 +5,11 @@ public class PalmMenuHandler : MonoBehaviour
 {
     [SerializeField] private GameObject ui_panel;
     [SerializeField] private GameObject hide_icon;
+    [SerializeField] private GameObject text_hide;
+
     [SerializeField] private GameObject show_icon;
+    [SerializeField] private GameObject text_show;
+    
 
     [SerializeField] private Camera cam;
 
@@ -18,10 +22,13 @@ public class PalmMenuHandler : MonoBehaviour
 
     public void ToggleHideUiEnabled()
     {
-        show_icon.SetActive(!hidingEnabled);
-        hide_icon.SetActive(hidingEnabled);
-        HideUi(!hidingEnabled);//Status von ui panel aendern
         hidingEnabled = !hidingEnabled;
+        show_icon.SetActive(!hidingEnabled);
+        text_show.SetActive(!hidingEnabled);
+
+        hide_icon.SetActive(hidingEnabled);
+        text_hide.SetActive(hidingEnabled);
+        HideUi(hidingEnabled);//Status von ui panel aendern
     }
 
     private void HideUi (bool hide){

@@ -246,16 +246,14 @@ public class Wurm : MonoBehaviour
         spline[index] = bezierKnot;
     }
 
-    public Wurm NodePlacementMode(bool enable)
+    public void NodePlacementMode(bool enable)
     {
         if (enable)
         {
-            var newWurm = Instantiate(preWurm, Vector3.zero, Quaternion.identity);
-            newWurm.SetEnableNodePlacement(true);
-            return newWurm;
+            SetEnableNodePlacement(true);
+            
         }
         enableNodePlacement = false;
-        return null;
     }
     
     private void SetEnableNodePlacement(bool enable) { enableNodePlacement = enable; }

@@ -176,7 +176,7 @@ public class Wurm : MonoBehaviour
             parentNode.transform.SetParent(transform, false);
         }
 
-        if (gameObject.GetComponentInChildren<ArtNode>() == null && nodes == null)
+        if (gameObject.GetComponentInChildren<ArtNode>() == null && (nodes == null || nodes.Length == 0))
         {
             var count = 0;
             nodes = new GameObject[spline.Count];
@@ -224,9 +224,9 @@ public class Wurm : MonoBehaviour
 
     public void ViewNodes(bool view)
     {
-        if (nodes == null)
+        if (nodes == null || nodes.Length == 0)
             CreateNodes();
-        if (nodes == null)
+        if (nodes == null || nodes.Length == 0)
         {
             Debug.LogError("ViewNodes: nodes is null");
             return;
@@ -248,15 +248,9 @@ public class Wurm : MonoBehaviour
 
     public void NodePlacementMode(bool enable)
     {
-        if (enable)
-        {
-            SetEnableNodePlacement(true);
-            
-        }
-        enableNodePlacement = false;
+       
+        enableNodePlacement = enable;
     }
-    
-    private void SetEnableNodePlacement(bool enable) { enableNodePlacement = enable; }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {

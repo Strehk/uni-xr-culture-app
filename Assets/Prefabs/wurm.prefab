@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32c4fae57c9b914aacc8b692bf3125f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prenode: {fileID: 7119717884381108783, guid: 63c73eafeb3d4f3489c3120c7dbcbf15, type: 3}
+  preNode: {fileID: 7119717884381108783, guid: 63c73eafeb3d4f3489c3120c7dbcbf15, type: 3}
   controls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   preWurm: {fileID: 182132336918577964}
   spline:
@@ -166,7 +166,6 @@ MonoBehaviour:
   nodes: []
   selected: 0
   enableNodePlacement: 0
-  mainMaterial: {fileID: 0}
   outlineMaterial: {fileID: 2100000, guid: 893f399ac6a6c414186d586ce0a05fdb, type: 2}
   nullMaterial: {fileID: 2100000, guid: 6c925a01a5f38d0448da0dc96bac5e7e, type: 2}
 --- !u!114 &3611371046790624175
@@ -362,7 +361,7 @@ MonoBehaviour:
     space: 0
   m_DeprecatedInstances: []
   m_AutoRefresh: 1
-  m_Seed: 0
+  m_Seed: 104508
 --- !u!33 &6395439281870917038
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -245,7 +245,7 @@ public class Wurm : MonoBehaviour
 
     public void ViewNodes(bool view)
     {
-        if (view && nodes == null)
+        if (nodes == null)
             CreateNodes();
         foreach (var node in nodes)
         {
@@ -275,20 +275,19 @@ public class Wurm : MonoBehaviour
         selected = !selected;
     }
 
-    public void NodePlacementMode(bool enable)
+    public Wurm NodePlacementMode(bool enable)
     {
         if (enable)
         {
             var newWurm = Instantiate(preWurm, Vector3.zero, Quaternion.identity);
             newWurm.SetEnableNodePlacement(true);
+            return newWurm;
         }
-        else
-        {
-            enableNodePlacement = false;
-        }
+        enableNodePlacement = false;
+        return null;
     }
     
-    public void SetEnableNodePlacement(bool enable){ this.enableNodePlacement = enable; }
+    private void SetEnableNodePlacement(bool enable){ enableNodePlacement = enable; }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
@@ -296,19 +295,19 @@ public class Wurm : MonoBehaviour
             spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
     }
     
-    private void SetMaterial(Material newMaterial)
+    public void SetMaterial(Material newMaterial)
     {
         var materials = meshRenderer.materials;
         materials[1] = newMaterial;
         meshRenderer.materials = materials;
     }
 
-    private Material GetMaterial()
+    public Material GetMaterial()
     {
         return meshRenderer.materials[1];
     }
 
-    private void SetRandomColor()
+    public void SetRandomColor()
     {
         var materials = meshRenderer.materials;
         materials[1].color = Random.ColorHSV();
@@ -352,8 +351,6 @@ public class Wurm : MonoBehaviour
         {
             spline.Add(node);
         }
-        
-
     }
 
     public Vector3[] GetNodes()
@@ -366,7 +363,7 @@ public class Wurm : MonoBehaviour
         return nodes;
     }
 
-    private void SetRandomRadius()
+    public void SetRandomRadius()
     {
         splineExtrude.Radius = Random.Range(0.01f, 0.1f);
     }

@@ -74,18 +74,24 @@ public class BottonManager : MonoBehaviour
         DeaktivateButtons();
         end_draw_worm_Button.gameObject.SetActive(true);
         Wurm wurm = Instantiate(artObjectScript);
+        wurm.NodePlacementMode(true);
 
         InteractableUnityEventWrapper eventWrapper = wurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(wurm));
         currentWorm = wurm;
         worms.Add(currentWorm);
-        wurm.NodePlacementMode(true);
-
     }
     public void onEndDrawmodebuttonClick(){
         AktivateButtons();
         end_draw_worm_Button.gameObject.SetActive(false);
         currentWorm.NodePlacementMode(false);
+    }
+
+    
+    public bool isDrawModeActive () {
+        if (exit_Connect_Worms_Button.gameObject.activeSelf == true){
+            return true;
+        }else return false;
     }
 
     
@@ -289,6 +295,11 @@ public class BottonManager : MonoBehaviour
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
                     OnViewNodeButtonClick(true);
+                } else if (isDrawModeActive()==true){
+                    onEndDrawmodebuttonClick();
+                    currentWorm = wurm;
+                    currentWorm.EnableOutline(true);
+                    slider.value = wurm.GetRadius();
                 }
                 else
                 {

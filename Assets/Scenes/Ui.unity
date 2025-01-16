@@ -199,14 +199,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WurmSceneRigOVR
       objectReference: {fileID: 0}
-    - target: {fileID: 2028502346658983756, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
-      propertyPath: '_interactors.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2028502347914172054, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
-      propertyPath: '_interactors.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2069022673075644865, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

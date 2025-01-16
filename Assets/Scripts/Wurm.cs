@@ -266,6 +266,12 @@ public class Wurm : MonoBehaviour
             spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
     }
     
+    private void PlaceNode()
+    {
+        if (enableNodePlacement)
+            spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Hand.HandRight )));
+    }
+    
     public void SetMaterial(Material newMaterial)
     {
         var materials = meshRenderer.materials;

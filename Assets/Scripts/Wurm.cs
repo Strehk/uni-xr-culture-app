@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.Surfaces;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
@@ -48,7 +46,6 @@ public class Wurm : MonoBehaviour
         Setup();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
         var debugActionMap = controls.FindActionMap("Debug");
@@ -138,7 +135,7 @@ public class Wurm : MonoBehaviour
         grabInteractable.InjectRigidbody(rigidbodySpline);
     }
 
-    private void Generate(InputAction.CallbackContext context)
+    private void Generate()
     {
         gameObject.SetActive(true);
         NodePlacementMode(false);
@@ -169,15 +166,9 @@ public class Wurm : MonoBehaviour
         });
     }
 
-    public void OnUnselect()
-    {
-        Debug.Log("Unselect");
-    }
+    public void OnUnselect() { Debug.Log("Unselect"); }
     
-    public void OnButtonClick()
-    {
-        Generate(default);
-    }
+    public void OnButtonClick() { Generate(); }
 
     public void CreateNodes()
     {
@@ -209,21 +200,11 @@ public class Wurm : MonoBehaviour
         }
     }
 	
-	
-	public GameObject[] getNodes()
-	{
-		return nodes;
-	}
+	public GameObject[] getNodes() { return nodes; }
 
-    private void OnNodeHover()
-    {
-        handGrab.enabled = false;
-    }
+    private void OnNodeHover() { handGrab.enabled = false; }
 
-    private void OnNodeUnhover()
-    {
-        handGrab.enabled = true;
-    }
+    private void OnNodeUnhover() { handGrab.enabled = true; }
     
     private void DeleteNodes()
     {
@@ -287,7 +268,7 @@ public class Wurm : MonoBehaviour
         return null;
     }
     
-    private void SetEnableNodePlacement(bool enable){ enableNodePlacement = enable; }
+    private void SetEnableNodePlacement(bool enable) { enableNodePlacement = enable; }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
@@ -302,10 +283,7 @@ public class Wurm : MonoBehaviour
         meshRenderer.materials = materials;
     }
 
-    public Material GetMaterial()
-    {
-        return meshRenderer.materials[1];
-    }
+    public Material GetMaterial() { return meshRenderer.materials[1]; }
 
     public void SetRandomColor()
     {
@@ -333,10 +311,7 @@ public class Wurm : MonoBehaviour
         meshRenderer.materials = materials;
     }
 
-    public Color GetColor()
-    {
-        return meshRenderer.materials[1].color;
-    }
+    public Color GetColor() { return meshRenderer.materials[1].color; }
 
     private void SetRandomSplineNodes()
     {
@@ -363,26 +338,9 @@ public class Wurm : MonoBehaviour
         return nodes;
     }
 
-    public void SetRandomRadius()
-    {
-        splineExtrude.Radius = Random.Range(0.01f, 0.1f);
-    }
+    public void SetRandomRadius() { splineExtrude.Radius = Random.Range(0.01f, 0.1f); }
 
-    public void SetRadius(float radius)
-    {
-        splineExtrude.Radius = radius;
-    }
+    public void SetRadius(float radius) { splineExtrude.Radius = radius; }
 
-    public float GetRadius()
-    {
-        return splineExtrude.Radius;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    
+    public float GetRadius() { return splineExtrude.Radius; }
 }

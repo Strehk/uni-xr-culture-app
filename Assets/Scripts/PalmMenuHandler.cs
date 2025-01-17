@@ -4,6 +4,7 @@ using UnityEngine;
 public class PalmMenuHandler : MonoBehaviour
 {
     [SerializeField] private GameObject ui_panel;
+    [SerializeField] private GameObject ContainerObject;
     [SerializeField] private GameObject hide_icon;
     [SerializeField] private GameObject text_hide;
 
@@ -32,11 +33,11 @@ public class PalmMenuHandler : MonoBehaviour
     }
 
     private void HideUi (bool hide){
-        ui_panel.SetActive(hide);
+        ContainerObject.SetActive(hide);
     }
 
     public void ToleportUi(){
-        ui_panel.transform.position = cam.transform.position + cam.transform.forward * 1.5f;
+        ContainerObject.transform.position = cam.transform.position + cam.transform.forward * 1.5f;
         ui_panel.transform.rotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
     }
 }

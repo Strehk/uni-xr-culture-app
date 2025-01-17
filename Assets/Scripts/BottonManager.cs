@@ -36,6 +36,10 @@ public class BottonManager : MonoBehaviour
 
     [SerializeField] private Toggle changeColorButton;
 
+    [SerializeField] private Toggle changeapperance_Button;
+
+    [SerializeField] private GameObject apperance_Panel;
+
     [SerializeField] private Colorchanger ColorPanel;
     private bool color_panelActive;
 
@@ -43,12 +47,17 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
+
+    private bool changeapperance_Button_state;
+
     private Wurm currentWorm;
     private GameObject gptspawn;
     
 
     void Start()
     {   
+        changeapperance_Button_state = false;
+        on_Change_Apperance_Button_click();
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
         chatGPT.MessageReceived += MessageReceived;
@@ -433,6 +442,27 @@ public class BottonManager : MonoBehaviour
         gptGenerate_Button.gameObject.SetActive(true);
         start_draw_worm_Button.gameObject.SetActive(true);
         end_draw_worm_Button.gameObject.SetActive(false);
+    }
+
+    public void on_Change_Apperance_Button_click(){
+        apperance_Panel.SetActive(changeapperance_Button_state);
+        changeapperance_Button_state = !changeapperance_Button_state;
+    }
+
+
+    ///
+    ///
+    ///Florans Space
+    ///
+    ///
+    //nach moeglichkeit bitte keiene wuermer loeschen. Wenn loeschen eiziger weg, bitte onDeleteButtonClick() aufrufen und neuen Wurm zu worms[] hinzufuegen!!!
+    public void onSphere_buttonClick(GameObject artObject){
+        
+    }
+    public void onCylinder_buttonClick(GameObject artObject){
+    }
+
+    public void onWormTexture_buttonClick(GameObject artObject){
     }
 }
 

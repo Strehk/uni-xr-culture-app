@@ -231,7 +231,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4172199323298046859}
+    m_TransformParent: {fileID: 960174781977640658}
     m_Modifications:
     - target: {fileID: 59233283795354616, guid: de6467ed1448847469626f41a396811f, type: 3}
       propertyPath: m_OverridePixelPerfect
@@ -395,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7527324846867969405, guid: de6467ed1448847469626f41a396811f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1
+      value: 0.100016594
       objectReference: {fileID: 0}
     - target: {fileID: 7527324846867969405, guid: de6467ed1448847469626f41a396811f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1897,8 +1897,8 @@ PrefabInstance:
     - {fileID: 7449072997056587091, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
     - {fileID: 241071396129652618, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7609591672963585454, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
-      insertIndex: -1
+    - targetCorrespondingSourceObject: {fileID: 6714633408114149623, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
+      insertIndex: 2
       addedObject: {fileID: 5078043310538437181}
     - targetCorrespondingSourceObject: {fileID: 7609591672963585454, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       insertIndex: -1
@@ -1943,6 +1943,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &960174781977640658 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6714633408114149623, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
+  m_PrefabInstance: {fileID: 5799530635711084069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1213404518046970416 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4659803500166169621, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}

@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 8395456596881799391}
   - component: {fileID: 6966527775601897256}
   m_Layer: 5
-  m_Name: UiTestSphere
+  m_Name: ShereButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

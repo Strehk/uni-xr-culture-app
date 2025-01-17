@@ -289,7 +289,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &171485621228790196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,10 +367,13 @@ MonoBehaviour:
   gptGenerate_Button: {fileID: 0}
   gpt_ReGen_Button: {fileID: 0}
   start_draw_worm_Button: {fileID: 0}
+  end_draw_worm_Button: {fileID: 0}
   cam: {fileID: 0}
   artObjectScript: {fileID: 182132336918577964, guid: 776aefb2604f33d47879b8810e7350b2, type: 3}
   slider: {fileID: 0}
   SmothnesSlider: {fileID: 0}
+  changeColorButton: {fileID: 0}
+  ColorPanel: {fileID: 0}
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   worms: []
 --- !u!1001 &298605268008942924

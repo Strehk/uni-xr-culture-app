@@ -72,7 +72,7 @@ public class BottonManager : MonoBehaviour
         Vector3 spawnpsition = cam.transform.position+cam.transform.forward*1.5f;
         gptspawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
         gptspawn.transform.position = spawnpsition;
-        gptspawn.transform.localScale = new Vector3(1f,1f,1f);
+        gptspawn.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
         gptspawn.transform.parent = cam.transform;
         gptspawn.name = "GPTspawn";
         gptspawn.SetActive(false);
@@ -114,7 +114,58 @@ public class BottonManager : MonoBehaviour
 
     //darf nur von gpt aufgerufen werden 
     private void MessageReceived(string message){
-        Vector3[] list = formate(message);
+        string ChatgbtResponse;
+        string Response;
+        if(message.Contains(">")){
+            Debug.Log("Connection Mode__");
+            ChatgbtResponse = message.Split(">")[0];
+            string Worms = message.Split(">")[1];
+            string wurm1 = Worms.Split(";")[0];
+            string wurm2 = Worms.Split(";")[1];
+            string Wurm1 = "";
+            string Wurm2 = "";
+            string[] wurm1array = wurm1.Split(")");
+            for (int i = 0; i < wurm1array.Length; i++)
+            {
+                wurm1array[i] = wurm1array[i].Replace("(", "").Replace(" ", "").Replace(";", "");
+                Wurm1 += wurm1array[i];
+                if(i!= wurm1array.Length-2){
+                    Wurm1 += ";";
+                }
+            }
+            string[] wurm2array = wurm2.Split(")");
+            for (int i = 0; i < wurm2array.Length; i++)
+            {
+               wurm2array[i] = wurm2array[i].Replace("(", "").Replace(" ", "").Replace(";","");
+               Wurm2 += wurm2array[i];
+               if(i!= wurm2array.Length-2){
+                    Wurm2 += ";";
+               }
+
+            }
+            Wurm2 = Wurm2.Remove(Wurm2.Length -1);
+
+
+            Debug.Log("Worms:"+Wurm1 + Wurm2);
+            Worms = Wurm1+Wurm2;
+
+            string[] wormsArray = Worms.Split(';');
+
+
+            foreach (string worm in wormsArray)
+            {
+             ChatgbtResponse = ChatgbtResponse.Replace(worm, "");
+
+            }
+            Response = Wurm1+ChatgbtResponse+Wurm2;
+            Debug.Log("Response:"+Response);
+
+        }else{
+            Response = message;
+        }
+
+
+        Vector3[] list = formate(Response);
 
         Wurm newWurm = Instantiate(artObjectScript);
         newWurm.SetNodes(list);
@@ -190,16 +241,18 @@ public class BottonManager : MonoBehaviour
             " Y-Achse: " + minCorner.y + "<y<" + maxCorner.y + " Z-Achse:" + minCorner.z + "<z<" + maxCorner.z;
 
 
-       String promt = "Der Spline soll möglichst dynamisch und organisch verlaufen, dabei dürfen die Grenzen der box nie überschritten werden. Der Spline soll einen Wurm darstellen. Erstelle mir eine Liste an Positionen, die die Position von Nodes des Splines darstellen.Dein Output sind die Positionen der Nodes des Splines. Beispiel Output: -2.85, 0.5, 0.325; -1.96, 0.5, 0.324; -1.15,0.817, 0.325;-0.51, 0.817, 0.90;0.135, 0.817, 1.099;0.8,1.148,1,1;1.5, 1.33, 1,1;2,1.33,0.35;2.35, 1.41, -0.3;2.35, 1.68, -1.Dein Output hat folgendes format: x,y,z;x,y,z;x,y,z. Tausche dabei x, y und z durch die jeweiligen Koordinaten aus.Der Beispiel Output muss nicht mit den Begrenzungs Parametern übereinstimmen.";
+       String promt = "Der Spline soll möglichst dynamisch und organisch verlaufen, dabei dürfen die Grenzen nie überschritten werden. Der Spline soll einen Wurm darstellen, dennoch soll der Spline nicht linear verlaufen, sondern eine große Vielfalt darstellen. Erstelle mir eine Liste an Positionen, die die Position von Nodes des Splines darstellen.Dein Output sind die Positionen der Nodes des Splines. Gib mindestens 8 Positionen an. Des weiteren soll der Wurm möglichst komplex sein, das heißt , dass er möglichst viele Kurven hat. Der Spline soll mindestens zwei kurven haben.Beispiel Output: -2.85, 0.5, 0.325; -1.96, 0.5, 0.324; -1.15,0.817, 0.325;-0.51, 0.817, 0.90;0.135, 0.817, 1.099;0.8,1.148,1,1;1.5, 1.33, 1,1;2,1.33,0.35;2.35, 1.41, -0.3;2.35, 1.68, -1.Dein Output hat folgendes format: x,y,z;x,y,z;x,y,z. Tausche dabei x, y und z durch die jeweiligen Koordinaten aus.Der Beispiel Output muss nicht mit den Begrenzungs Parametern übereinstimmen, dein Output jedoch schon.";
 
        chatGPT.SendMessageToChatGPT(box +promt);
     }
     public void Connect(string Wurms){
         string Wurm1 = Wurms.Split(";")[0];
         string Wurm2 = Wurms.Split(";")[1];
+        string Worms = ">"+Wurm1+";"+Wurm2;
+        Debug.Log("Worms:"+Wurm1+Wurm2);
 
         chatGPT.SendMessageToChatGPT("Erstelle mir einen Spline der folgende zwei Splines miteinander verbinden Soll: Wurm1:"+ Wurm1+
-        "Wurm2:"+ Wurm2 + "Der Spline soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt des anderen sollen verbunden sein start punkt ist der erste wert jedes Wurms und Endpunkt der letzte. Uebernehme die Koordinaten der ohne diese zu aendern. Fuege deine Koordinaten nur zwischen wuermern ein.  Dein Output hat folgendes format: x,y,z;x,y,z;x,y,z.");
+        "Wurm2:"+ Wurm2 + "Der Spline soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt des anderen sollen verbunden sein. Die Verbindung hat mindestens 8 Positionen und verläuft dynamisch. Startpunkt ist der erste Wert jedes Wurms und der Endpunkt der letzte. Du darfst nur Koordinaten zwischen dem Startpunkt und Endpunkt hinzufügen.Dein Output beinhaltet nur die Verbindung zwischen den Würmern.  Dein Output hat folgendes Format: x,y,z;x,y,z;x,y,z.", Worms);
     }
 
     public void OnGPTREGenerateButtonClick(){

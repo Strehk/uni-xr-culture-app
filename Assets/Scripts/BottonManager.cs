@@ -332,12 +332,13 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
+
         if (worms.Count > 0 && worms.Contains(currentWorm))
         {
             int i = worms.FindIndex(x => x == currentWorm);
             Destroy(worms[i].gameObject);
             worms.RemoveAt(i);
-            if(worms.Count == 0) currentWorm = null;
+            currentWorm = null;
             currently_posseble_operations();
         }
     }
@@ -355,7 +356,7 @@ public class BottonManager : MonoBehaviour
             int i = worms.FindIndex(x => x == wurm);
             Destroy(worms[i].gameObject);
             worms.RemoveAt(i);
-            if(worms.Count == 0) currentWorm = null;
+            if(currentWorm == wurm){currentWorm = null;}
             currently_posseble_operations();
         }
     }

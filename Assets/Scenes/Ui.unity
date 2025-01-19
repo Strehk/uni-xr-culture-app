@@ -2008,7 +2008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 361245620, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_Name
-      value: Hide_text
+      value: Show_text
       objectReference: {fileID: 0}
     - target: {fileID: 361245620, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_IsActive
@@ -2040,7 +2040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 361245622, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_text
-      value: hide Ui
+      value: show Ui
       objectReference: {fileID: 0}
     - target: {fileID: 361245622, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_sharedMaterial
@@ -2298,6 +2298,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1861521772375523042, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7781837157368653948, guid: 64f884351318b694f942625580e64a8b, type: 3}
     - target: {fileID: 1915603345510730370, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2324,7 +2328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2185176936651825224, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_Name
-      value: show_text
+      value: Hide_text
       objectReference: {fileID: 0}
     - target: {fileID: 2185176936651825224, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_IsActive
@@ -2492,7 +2496,19 @@ PrefabInstance:
       objectReference: {fileID: 883880667}
     - target: {fileID: 4673286702085148941, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_text
-      value: show Ui
+      value: hide Ui
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673286702085148941, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4673286702085148941, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614022670736787055, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
+      propertyPath: m_text
+      value: Center Ui
       objectReference: {fileID: 0}
     - target: {fileID: 5614022670736787055, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_sharedMaterial
@@ -2501,6 +2517,10 @@ PrefabInstance:
     - target: {fileID: 5614022670736787055, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782123827700029313, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
+      propertyPath: m_AnimationTriggers.m_DisabledTrigger
+      value: Disabled
       objectReference: {fileID: 0}
     - target: {fileID: 5782123827700029313, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
@@ -2612,11 +2632,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7107640338634844782, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7107640338634844782, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7107640338634844782, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2706,6 +2726,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8876329104875904758, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3769177770474531211, guid: 36cc40c6a4af6954ab6343c9a12853e5, type: 3}
     m_RemovedGameObjects:
@@ -2751,9 +2775,9 @@ MonoBehaviour:
   ui_panel: {fileID: 1641869639}
   ContainerObject: {fileID: 1138872032}
   hide_icon: {fileID: 1773663202}
-  text_hide: {fileID: 1551397267}
+  text_hide: {fileID: 591363977}
   show_icon: {fileID: 1773663203}
-  text_show: {fileID: 591363977}
+  text_show: {fileID: 1551397267}
   cam: {fileID: 852290145}
 --- !u!1 &1867165153
 GameObject:

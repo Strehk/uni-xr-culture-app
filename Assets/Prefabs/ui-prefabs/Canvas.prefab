@@ -241,7 +241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.49}
+  m_AnchoredPosition: {x: 0, y: 1.4899902}
   m_SizeDelta: {x: 1013.5, y: 493.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &59233283795354616
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &171485621228790196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,13 +356,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6585c098e2060364c8dac228505e15b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainButton: {fileID: 5565873478332823512}
+  deleteButton: {fileID: 0}
   regenerateButton: {fileID: 2100520283394589728}
-  newArtObjectButton: {fileID: 4755718875326847948}
-  viewNodeButton: {fileID: 7748476542407233393}
+  generate_button: {fileID: 0}
+  viewNodeButton: {fileID: 0}
+  exit_View_Nodes_Button: {fileID: 0}
+  connect_Worms_Button: {fileID: 0}
+  exit_Connect_Worms_Button: {fileID: 0}
+  chatGPT: {fileID: 0}
+  gptGenerate_Button: {fileID: 0}
+  gpt_ReGen_Button: {fileID: 0}
+  start_draw_worm_Button: {fileID: 0}
+  end_draw_worm_Button: {fileID: 0}
+  cam: {fileID: 0}
   artObjectScript: {fileID: 182132336918577964, guid: 776aefb2604f33d47879b8810e7350b2, type: 3}
-  radiuslider: {fileID: 0}
+  slider: {fileID: 0}
+  SmothnesSlider: {fileID: 0}
+  changeColorButton: {fileID: 0}
+  ColorPanel: {fileID: 0}
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  worms: []
 --- !u!1001 &298605268008942924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -540,17 +553,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
---- !u!114 &4755718875326847948 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5033739013383628416, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
-  m_PrefabInstance: {fileID: 298605268008942924}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4755718875326847951 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5033739013383628419, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
@@ -709,17 +711,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
---- !u!114 &5565873478332823512 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5033739013383628416, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
-  m_PrefabInstance: {fileID: 641369897465155928}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5565873478332823515 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5033739013383628419, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
@@ -886,17 +877,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
---- !u!114 &7748476542407233393 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5033739013383628416, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
-  m_PrefabInstance: {fileID: 3338135627687324145}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &7748476542407233394 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5033739013383628419, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}

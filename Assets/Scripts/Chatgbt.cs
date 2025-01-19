@@ -16,6 +16,7 @@ public class ChatGPT : MonoBehaviour
     [SerializeField] private InputActionAsset controls;
     [SerializeField] private string apiUrl;
     [SerializeField] private string setnewkey;
+    private string worms;
 
     
     // Systemnachricht zur Festlegung des Assistenten-Charakters
@@ -29,6 +30,12 @@ public class ChatGPT : MonoBehaviour
         StartCoroutine(SendRequest(userMessage));
        
     }
+    public void SendMessageToChatGPT(string userMessage, string worms)
+    {
+            StartCoroutine(SendRequest(userMessage));
+           this.worms = worms;
+    }
+
     void OnValidate()
     {
        
@@ -106,7 +113,7 @@ public class ChatGPT : MonoBehaviour
                 {
                     string responseText = responseData.choices[0].message.content;
                     Debug.Log("ChatGPT Antwort: " + responseText);
-                    MessageReceived?.Invoke(responseText);
+                    MessageReceived?.Invoke(responseText+worms);
                     //spawner.Spawn(responseText);
 
                 }

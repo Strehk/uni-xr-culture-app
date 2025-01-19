@@ -7,7 +7,7 @@ public class ShowInInspectorAttribute : PropertyAttribute
 {
 
 }
-
+# if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ShowInInspectorAttribute))]
 public class ShowInInspector : PropertyDrawer
 {
@@ -55,3 +55,4 @@ public class ShowInInspector : PropertyDrawer
         }
     }
 }
+# endif

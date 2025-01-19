@@ -1,19 +1,17 @@
 using System;
-using System.Collections.Generic;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.Surfaces;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
-using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class Wurm : MonoBehaviour
 {
-    [SerializeField] private GameObject prenode;
+    [SerializeField] private GameObject preNode;
     [SerializeField] public InputActionAsset controls;
     [SerializeField] private Wurm preWurm;
     
@@ -48,7 +46,6 @@ public class Wurm : MonoBehaviour
         Setup();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
         var debugActionMap = controls.FindActionMap("Debug");
@@ -138,7 +135,7 @@ public class Wurm : MonoBehaviour
         grabInteractable.InjectRigidbody(rigidbodySpline);
     }
 
-    private void Generate(InputAction.CallbackContext context)
+    private void Generate()
     {
         gameObject.SetActive(true);
         NodePlacementMode(false);
@@ -150,8 +147,6 @@ public class Wurm : MonoBehaviour
         SetRandomColor();
         CreateNodes();
     }
-
-    private Color oldColor;
 
     public void OnHoverEnter()
     {
@@ -169,15 +164,9 @@ public class Wurm : MonoBehaviour
         });
     }
 
-    public void OnUnselect()
-    {
-        Debug.Log("Unselect");
-    }
+    public void OnUnselect() { Debug.Log("Unselect"); }
     
-    public void OnButtonClick()
-    {
-        Generate(default);
-    }
+    public void OnButtonClick() { Generate(); }
 
     public void CreateNodes()
     {
@@ -187,14 +176,14 @@ public class Wurm : MonoBehaviour
             parentNode.transform.SetParent(transform, false);
         }
 
-        if (gameObject.GetComponentInChildren<ArtNode>() == null && nodes == null)
+        if (gameObject.GetComponentInChildren<ArtNode>() == null && (nodes == null || nodes.Length == 0))
         {
             var count = 0;
             nodes = new GameObject[spline.Count];
             foreach (var knot in spline.ToArray())
             {
                 Debug.Log(count + " Knoten: " + knot);
-                var node = Instantiate(prenode, parentNode.transform, false);
+                var node = Instantiate(preNode, parentNode.transform, false);
                 node.transform.localPosition = knot.Position;
                 var scale = Convert.ToSingle(GetRadius() * 3);
                 node.transform.localScale = new Vector3(scale, scale, scale);
@@ -209,21 +198,11 @@ public class Wurm : MonoBehaviour
         }
     }
 	
-	
-	public GameObject[] getNodes()
-	{
-		return nodes;
-	}
+	public GameObject[] getNodes() { return nodes; }
 
-    private void OnNodeHover()
-    {
-        handGrab.enabled = false;
-    }
+    private void OnNodeHover() { handGrab.enabled = false; }
 
-    private void OnNodeUnhover()
-    {
-        handGrab.enabled = true;
-    }
+    private void OnNodeUnhover() { handGrab.enabled = true; }
     
     private void DeleteNodes()
     {
@@ -245,8 +224,13 @@ public class Wurm : MonoBehaviour
 
     public void ViewNodes(bool view)
     {
-        if (view && nodes == null)
+        if (nodes == null || nodes.Length == 0)
             CreateNodes();
+        if (nodes == null || nodes.Length == 0)
+        {
+            Debug.LogError("ViewNodes: nodes is null");
+            return;
+        }
         foreach (var node in nodes)
         {
             node.gameObject.SetActive(view);
@@ -261,34 +245,12 @@ public class Wurm : MonoBehaviour
         bezierKnot.Position = artNode.transform.localPosition;
         spline[index] = bezierKnot;
     }
-   
-    private void MoveObject(InputAction.CallbackContext context)
-    {
-        if (!selected) return;
-        var moveObjectInput = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
-        transform.position += moveObjectInput * 0.01f;
-    }
-
-    private void SelectObject(InputAction.CallbackContext context)
-    {
-        splineInstantiate.enabled = true;
-        selected = !selected;
-    }
 
     public void NodePlacementMode(bool enable)
     {
-        if (enable)
-        {
-            var newWurm = Instantiate(preWurm, Vector3.zero, Quaternion.identity);
-            newWurm.SetEnableNodePlacement(true);
-        }
-        else
-        {
-            enableNodePlacement = false;
-        }
+       
+        enableNodePlacement = enable;
     }
-    
-    public void SetEnableNodePlacement(bool enable){ this.enableNodePlacement = enable; }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
@@ -296,23 +258,22 @@ public class Wurm : MonoBehaviour
             spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
     }
     
-    private void SetMaterial(Material newMaterial)
+    public void SetMaterial(Material newMaterial)
     {
         var materials = meshRenderer.materials;
         materials[1] = newMaterial;
         meshRenderer.materials = materials;
     }
 
-    private Material GetMaterial()
-    {
-        return meshRenderer.materials[1];
-    }
+    public Material GetMaterial() { return meshRenderer.materials[1]; }
 
-    private void SetRandomColor()
+    private Color _oldColor;
+
+    public void SetRandomColor()
     {
         var materials = meshRenderer.materials;
         materials[1].color = Random.ColorHSV();
-        oldColor = materials[1].color;
+        _oldColor = materials[1].color;
         meshRenderer.materials = materials;
     }
 
@@ -320,7 +281,7 @@ public class Wurm : MonoBehaviour
     {
         var materials = meshRenderer.materials;
         materials[1].color = color;
-        oldColor = materials[1].color;
+        _oldColor = materials[1].color;
         meshRenderer.materials = materials;
     }
 
@@ -334,10 +295,7 @@ public class Wurm : MonoBehaviour
         meshRenderer.materials = materials;
     }
 
-    public Color GetColor()
-    {
-        return meshRenderer.materials[1].color;
-    }
+    public Color GetColor() { return meshRenderer.materials[1].color; }
 
     private void SetRandomSplineNodes()
     {
@@ -345,47 +303,28 @@ public class Wurm : MonoBehaviour
             spline.Add(new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 2f), Random.Range(-1f, 1f)));
     }
 
-    public void SetNodes(Vector3[] nodes)
+    public void SetNodes(Vector3[] wurmNodes)
     {
         spline.Clear();
-        foreach (var node in nodes)
+        foreach (var node in wurmNodes)
         {
             spline.Add(node);
         }
-        
-
     }
 
     public Vector3[] GetNodes()
     {
-        var nodes = new Vector3[spline.Count];
+        var wurmNodes = new Vector3[spline.Count];
         for (int i = 0; i < spline.Count; i++)
         {
-            nodes[i] = spline.ToArray()[i].Position;
+            wurmNodes[i] = spline.ToArray()[i].Position;
         }
-        return nodes;
+        return wurmNodes;
     }
 
-    private void SetRandomRadius()
-    {
-        splineExtrude.Radius = Random.Range(0.01f, 0.1f);
-    }
+    public void SetRandomRadius() { splineExtrude.Radius = Random.Range(0.01f, 0.1f); }
 
-    public void SetRadius(float radius)
-    {
-        splineExtrude.Radius = radius;
-    }
+    public void SetRadius(float radius) { splineExtrude.Radius = radius; }
 
-    public float GetRadius()
-    {
-        return splineExtrude.Radius;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    
+    public float GetRadius() { return splineExtrude.Radius; }
 }

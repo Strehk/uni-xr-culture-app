@@ -2,24 +2,74 @@ using UnityEngine;
 
 public class Colorchanger : MonoBehaviour
 {
-    public GameObject targetObject; // Das Objekt, dessen Farbe geändert wird
-    private Renderer targetRenderer;
+    [SerializeField] private BottonManager uiPanel;
+
 
     void Start()
     {
-        // Den Renderer des Zielobjekts abrufen
-        if (targetObject != null)
+        
+    }
+
+    public void ChangeToGreen()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
         {
-            targetRenderer = targetObject.GetComponent<Renderer>();
+            wurm.SetColor(Color.green);
         }
-        else
+    }
+    public void ChangeToRed()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
         {
-            Debug.LogError("Kein Zielobjekt zugewiesen!");
+            wurm.SetColor(Color.red);
         }
     }
 
-    public void ChangeColor()
+    public void ChangeToBlue()
     {
-        Debug.LogError("Gedrueckt");
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
+        {
+            wurm.SetColor(Color.blue);
+        }
     }
+
+    public void ChangeToYellow()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
+        {
+            wurm.SetColor(Color.yellow);
+        }
+    }
+
+    public void ChangeToCyan()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
+        {
+            wurm.SetColor(Color.cyan);
+        }
+    }
+
+    public void ChangeToMagenta()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
+        {
+            wurm.SetColor(Color.magenta);
+        }
+    }
+
+    public void ChangeRandomColor()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
+        {
+            wurm.SetRandomColor();
+        }
+    }
+
 }

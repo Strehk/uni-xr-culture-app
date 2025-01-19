@@ -1,3 +1,4 @@
+# if UNITY_EDITOR
 using System;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
@@ -5,7 +6,6 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
@@ -197,6 +197,58 @@ public class Wurm : MonoBehaviour
             ViewNodes(false);
         }
     }
+
+    public void AddInstantiateObject(GameObject prefab)
+    {
+
+        var item = new SplineInstantiate.InstantiableItem();
+        item.Prefab = prefab;
+        var items = new SplineInstantiate.InstantiableItem[] { RecallculateInstantiateObject(item) };
+        splineInstantiate.itemsToInstantiate = items;
+        splineInstantiate.enabled = true;
+        /*
+        var items = splineInstantiate.itemsToInstantiate;
+        var newItems = new SplineInstantiate.InstantiableItem [items.Length + 1];
+        for (int i = 0; i < items.Length; i++)
+            newItems[i] = items[i];
+        newItems[newItems.Length] = prefab;
+        splineInstantiate.itemsToInstantiate = newItems;*/
+    }
+
+    private SplineInstantiate.InstantiableItem RecallculateInstantiateObject(SplineInstantiate.InstantiableItem item)
+    {
+        item.Prefab.transform.localScale *= GetRadius() * 0.1f;
+        return item;
+    }
+    
+    private void RecallculateInstantiateObjects()
+    {
+        var items = splineInstantiate.itemsToInstantiate;
+        /*foreach (var item in items)
+            RecallculateInstantiateObjects(item);*/
+    }
+
+    private void RemoveInstantiateObject(SplineInstantiate.InstantiableItem prefab)
+    {
+        /*
+        var items = splineInstantiate.itemsToInstantiate;
+        var newItems = new SplineInstantiate.InstantiableItem [items.Length - 1];
+        var j = 0;
+        for (int i = 0; i < items.Length; i++, j++)
+        {
+            if (items[i].Equals(prefab))
+                i++;
+            newItems[j] = items[i];
+        }
+        splineInstantiate.itemsToInstantiate = newItems;*/
+    }
+
+    public void RemoveInstantiateObject()
+    {
+        var items = Array.Empty<SplineInstantiate.InstantiableItem>();
+        splineInstantiate.itemsToInstantiate = items;
+        splineInstantiate.enabled = false;
+    }
 	
 	public GameObject[] getNodes() { return nodes; }
 
@@ -324,7 +376,13 @@ public class Wurm : MonoBehaviour
 
     public void SetRandomRadius() { splineExtrude.Radius = Random.Range(0.01f, 0.1f); }
 
-    public void SetRadius(float radius) { splineExtrude.Radius = radius; }
+    public void SetRadius(float radius)
+    {
+        splineExtrude.Radius = radius;/*
+        if (splineInstantiate != null)
+            RecallculateInstantiateObjects();*/
+    }
 
     public float GetRadius() { return splineExtrude.Radius; }
 }
+# endif

@@ -1,13 +1,11 @@
+# if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Oculus.Interaction;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine.AI;
-using System.Threading;
-using System.Threading.Tasks;
 using System;
+using UnityEngine.Splines;
 
 
 public class BottonManager : MonoBehaviour
@@ -661,13 +659,22 @@ public class BottonManager : MonoBehaviour
     ///
     ///
     //nach moeglichkeit bitte keiene wuermer loeschen. Wenn loeschen eiziger weg, bitte onDeleteButtonClick() aufrufen und neuen Wurm zu worms[] hinzufuegen!!!
-    public void onSphere_buttonClick(GameObject artObject){
-        
+    public void onSphere_buttonClick(GameObject artObject)
+    {
+        currentWorm.AddInstantiateObject(artObject);
+        Debug.Log("OnSphere_buttonClick");
     }
-    public void onCylinder_buttonClick(GameObject artObject){
+    public void onCylinder_buttonClick(GameObject artObject)
+    {
+        currentWorm.AddInstantiateObject(artObject);
+        Debug.Log("OnCylinder_buttonClick");
     }
 
-    public void onWormTexture_buttonClick(GameObject artObject){
+    public void onWormTexture_buttonClick(GameObject artObject)
+    {
+        currentWorm.RemoveInstantiateObject();
+        Debug.Log("OnWormTexture_buttonClick");
     }
 }
 
+# endif

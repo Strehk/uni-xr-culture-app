@@ -47,7 +47,6 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
-
     private bool changeapperance_Button_state;
 
     private Wurm currentWorm;
@@ -56,6 +55,7 @@ public class BottonManager : MonoBehaviour
 
     void Start()
     {   
+        
         apperance_Panel.gameObject.SetActive(false);
         changeapperance_Button_state = false;
         ColorPanel.gameObject.SetActive(false);
@@ -106,13 +106,13 @@ public class BottonManager : MonoBehaviour
         eventWrapper.WhenSelect.AddListener(() => OnSelect(wurm));
 
         currentWorm = wurm;
-        slider.value = currentWorm.GetRadius();
+
         OnSelect(wurm);
     }
     public void onEndDrawmodebuttonClick(){
+        currentWorm.NodePlacementMode(false);
         AktivateButtons();
         end_draw_worm_Button.gameObject.SetActive(false);
-        currentWorm.NodePlacementMode(false);
     }
 
     
@@ -417,11 +417,16 @@ public class BottonManager : MonoBehaviour
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
                     OnViewNodeButtonClick(true);
-                } else if (isDrawModeActive()==true){
+
+                } else if (isDrawModeActive()==true)
+                {   
+                    Debug.Log("Drwamode vor end");
                     onEndDrawmodebuttonClick();
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    Debug.Log("Drwamode nach end");
+                    return;
                 }
                 else
                 {
@@ -429,15 +434,24 @@ public class BottonManager : MonoBehaviour
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
                     currently_posseble_operations();
+                    Debug.Log("weder drawmode noch connectmode noch viewmode aber curent wurm !=0");
                 }
+            }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false)
+            {
+                currentWorm.EnableOutline(false);
+                currentWorm = null;
+                currently_posseble_operations();
+                Debug.Log("wurm == current wurm");
             }
         }
         else
-        {
+        {   
+
             currentWorm = wurm;
             currentWorm.EnableOutline(true);
             slider.value = wurm.GetRadius();
             currently_posseble_operations();
+            Debug.Log("current wurm == null");
         }
     }
 

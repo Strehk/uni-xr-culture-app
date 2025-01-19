@@ -1,6 +1,10 @@
 using System.ComponentModel;
+using System.Collections;
 using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
+using Oculus.Interaction.Locomotion;
+using Oculus.Platform;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PalmMenuHandler : MonoBehaviour
 {
@@ -16,21 +20,30 @@ public class PalmMenuHandler : MonoBehaviour
     [SerializeField] private Camera cam;
 
     private bool hidingEnabled;
+
+    private Vector3 camPos;
+
+
     void Start()
-    {
+    {   
+        camPos = cam.transform.position;
         hidingEnabled = false;
         ToggleHideUiEnabled();
+        StartCoroutine(CheckCameraPosition());
     }
 
     public void ToggleHideUiEnabled()
-    {
-        hidingEnabled = !hidingEnabled;
-        show_icon.SetActive(!hidingEnabled);
-        text_show.SetActive(!hidingEnabled);
+    {   
+        if (ContainerObject != null)
+        {    
+            hidingEnabled = !hidingEnabled;
+            show_icon.SetActive(!hidingEnabled);
+            text_show.SetActive(!hidingEnabled);
 
-        hide_icon.SetActive(hidingEnabled);
-        text_hide.SetActive(hidingEnabled);
-        UiVisebility(hidingEnabled);//Status von ui panel aendern
+            hide_icon.SetActive(hidingEnabled);
+            text_hide.SetActive(hidingEnabled);
+            UiVisebility(hidingEnabled);//Status von ui panel aendern
+        }
     }
 
     private void UiVisebility (bool state){
@@ -40,11 +53,23 @@ public class PalmMenuHandler : MonoBehaviour
 
     //Ui panel (ContainerObject wird sichtbar gemacht und im sichtbereich gespawned)
     public void ToleportUi(){
-        if (ContainerObject.activeSelf == false)
-        {
-            ToggleHideUiEnabled();
-        }
-        ContainerObject.transform.position = cam.transform.position + cam.transform.forward * 0.5f;
-        ui_panel.transform.rotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
+
+        
+            ContainerObject.transform.position = cam.transform.position + cam.transform.forward * 1f;
+            ui_panel.transform.rotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
+            if (ContainerObject.activeSelf == false)
+            { 
+                ToggleHideUiEnabled();
+            }
     }
-}
+    private IEnumerator CheckCameraPosition()
+    {
+        // Solange sich die Position nicht geändert hat, warte weiter
+        while (cam.transform.position == camPos)
+        {
+            yield return null; // Warten auf den nächsten Frame
+        }
+        ToleportUi();
+    }
+
+} 

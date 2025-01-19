@@ -56,11 +56,14 @@ public class BottonManager : MonoBehaviour
 
     void Start()
     {   
+        apperance_Panel.gameObject.SetActive(false);
         changeapperance_Button_state = false;
-        on_Change_Apperance_Button_click();
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
         chatGPT.MessageReceived += MessageReceived;
+
+        currently_posseble_operations();
+
         if (worms==null)
         {
             worms = new List<Wurm>();
@@ -85,8 +88,14 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
+        
+
         start_draw_worm_Button.gameObject.SetActive(false);
         DeaktivateButtons();
+        slider.gameObject.SetActive(true);
+        SmothnesSlider.gameObject.SetActive(true);
+        changeapperance_Button.gameObject.SetActive(true);
+        changeColorButton.gameObject.SetActive(true);
         end_draw_worm_Button.gameObject.SetActive(true);
         Wurm wurm = Instantiate(artObjectScript);
         wurm.NodePlacementMode(true);
@@ -95,6 +104,9 @@ public class BottonManager : MonoBehaviour
 
         InteractableUnityEventWrapper eventWrapper = wurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(wurm));
+
+        currentWorm = wurm;
+        slider.value = currentWorm.GetRadius();
         OnSelect(wurm);
     }
     public void onEndDrawmodebuttonClick(){
@@ -105,7 +117,7 @@ public class BottonManager : MonoBehaviour
 
     
     public bool isDrawModeActive () {
-        if (exit_Connect_Worms_Button.gameObject.activeSelf == true){
+        if (end_draw_worm_Button.gameObject.activeSelf == true){
             return true;
         }else return false;
     }
@@ -272,6 +284,7 @@ public class BottonManager : MonoBehaviour
             int i = worms.FindIndex(x => x == currentWorm);
             Destroy(worms[i].gameObject);
             worms.RemoveAt(i);
+            if(worms.Count == 0) currentWorm = null;
             currently_posseble_operations();
         }
     }
@@ -289,6 +302,7 @@ public class BottonManager : MonoBehaviour
             int i = worms.FindIndex(x => x == wurm);
             Destroy(worms[i].gameObject);
             worms.RemoveAt(i);
+            if(worms.Count == 0) currentWorm = null;
             currently_posseble_operations();
         }
     }
@@ -360,6 +374,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    currently_posseble_operations();
                 }
             }
         }
@@ -368,6 +383,7 @@ public class BottonManager : MonoBehaviour
             currentWorm = wurm;
             currentWorm.EnableOutline(true);
             slider.value = wurm.GetRadius();
+            currently_posseble_operations();
         }
     }
 
@@ -438,11 +454,11 @@ public class BottonManager : MonoBehaviour
 
     private bool AreNodesVisible()
     {
-        if (viewNodeButton.gameObject.activeSelf == true){
-            return false;
+        if (exit_View_Nodes_Button.gameObject.activeSelf == true){
+            return true;
         }else
         {
-         return true;   
+         return false;   
         }
         
     }
@@ -463,7 +479,7 @@ public class BottonManager : MonoBehaviour
     }
     public bool IsConnectModeActive()
     {
-        if (connect_Worms_Button.gameObject.activeSelf == false)
+        if (exit_Connect_Worms_Button.gameObject.activeSelf == true)
         {
             return true;
         }else
@@ -504,22 +520,24 @@ public class BottonManager : MonoBehaviour
             regenerateButton.interactable = true;
             gpt_ReGen_Button.interactable = true;
             viewNodeButton.interactable = true;
-            slider.interactable = true;
-            SmothnesSlider.interactable = true;
+            slider.gameObject.SetActive(true);
+            SmothnesSlider.gameObject.SetActive(true);
             connect_Worms_Button.interactable = Connect_possible();
             changeapperance_Button.interactable = true;
             changeColorButton.interactable = true;
+            deleteButton.interactable = true;
         }
         else
         {
             regenerateButton.interactable = false;
             gpt_ReGen_Button.interactable = false;
             viewNodeButton.interactable = false;
-            slider.interactable = false;
-            SmothnesSlider.interactable = false;
+            slider.gameObject.SetActive(false);
+            SmothnesSlider.gameObject.SetActive(false);
             connect_Worms_Button.interactable = false;
             changeapperance_Button.interactable = false;
             changeColorButton.interactable = false;
+            deleteButton.interactable = false;
         }
     }
 
@@ -564,8 +582,8 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
-        apperance_Panel.SetActive(changeapperance_Button_state);
         changeapperance_Button_state = !changeapperance_Button_state;
+        apperance_Panel.SetActive(changeapperance_Button_state);
     }
 
 

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 
 public class Colorchanger : MonoBehaviour
@@ -73,3 +74,4 @@ public class Colorchanger : MonoBehaviour
     }
 
 }
+#endif

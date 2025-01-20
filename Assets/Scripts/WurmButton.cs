@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -70,3 +71,4 @@ public class WurmButton : MonoBehaviour
         newWurm.ViewNodes(true);
     }
 }
+#endif

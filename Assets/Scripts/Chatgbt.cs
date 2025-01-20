@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.InputSystem;
-using System.Runtime.CompilerServices;
 using System;
 using NaughtyAttributes;
 
@@ -149,3 +149,4 @@ public class ChatGPT : MonoBehaviour
         public string content;
     }
 }
+# endif

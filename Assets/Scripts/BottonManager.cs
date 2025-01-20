@@ -672,7 +672,7 @@ public class BottonManager : MonoBehaviour
 
     public void onWormTexture_buttonClick(GameObject artObject)
     {
-        currentWorm.RemoveInstantiateObject();
+        currentWorm.RemoveInstantiateObjects();
         Debug.Log("OnWormTexture_buttonClick");
     }
 }

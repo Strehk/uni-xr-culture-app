@@ -6,6 +6,7 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
@@ -200,14 +201,12 @@ public class Wurm : MonoBehaviour
 
     public void AddInstantiateObject(GameObject prefab)
     {
-        RemoveInstantiateObject();
-        var item = new SplineInstantiate.InstantiableItem();
-        var instance = Instantiate(prefab);
-        item.Prefab = instance;
-        Destroy(instance);
-        var items = new [] { RecallculateInstantiateObject(item) };
+        RemoveInstantiateObjects();
+        var items = SetRandomColorsOfInstantiableItem(prefab);
         splineInstantiate.itemsToInstantiate = items;
+        RecallculateInstantiateObjects();
         splineInstantiate.enabled = true;
+        EnablePrefabsOfInstantiableItems(false);
         /*
         var items = splineInstantiate.itemsToInstantiate;
         var newItems = new SplineInstantiate.InstantiableItem [items.Length + 1];
@@ -217,13 +216,26 @@ public class Wurm : MonoBehaviour
         splineInstantiate.itemsToInstantiate = newItems;*/
     }
     
-    public void RemoveInstantiateObject()
+    public void RemoveInstantiateObjects()
     {
         var items = splineInstantiate.itemsToInstantiate;
         foreach (var item in items)
             Destroy(item.Prefab);
         splineInstantiate.itemsToInstantiate = Array.Empty<SplineInstantiate.InstantiableItem>();
         splineInstantiate.enabled = false;
+    }
+
+    private SplineInstantiate.InstantiableItem[] SetRandomColorsOfInstantiableItem(GameObject prefab)
+    {
+        var items = new SplineInstantiate.InstantiableItem[10];
+        for (int i = 0; i < items.Length; i++)
+        {
+            var instance = Instantiate(prefab);
+            instance.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0.5f, 1f, 0.5f, 1f, 0.8f, 1f);
+            items[i].Prefab = instance;
+            items[i].Probability = 10f;
+        }
+        return items;
     }
 
     private SplineInstantiate.InstantiableItem RecallculateInstantiateObject(SplineInstantiate.InstantiableItem item)
@@ -234,11 +246,28 @@ public class Wurm : MonoBehaviour
         return item;
     }
     
-    private void RecallculateInstantiateObjects()
+    public void RecallculateInstantiateObjects()
     {
         var items = splineInstantiate.itemsToInstantiate;
-        /*foreach (var item in items)
-            RecallculateInstantiateObjects(item);*/
+        for (int i = 0; i < items.Length; i++)
+            items[i] = RecallculateInstantiateObject(items[i]);
+        
+    }
+
+    private void EnablePrefabsOfInstantiableItems(bool enable)
+    {
+        var items = splineInstantiate.itemsToInstantiate;
+        foreach (var item in items)
+        {
+            item.Prefab.gameObject.SetActive(enable);
+        }
+    }
+
+    private void UpdateInstances()
+    {
+        EnablePrefabsOfInstantiableItems(true);
+        splineInstantiate.UpdateInstances();
+        EnablePrefabsOfInstantiableItems(false);
     }
 
     private void RemoveInstantiateObject(SplineInstantiate.InstantiableItem prefab)
@@ -302,6 +331,8 @@ public class Wurm : MonoBehaviour
         var bezierKnot = spline[index];
         bezierKnot.Position = artNode.transform.localPosition;
         spline[index] = bezierKnot;
+        if (splineInstantiate.itemsToInstantiate.Length > 0)
+            UpdateInstances();
     }
 
     public void NodePlacementMode(bool enable)
@@ -380,13 +411,18 @@ public class Wurm : MonoBehaviour
         return wurmNodes;
     }
 
-    public void SetRandomRadius() { splineExtrude.Radius = Random.Range(0.01f, 0.1f); }
+    public void SetRandomRadius()
+    {
+        splineExtrude.Radius = Random.Range(0.01f, 0.1f);
+        if (splineInstantiate.itemsToInstantiate.Length > 0)
+            RecallculateInstantiateObjects();
+    }
 
     public void SetRadius(float radius)
     {
-        splineExtrude.Radius = radius;/*
-        if (splineInstantiate != null)
-            RecallculateInstantiateObjects();*/
+        splineExtrude.Radius = radius;
+        if (splineInstantiate.itemsToInstantiate.Length > 0)
+            RecallculateInstantiateObjects();
     }
 
     public float GetRadius() { return splineExtrude.Radius; }

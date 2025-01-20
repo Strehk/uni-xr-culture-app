@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9fd06320d31418b79a275c3addfa66d7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/lamps/cylinderLamp/editableMaterial/shadeLampMaterial.mat
+  uploadId: 594439

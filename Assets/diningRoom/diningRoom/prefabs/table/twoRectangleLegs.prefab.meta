@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 850e8dc178402c4f18175884ac4385bd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/prefabs/table/twoRectangleLegs.prefab
+  uploadId: 594439

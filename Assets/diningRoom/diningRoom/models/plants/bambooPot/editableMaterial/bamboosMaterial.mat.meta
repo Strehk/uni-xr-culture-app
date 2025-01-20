@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 43c3b4af16b70e225b646bd5b52cc653
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/plants/bambooPot/editableMaterial/bamboosMaterial.mat
+  uploadId: 594439

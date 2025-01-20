@@ -1,0 +1,1 @@
+C:\Users\victo\Pstudium\uni-xr-culture-app\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4d6r2q56\obj\arm64-v8a

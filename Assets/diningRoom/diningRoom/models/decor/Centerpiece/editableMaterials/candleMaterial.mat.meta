@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ec728cd61e402aa37bfff052c5179ad8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/decor/Centerpiece/editableMaterials/candleMaterial.mat
+  uploadId: 594439

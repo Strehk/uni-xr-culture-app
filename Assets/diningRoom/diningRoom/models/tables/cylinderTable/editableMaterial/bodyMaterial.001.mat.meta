@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 54ba146f18259654c9c2010878bf241d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/tables/cylinderTable/editableMaterial/bodyMaterial.001.mat
+  uploadId: 594439

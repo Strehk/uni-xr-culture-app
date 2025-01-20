@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 253f57fc38d29ee408004170647ff1df
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - chatGPT: {fileID: 7403200056121495967, guid: f525e14150aa92a468fbd758d26477d5, type: 3}
+  - wurm: {fileID: 182132336918577964, guid: 776aefb2604f33d47879b8810e7350b2, type: 3}
+  - controls: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

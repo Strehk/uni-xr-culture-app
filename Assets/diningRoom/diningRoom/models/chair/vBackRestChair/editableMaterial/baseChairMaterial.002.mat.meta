@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7d3ee89862a8916759c749b0a1baca73
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 199435
+  packageName: Polygon Dining Room
+  packageVersion: 2.2
+  assetPath: Assets/diningRoom/diningRoom/models/chair/vBackRestChair/editableMaterial/baseChairMaterial.002.mat
+  uploadId: 594439

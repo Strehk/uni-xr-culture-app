@@ -1,0 +1,2 @@
+C:\Users\victo\Pstudium\uni-xr-culture-app\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\victo\Pstudium\uni-xr-culture-app\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

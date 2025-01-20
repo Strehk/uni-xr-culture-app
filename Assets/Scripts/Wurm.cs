@@ -234,13 +234,16 @@ public class Wurm : MonoBehaviour
             instance.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0.5f, 1f, 0.5f, 1f, 0.8f, 1f);
             items[i].Prefab = instance;
             items[i].Probability = 10f;
+            itemScale = instance.transform.localScale;
         }
         return items;
     }
 
+    private Vector3 itemScale;
+
     private SplineInstantiate.InstantiableItem RecallculateInstantiateObject(SplineInstantiate.InstantiableItem item)
     {
-        item.Prefab.transform.localScale *= GetRadius() * 4f;
+        item.Prefab.transform.localScale = itemScale * (GetRadius() * 4f);
         splineInstantiate.MinPositionOffset = new Vector3(0, -2f * GetRadius(), 0);
         splineInstantiate.MaxPositionOffset = splineInstantiate.MinPositionOffset;
         return item;
@@ -251,7 +254,8 @@ public class Wurm : MonoBehaviour
         var items = splineInstantiate.itemsToInstantiate;
         for (int i = 0; i < items.Length; i++)
             items[i] = RecallculateInstantiateObject(items[i]);
-        
+        splineInstantiate.itemsToInstantiate = items;
+        UpdateInstances();
     }
 
     private void EnablePrefabsOfInstantiableItems(bool enable)
@@ -268,6 +272,29 @@ public class Wurm : MonoBehaviour
         EnablePrefabsOfInstantiableItems(true);
         splineInstantiate.UpdateInstances();
         EnablePrefabsOfInstantiableItems(false);
+    }
+
+    private float oldSpaceing;
+
+    public void SetSpacing(float value)
+    {
+        if (oldSpaceing <= value)
+        {
+            splineInstantiate.MaxSpacing = value;
+            splineInstantiate.MinSpacing = splineInstantiate.MaxSpacing;
+        }
+        else
+        {
+            splineInstantiate.MinSpacing = value;
+            splineInstantiate.MaxSpacing = splineInstantiate.MinSpacing;
+        }
+        oldSpaceing = value;
+        UpdateInstances();
+    }
+
+    public int GetInstanceCount()
+    {
+        return splineInstantiate.itemsToInstantiate.Length;
     }
 
     private void RemoveInstantiateObject(SplineInstantiate.InstantiableItem prefab)
@@ -415,14 +442,18 @@ public class Wurm : MonoBehaviour
     {
         splineExtrude.Radius = Random.Range(0.01f, 0.1f);
         if (splineInstantiate.itemsToInstantiate.Length > 0)
+        {
             RecallculateInstantiateObjects();
+        }
     }
 
     public void SetRadius(float radius)
     {
         splineExtrude.Radius = radius;
         if (splineInstantiate.itemsToInstantiate.Length > 0)
+        {
             RecallculateInstantiateObjects();
+        }
     }
 
     public float GetRadius() { return splineExtrude.Radius; }

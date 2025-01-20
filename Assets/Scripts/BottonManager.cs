@@ -500,6 +500,31 @@ public class BottonManager : MonoBehaviour
             currentWorm.ViewNodes(true);
         }
     }
+
+    public void OnItemsChanged()
+    {
+        apperance_Panel.gameObject.SetActive(false);
+        changeapperance_Button_state = false;
+
+        ColorPanel.gameObject.SetActive(false);
+        color_panelActive = false;
+
+
+        if (currentWorm == null)
+        {
+            Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
+            return;
+        }
+
+        if (currentWorm.GetInstanceCount() <= 0)
+        {
+            return;
+        }
+
+        currentWorm.SetSpacing(SmothnesSlider.value);
+
+
+    }
     
     //methode um moove/viewNode Modus zu verlassen
     //true wenn:  view nodes aktiv ist, also die nodes sichtbar sind.

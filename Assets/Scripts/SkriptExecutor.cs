@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,3 +32,4 @@ public class SkriptExecutor : MonoBehaviour
         splinecreated = true;
     }
 }
+# endif

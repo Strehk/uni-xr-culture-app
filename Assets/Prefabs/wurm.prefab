@@ -168,11 +168,6 @@ MonoBehaviour:
   enableNodePlacement: 0
   outlineMaterial: {fileID: 2100000, guid: 893f399ac6a6c414186d586ce0a05fdb, type: 2}
   nullMaterial: {fileID: 2100000, guid: 6c925a01a5f38d0448da0dc96bac5e7e, type: 2}
-  instantiableItem:
-    prefab: {fileID: 0}
-    Prefab: {fileID: 4569345742825985501, guid: 109374c1a2e633847968848d135ad1ac, type: 3}
-    probability: 0
-    Probability: 0
 --- !u!114 &3611371046790624175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,12 +329,12 @@ MonoBehaviour:
   m_Method: 1
   m_Space: 2
   m_Spacing: {x: 1, y: 1}
-  m_Up: 4
+  m_Up: 1
   m_Forward: 2
   m_PositionOffset:
-    setup: 0
+    setup: 1
     min: {x: 0, y: 0, z: 0}
-    max: {x: 0, y: 0, z: 0}
+    max: {x: 0, y: 1, z: 0}
     randomX: 0
     randomY: 0
     randomZ: 0
@@ -362,7 +357,7 @@ MonoBehaviour:
     space: 0
   m_DeprecatedInstances: []
   m_AutoRefresh: 1
-  m_Seed: 0
+  m_Seed: 1327159905
 --- !u!33 &6395439281870917038
 MeshFilter:
   m_ObjectHideFlags: 0

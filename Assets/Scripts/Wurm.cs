@@ -200,10 +200,12 @@ public class Wurm : MonoBehaviour
 
     public void AddInstantiateObject(GameObject prefab)
     {
-
+        RemoveInstantiateObject();
         var item = new SplineInstantiate.InstantiableItem();
-        item.Prefab = prefab;
-        var items = new SplineInstantiate.InstantiableItem[] { RecallculateInstantiateObject(item) };
+        var instance = Instantiate(prefab);
+        item.Prefab = instance;
+        Destroy(instance);
+        var items = new [] { RecallculateInstantiateObject(item) };
         splineInstantiate.itemsToInstantiate = items;
         splineInstantiate.enabled = true;
         /*
@@ -214,10 +216,21 @@ public class Wurm : MonoBehaviour
         newItems[newItems.Length] = prefab;
         splineInstantiate.itemsToInstantiate = newItems;*/
     }
+    
+    public void RemoveInstantiateObject()
+    {
+        var items = splineInstantiate.itemsToInstantiate;
+        foreach (var item in items)
+            Destroy(item.Prefab);
+        splineInstantiate.itemsToInstantiate = Array.Empty<SplineInstantiate.InstantiableItem>();
+        splineInstantiate.enabled = false;
+    }
 
     private SplineInstantiate.InstantiableItem RecallculateInstantiateObject(SplineInstantiate.InstantiableItem item)
     {
-        item.Prefab.transform.localScale *= GetRadius() * 0.1f;
+        item.Prefab.transform.localScale *= GetRadius() * 4f;
+        splineInstantiate.MinPositionOffset = new Vector3(0, -2f * GetRadius(), 0);
+        splineInstantiate.MaxPositionOffset = splineInstantiate.MinPositionOffset;
         return item;
     }
     
@@ -241,13 +254,6 @@ public class Wurm : MonoBehaviour
             newItems[j] = items[i];
         }
         splineInstantiate.itemsToInstantiate = newItems;*/
-    }
-
-    public void RemoveInstantiateObject()
-    {
-        var items = Array.Empty<SplineInstantiate.InstantiableItem>();
-        splineInstantiate.itemsToInstantiate = items;
-        splineInstantiate.enabled = false;
     }
 	
 	public GameObject[] getNodes() { return nodes; }

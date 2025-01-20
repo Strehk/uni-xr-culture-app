@@ -1,6 +1,6 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text.RegularExpressions;
 
 public class SphereSpawner : MonoBehaviour
 {
@@ -21,3 +21,4 @@ public class SphereSpawner : MonoBehaviour
        
     }
 }
+#endif

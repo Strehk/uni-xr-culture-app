@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.Surfaces;
@@ -81,6 +82,7 @@ public class Wurm : MonoBehaviour
         splineExtrude.Container = splineContainer;
         splineExtrude.RebuildOnSplineChange = true;
         splineExtrude.SegmentsPerUnit = 20;
+        splineExtrude.Radius = 0.05f;
         
         splineInstantiate = gameObject.GetComponent<SplineInstantiate>();
         if (splineInstantiate != null)
@@ -290,10 +292,9 @@ public class Wurm : MonoBehaviour
         UpdateInstances();
     }
 
-    public int GetInstanceCount()
-    {
-        return splineInstantiate.itemsToInstantiate.Length;
-    }
+    public int GetInstanceCount() { return splineInstantiate.itemsToInstantiate.Length; }
+    
+    public float GetInstanceSpace() { return splineInstantiate.MinSpacing; }
 
     private void RemoveInstantiateObject(SplineInstantiate.InstantiableItem prefab)
     {
@@ -362,14 +363,43 @@ public class Wurm : MonoBehaviour
 
     public void NodePlacementMode(bool enable)
     {
-       
         enableNodePlacement = enable;
+        if (enable)
+        {
+            SetRandomColor();
+            meshRenderer.enabled = false;
+        }
     }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
+        PlaceNode(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
+    }
+
+    private GameObject node;
+
+    public void PlaceNode(GameObject hand)
+    {
+        PlaceNode(hand.transform.position);
+    }
+
+    public void PlaceNode(Vector3 position)
+    {
         if (enableNodePlacement)
-            spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
+            spline.Add(transform.InverseTransformPoint(position));
+        if (spline.Knots.Count() < 2)
+        {
+            meshRenderer.enabled = false;
+            node = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            node.transform.position = position;
+            node.transform.localScale = GetRadius() * Vector3.one;
+        }
+        else
+        {
+            if (node != null)
+                Destroy(node);
+            meshRenderer.enabled = true;
+        }
     }
     
     public void SetMaterial(Material newMaterial)

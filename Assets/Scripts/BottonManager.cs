@@ -42,6 +42,7 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
+    
     private bool changeapperance_Button_state;
 
     private Wurm currentWorm;
@@ -76,7 +77,8 @@ public class BottonManager : MonoBehaviour
         gptspawn.SetActive(false);
     }
 
-    public void onDrawmodebuttonClick(){
+    public void onDrawmodebuttonClick()
+    {
         apperance_Panel.gameObject.SetActive(false);
         changeapperance_Button_state = false;
 
@@ -91,19 +93,24 @@ public class BottonManager : MonoBehaviour
         SmothnesSlider.gameObject.SetActive(true);
         changeapperance_Button.gameObject.SetActive(true);
         changeColorButton.gameObject.SetActive(true);
-        end_draw_worm_Button.gameObject.SetActive(true);
         Wurm wurm = Instantiate(artObjectScript);
+        OnSelect(wurm);
+        end_draw_worm_Button.gameObject.SetActive(true);
         wurm.NodePlacementMode(true);
 
         worms.Add(wurm);
 
         InteractableUnityEventWrapper eventWrapper = wurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(wurm));
-
-        currentWorm = wurm;
-
-        OnSelect(wurm);
+        
     }
+
+    public void PlaceNode(GameObject hand)
+    {
+        if (isDrawModeActive())
+            currentWorm.PlaceNode(hand);
+    }
+    
     public void onEndDrawmodebuttonClick(){
         currentWorm.NodePlacementMode(false);
         AktivateButtons();
@@ -381,11 +388,13 @@ public class BottonManager : MonoBehaviour
             if (wurm != currentWorm)
             {
                 currentWorm.EnableOutline(false);
+                SmothnesSlider.value = currentWorm.GetInstanceSpace();
                 Wurm oldWurm = currentWorm;
                 if (IsConnectModeActive() == true)
                 {
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     GameObject[] oldnodes = oldWurm.getNodes();
                     GameObject[] newnodes = wurm.getNodes();
                     String nodes = " ";
@@ -411,6 +420,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     OnViewNodeButtonClick(true);
 
                 } else if (isDrawModeActive()==true)
@@ -420,6 +430,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     Debug.Log("Drwamode nach end");
                     return;
                 }
@@ -428,12 +439,14 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     currently_posseble_operations();
                     Debug.Log("weder drawmode noch connectmode noch viewmode aber curent wurm !=0");
                 }
             }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false)
             {
                 currentWorm.EnableOutline(false);
+                SmothnesSlider.value = currentWorm.GetInstanceSpace();
                 currentWorm = null;
                 currently_posseble_operations();
                 Debug.Log("wurm == current wurm");
@@ -444,6 +457,7 @@ public class BottonManager : MonoBehaviour
 
             currentWorm = wurm;
             currentWorm.EnableOutline(true);
+            SmothnesSlider.value = currentWorm.GetInstanceSpace();
             slider.value = wurm.GetRadius();
             currently_posseble_operations();
             Debug.Log("current wurm == null");

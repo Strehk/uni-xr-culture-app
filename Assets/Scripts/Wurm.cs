@@ -1,4 +1,3 @@
-# if UNITY_EDITOR
 using System;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
@@ -6,7 +5,6 @@ using Oculus.Interaction.Surfaces;
 using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
@@ -458,4 +456,3 @@ public class Wurm : MonoBehaviour
 
     public float GetRadius() { return splineExtrude.Radius; }
 }
-# endif

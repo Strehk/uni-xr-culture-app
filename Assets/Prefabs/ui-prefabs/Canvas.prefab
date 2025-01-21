@@ -289,7 +289,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &171485621228790196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   exit_View_Nodes_Button: {fileID: 0}
   connect_Worms_Button: {fileID: 0}
   exit_Connect_Worms_Button: {fileID: 0}
-  chatGPT: {fileID: 0}
+  chatGPT: {fileID: 7403200056121495967, guid: f525e14150aa92a468fbd758d26477d5, type: 3}
   gptGenerate_Button: {fileID: 0}
   gpt_ReGen_Button: {fileID: 0}
   start_draw_worm_Button: {fileID: 0}
@@ -373,7 +373,9 @@ MonoBehaviour:
   slider: {fileID: 0}
   SmothnesSlider: {fileID: 0}
   changeColorButton: {fileID: 0}
-  ColorPanel: {fileID: 0}
+  changeapperance_Button: {fileID: 0}
+  apperance_Panel: {fileID: 0}
+  ColorPanel: {fileID: 7060558059240329257, guid: ff10b88c08a1a5f499e6ef10c0e116ca, type: 3}
   inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   worms: []
 --- !u!1001 &298605268008942924

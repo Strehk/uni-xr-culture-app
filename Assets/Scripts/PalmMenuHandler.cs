@@ -1,10 +1,5 @@
-using System.ComponentModel;
 using System.Collections;
-using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
-using Oculus.Interaction.Locomotion;
-using Oculus.Platform;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PalmMenuHandler : MonoBehaviour
 {

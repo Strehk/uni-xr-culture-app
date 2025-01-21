@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using UnityEngine;
 
 public class WindowDrag : MonoBehaviour
@@ -24,4 +23,3 @@ public class WindowDrag : MonoBehaviour
         
     }
 }
-#endif

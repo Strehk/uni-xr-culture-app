@@ -1,12 +1,9 @@
-# if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Oculus.Interaction;
 using System.Collections.Generic;
 using System;
-using UnityEngine.Splines;
-
 
 public class BottonManager : MonoBehaviour
 {   
@@ -701,5 +698,3 @@ public class BottonManager : MonoBehaviour
         Debug.Log("OnWormTexture_buttonClick");
     }
 }
-
-# endif

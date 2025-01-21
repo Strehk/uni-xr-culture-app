@@ -1073,6 +1073,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3780208764342090872}
     - target: {fileID: 6132181373785493186, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
+      propertyPath: chatGPT
+      value: 
+      objectReference: {fileID: 7403200056121495967, guid: f525e14150aa92a468fbd758d26477d5, type: 3}
+    - target: {fileID: 6132181373785493186, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
+      propertyPath: ColorPanel
+      value: 
+      objectReference: {fileID: 7060558059240329257, guid: ff10b88c08a1a5f499e6ef10c0e116ca, type: 3}
+    - target: {fileID: 6132181373785493186, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       propertyPath: deleteButton
       value: 
       objectReference: {fileID: 1769746424107599872}

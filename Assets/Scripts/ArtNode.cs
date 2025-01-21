@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ArtNode : MonoBehaviour
 {
@@ -56,4 +55,3 @@ public class ArtNode : MonoBehaviour
         }
     }
 }
-#endif

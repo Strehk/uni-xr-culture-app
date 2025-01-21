@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using UnityEngine;
 
 public class Radiuslider : MonoBehaviour
@@ -33,4 +32,3 @@ public class Radiuslider : MonoBehaviour
         wurm.SetRadius(slider.value);
     }
 }
-#endif

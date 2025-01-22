@@ -10783,6 +10783,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112400622654, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483171112400622654, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_ClearFlags
       value: 2
       objectReference: {fileID: 0}
@@ -10800,6 +10804,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112400622654, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: AllowRecenter
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
@@ -10823,8 +10831,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: shouldBoundaryVisibilityBeSuppressed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: requestBodyTrackingPermissionOnStartup
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112681471076, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: _activeState

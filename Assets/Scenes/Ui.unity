@@ -643,21 +643,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2641117874413925, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
-      propertyPath: '_interactors.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 927588936293247016, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
       propertyPath: m_Name
       value: WurmSceneRigOVR
-      objectReference: {fileID: 0}
-    - target: {fileID: 2028502346658983758, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
-      propertyPath: '_interactors.Array.data[2]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2028502347914172057, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
-      propertyPath: '_interactors.Array.data[2]'
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2069022673075644865, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -698,10 +686,6 @@ PrefabInstance:
     - target: {fileID: 2069022673075644865, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3831814521011152719, guid: c08bc8983607aa84fb94f1751b71b3fb, type: 3}
-      propertyPath: '_interactors.Array.data[3]'
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

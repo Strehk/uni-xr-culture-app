@@ -322,11 +322,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1525164048963951345, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       propertyPath: m_MaxValue
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1525164048963951345, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       propertyPath: m_MinValue
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1525164048963951345, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       propertyPath: m_Direction
@@ -1491,6 +1491,14 @@ PrefabInstance:
     - target: {fileID: 7208554042155354717, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       propertyPath: m_Value
       value: 0.215
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208554042155354717, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
+      propertyPath: m_MaxValue
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208554042155354717, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
+      propertyPath: m_MinValue
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 7208554042155354717, guid: d58db5dc346dee944920b1b0fb0da976, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target

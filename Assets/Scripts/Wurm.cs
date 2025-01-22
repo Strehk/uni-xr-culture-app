@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.Surfaces;
@@ -81,6 +82,7 @@ public class Wurm : MonoBehaviour
         splineExtrude.Container = splineContainer;
         splineExtrude.RebuildOnSplineChange = true;
         splineExtrude.SegmentsPerUnit = 20;
+        splineExtrude.Radius = 0.05f;
         
         splineInstantiate = gameObject.GetComponent<SplineInstantiate>();
         if (splineInstantiate != null)
@@ -200,7 +202,7 @@ public class Wurm : MonoBehaviour
     public void AddInstantiateObject(GameObject prefab)
     {
         RemoveInstantiateObjects();
-        var items = SetRandomColorsOfInstantiableItem(prefab);
+        var items = SetRandomColorsOfInstantiableItems(prefab);
         splineInstantiate.itemsToInstantiate = items;
         RecallculateInstantiateObjects();
         splineInstantiate.enabled = true;
@@ -223,37 +225,60 @@ public class Wurm : MonoBehaviour
         splineInstantiate.enabled = false;
     }
 
-    private SplineInstantiate.InstantiableItem[] SetRandomColorsOfInstantiableItem(GameObject prefab)
+    private float baseScale = 0.03f;
+    private float yScale = 0.06f;
+
+    private SplineInstantiate.InstantiableItem[] SetRandomColorsOfInstantiableItems(GameObject prefab)
     {
-        var items = new SplineInstantiate.InstantiableItem[10];
+        var items = new SplineInstantiate.InstantiableItem[5];
         for (int i = 0; i < items.Length; i++)
         {
             var instance = Instantiate(prefab);
-            instance.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0.5f, 1f, 0.5f, 1f, 0.8f, 1f);
+            if (instance.transform.localScale.x.Equals(instance.transform.localScale.y))
+                instance.transform.localScale = new Vector3(baseScale, baseScale, baseScale);
+            else
+                instance.transform.localScale = new Vector3(baseScale, yScale, baseScale);
+            SetColorOfItem(instance, i);
             items[i].Prefab = instance;
-            items[i].Probability = 10f;
-            itemScale = instance.transform.localScale;
+            items[i].Probability = 20f;
         }
         return items;
     }
 
-    private Vector3 itemScale;
+    private Color[] colors = { Color.red, Color.green, Color.blue, Color.yellow, Color.magenta };
+
+    private void SetColorOfItem(GameObject item, int index)
+    {
+        item.GetComponent<MeshRenderer>().material.color = colors[index];
+    }
 
     private SplineInstantiate.InstantiableItem RecallculateInstantiateObject(SplineInstantiate.InstantiableItem item)
     {
-        item.Prefab.transform.localScale = itemScale * (GetRadius() * 4f);
-        splineInstantiate.MinPositionOffset = new Vector3(0, -2f * GetRadius(), 0);
-        splineInstantiate.MaxPositionOffset = splineInstantiate.MinPositionOffset;
+        /*if (item.Prefab.transform.localScale.x <= 3000f)
+            item.Prefab.transform.localScale = itemScale * ((float)Math.Log(GetRadius(), 1000) + 0.8f);
+        else if (item.Prefab.transform.localScale.x is > 1f and <= 2f)
+            item.Prefab.transform.localScale = itemScale * (GetRadius() * 3f);*/
         return item;
     }
     
     public void RecallculateInstantiateObjects()
     {
-        var items = splineInstantiate.itemsToInstantiate;
+        /*var items = splineInstantiate.itemsToInstantiate;
         for (int i = 0; i < items.Length; i++)
             items[i] = RecallculateInstantiateObject(items[i]);
-        splineInstantiate.itemsToInstantiate = items;
+        splineInstantiate.itemsToInstantiate = items;*/
+        UpdatePositionOfInstances(splineInstantiate.itemsToInstantiate[0]);
         UpdateInstances();
+    }
+
+    private void UpdatePositionOfInstances(SplineInstantiate.InstantiableItem item)
+    {
+        if (item.Prefab.transform.localScale.x.Equals(item.Prefab.transform.localScale.y))
+            splineInstantiate.MinPositionOffset = new Vector3(0, (GetRadius() * -1f) -baseScale + 0.022f, 0);
+        else
+            splineInstantiate.MinPositionOffset = new Vector3(0, (GetRadius() * -1f) -yScale + 0.038f, 0);
+        
+        splineInstantiate.MaxPositionOffset = splineInstantiate.MinPositionOffset;
     }
 
     private void EnablePrefabsOfInstantiableItems(bool enable)
@@ -290,10 +315,9 @@ public class Wurm : MonoBehaviour
         UpdateInstances();
     }
 
-    public int GetInstanceCount()
-    {
-        return splineInstantiate.itemsToInstantiate.Length;
-    }
+    public int GetInstanceCount() { return splineInstantiate.itemsToInstantiate.Length; }
+    
+    public float GetInstanceSpace() { return splineInstantiate.MinSpacing; }
 
     private void RemoveInstantiateObject(SplineInstantiate.InstantiableItem prefab)
     {
@@ -362,14 +386,45 @@ public class Wurm : MonoBehaviour
 
     public void NodePlacementMode(bool enable)
     {
-       
         enableNodePlacement = enable;
+        if (enable)
+        {
+            SetRandomColor();
+            meshRenderer.enabled = false;
+        }
     }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
+        PlaceNode(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
+    }
+
+    private GameObject node;
+
+    public void PlaceNode(GameObject hand)
+    {
+        PlaceNode(hand.transform.position);
+    }
+
+    public void PlaceNode(Vector3 position)
+    {
         if (enableNodePlacement)
-            spline.Add(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
+            spline.Add(transform.InverseTransformPoint(position));
+        if (spline.Knots.Count() < 2)
+        {
+            meshRenderer.enabled = false;
+            node = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            node.transform.position = position;
+            node.transform.localScale = GetRadius() * Vector3.one;
+        }
+        else
+        {
+            if (node != null)
+                Destroy(node);
+            meshRenderer.enabled = true;
+        }
+        if (splineInstantiate.itemsToInstantiate.Length > 0)
+            RecallculateInstantiateObjects();
     }
     
     public void SetMaterial(Material newMaterial)

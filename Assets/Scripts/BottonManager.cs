@@ -42,6 +42,8 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
+
+    [SerializeField] private GameObject wire;
     
     private bool changeapperance_Button_state;
 
@@ -680,12 +682,14 @@ public class BottonManager : MonoBehaviour
         currently_posseble_operations();
     }
 
-    public void on_Change_Apperance_Button_click(){
+    public void on_Change_Apperance_Button_click()
+    {
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
         changeapperance_Button_state = !changeapperance_Button_state;
         apperance_Panel.SetActive(changeapperance_Button_state);
+        wire.GetComponent<MeshRenderer>().material.color = currentWorm.GetColor();
     }
 
 

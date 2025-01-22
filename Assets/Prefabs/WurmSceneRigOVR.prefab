@@ -10766,6 +10766,14 @@ PrefabInstance:
       propertyPath: '_interactors.Array.data[3]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2464299262102516848, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2464299264118713322, guid: f54012181eacade4ea242c65f804720f, type: 3}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2483171111210845616, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: '_interactors.Array.data[1]'
       value: 
@@ -10820,7 +10828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: minDynamicResolutionScale
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: isInsightPassthroughEnabled
@@ -10836,7 +10844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112407822886, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: requestBodyTrackingPermissionOnStartup
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483171112681471076, guid: f54012181eacade4ea242c65f804720f, type: 3}
       propertyPath: _activeState
@@ -10934,7 +10942,8 @@ PrefabInstance:
       propertyPath: m_showState
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2585996563486958946, guid: f54012181eacade4ea242c65f804720f, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6996277671651248563, guid: f54012181eacade4ea242c65f804720f, type: 3}
     - {fileID: 504492556834279066, guid: f54012181eacade4ea242c65f804720f, type: 3}

@@ -40,6 +40,8 @@ public class Wurm : MonoBehaviour
     
     [SerializeField] private Material outlineMaterial;
     [SerializeField] private Material nullMaterial;
+    
+    [SerializeField] private GameObject spherePrefab;
 
     private void Awake()
     {
@@ -85,11 +87,10 @@ public class Wurm : MonoBehaviour
         splineExtrude.Radius = 0.05f;
         
         splineInstantiate = gameObject.GetComponent<SplineInstantiate>();
-        if (splineInstantiate != null)
-        {
-            splineInstantiate.Container = splineContainer;
-            splineInstantiate.enabled = false;
-        }
+        if (splineInstantiate == null)
+            splineInstantiate = gameObject.AddComponent<SplineInstantiate>();
+        splineInstantiate.Container = splineContainer;
+        splineInstantiate.enabled = false;
         
         meshFilter.mesh = new Mesh();
         meshCollider = gameObject.GetComponent<MeshCollider>();
@@ -204,9 +205,10 @@ public class Wurm : MonoBehaviour
         RemoveInstantiateObjects();
         var items = SetRandomColorsOfInstantiableItems(prefab);
         splineInstantiate.itemsToInstantiate = items;
-        RecallculateInstantiateObjects();
+        splineInstantiate.Randomize();
         splineInstantiate.enabled = true;
-        EnablePrefabsOfInstantiableItems(false);
+        RecallculateInstantiateObjects();
+        UpdateInstances();
         /*
         var items = splineInstantiate.itemsToInstantiate;
         var newItems = new SplineInstantiate.InstantiableItem [items.Length + 1];
@@ -218,6 +220,8 @@ public class Wurm : MonoBehaviour
     
     public void RemoveInstantiateObjects()
     {
+        if (splineInstantiate.itemsToInstantiate.Length < 1 || splineInstantiate == null)
+            return;
         var items = splineInstantiate.itemsToInstantiate;
         foreach (var item in items)
             Destroy(item.Prefab);
@@ -230,6 +234,9 @@ public class Wurm : MonoBehaviour
 
     private SplineInstantiate.InstantiableItem[] SetRandomColorsOfInstantiableItems(GameObject prefab)
     {
+        if (splineInstantiate == null)
+            splineInstantiate = gameObject.AddComponent<SplineInstantiate>();
+        splineInstantiate.itemsToInstantiate ??= Array.Empty<SplineInstantiate.InstantiableItem>();
         var items = new SplineInstantiate.InstantiableItem[5];
         for (int i = 0; i < items.Length; i++)
         {
@@ -413,7 +420,7 @@ public class Wurm : MonoBehaviour
         if (spline.Knots.Count() < 2)
         {
             meshRenderer.enabled = false;
-            node = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            node = Instantiate(spherePrefab);
             node.transform.position = position;
             node.transform.localScale = GetRadius() * Vector3.one;
         }

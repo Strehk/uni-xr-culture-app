@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b99437916792e40aa82f4a93941f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiPanel: {fileID: 4013778742205962374, guid: de6467ed1448847469626f41a396811f, type: 3}
+  uiPanel: {fileID: 0}
 --- !u!114 &3081727108844292566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,9 +594,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
       propertyPath: m_text
-      value: 'Cylinder
+      value: 'Bulb
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_fontSize
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7493400751294770152, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
       propertyPath: m_IsActive
@@ -988,6 +996,36 @@ PrefabInstance:
     - target: {fileID: 3268898899498243131, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_text
+      value: 'Round Bulb
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_fontSize
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_margin.w
+      value: 13.838946
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_margin.x
+      value: -5.3644505
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_margin.y
+      value: 16.28649
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_margin.z
+      value: -5.7667866
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167246834153063590, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7493400751294770152, guid: eddf2cb303d54df44875a65b0c933918, type: 3}
       propertyPath: m_IsActive

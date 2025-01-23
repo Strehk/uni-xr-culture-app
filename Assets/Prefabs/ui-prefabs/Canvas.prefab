@@ -80,13 +80,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5565873478332823515}
   - {fileID: 4068480067831859289}
   - {fileID: 9078371074655725948}
   - {fileID: 6222131942787810044}
   - {fileID: 4513420682153060235}
   - {fileID: 6826992854362915919}
   - {fileID: 1069125351339487565}
+  - {fileID: 4755718875326847951}
   m_Father: {fileID: 7527324846867969405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 3898051222762018783}
   - component: {fileID: 4215791024592607548}
   - component: {fileID: 4208959519100491059}
-  - component: {fileID: 354536510887943086}
+  - component: {fileID: 5030589721182167287}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiPanel: {fileID: 0}
---- !u!114 &354536510887943086
+--- !u!114 &5030589721182167287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WurmUI_Panel: {fileID: 0}
---- !u!1001 &641369897465155928
+--- !u!1001 &298605268008942924
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -660,10 +660,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
---- !u!224 &5565873478332823515 stripped
+--- !u!224 &4755718875326847951 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5033739013383628419, guid: b2c930f6a5bd2524c8baf901dcd76eb6, type: 3}
-  m_PrefabInstance: {fileID: 641369897465155928}
+  m_PrefabInstance: {fileID: 298605268008942924}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1405715717750989951
 PrefabInstance:

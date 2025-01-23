@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using UnityEngine;
 
 public class Radiuslider : MonoBehaviour
@@ -9,11 +8,7 @@ public class Radiuslider : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (slider != null&& wurm != null)
-        {
-            slider.minValue = 0.0001f;
-            slider.maxValue = 0.4f;
-        }
+        
     }
 
     public void setWurm(Wurm newWurm)
@@ -33,4 +28,3 @@ public class Radiuslider : MonoBehaviour
         wurm.SetRadius(slider.value);
     }
 }
-#endif

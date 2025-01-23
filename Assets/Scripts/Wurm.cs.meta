@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - preNode: {instanceID: 0}
+  - preNode: {fileID: 7119717884381108783, guid: 63c73eafeb3d4f3489c3120c7dbcbf15, type: 3}
   - controls: {instanceID: 0}
   - preWurm: {fileID: 182132336918577964, guid: 776aefb2604f33d47879b8810e7350b2, type: 3}
   - splineContainer: {instanceID: 0}

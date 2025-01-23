@@ -1,12 +1,9 @@
-# if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Oculus.Interaction;
 using System.Collections.Generic;
 using System;
-using UnityEngine.Splines;
-
 
 public class BottonManager : MonoBehaviour
 {   
@@ -45,6 +42,9 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
+
+    [SerializeField] private GameObject wire;
+    
     private bool changeapperance_Button_state;
 
     private Wurm currentWorm;
@@ -79,7 +79,8 @@ public class BottonManager : MonoBehaviour
         gptspawn.SetActive(false);
     }
 
-    public void onDrawmodebuttonClick(){
+    public void onDrawmodebuttonClick()
+    {
         apperance_Panel.gameObject.SetActive(false);
         changeapperance_Button_state = false;
 
@@ -94,19 +95,24 @@ public class BottonManager : MonoBehaviour
         SmothnesSlider.gameObject.SetActive(true);
         changeapperance_Button.gameObject.SetActive(true);
         changeColorButton.gameObject.SetActive(true);
-        end_draw_worm_Button.gameObject.SetActive(true);
         Wurm wurm = Instantiate(artObjectScript);
+        OnSelect(wurm);
+        end_draw_worm_Button.gameObject.SetActive(true);
         wurm.NodePlacementMode(true);
 
         worms.Add(wurm);
 
         InteractableUnityEventWrapper eventWrapper = wurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(wurm));
-
-        currentWorm = wurm;
-
-        OnSelect(wurm);
+        
     }
+
+    public void PlaceNode(GameObject hand)
+    {
+        if (isDrawModeActive())
+            currentWorm.PlaceNode(hand);
+    }
+    
     public void onEndDrawmodebuttonClick(){
         currentWorm.NodePlacementMode(false);
         AktivateButtons();
@@ -384,11 +390,13 @@ public class BottonManager : MonoBehaviour
             if (wurm != currentWorm)
             {
                 currentWorm.EnableOutline(false);
+                SmothnesSlider.value = currentWorm.GetInstanceSpace();
                 Wurm oldWurm = currentWorm;
                 if (IsConnectModeActive() == true)
                 {
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     GameObject[] oldnodes = oldWurm.getNodes();
                     GameObject[] newnodes = wurm.getNodes();
                     String nodes = " ";
@@ -414,6 +422,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     OnViewNodeButtonClick(true);
 
                 } else if (isDrawModeActive()==true)
@@ -423,6 +432,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     Debug.Log("Drwamode nach end");
                     return;
                 }
@@ -431,12 +441,14 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
+                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     currently_posseble_operations();
                     Debug.Log("weder drawmode noch connectmode noch viewmode aber curent wurm !=0");
                 }
             }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false)
             {
                 currentWorm.EnableOutline(false);
+                SmothnesSlider.value = currentWorm.GetInstanceSpace();
                 currentWorm = null;
                 currently_posseble_operations();
                 Debug.Log("wurm == current wurm");
@@ -447,6 +459,7 @@ public class BottonManager : MonoBehaviour
 
             currentWorm = wurm;
             currentWorm.EnableOutline(true);
+            SmothnesSlider.value = currentWorm.GetInstanceSpace();
             slider.value = wurm.GetRadius();
             currently_posseble_operations();
             Debug.Log("current wurm == null");
@@ -499,6 +512,31 @@ public class BottonManager : MonoBehaviour
             currentWorm.ViewNodes(false);
             currentWorm.ViewNodes(true);
         }
+    }
+
+    public void OnItemsChanged()
+    {
+        apperance_Panel.gameObject.SetActive(false);
+        changeapperance_Button_state = false;
+
+        ColorPanel.gameObject.SetActive(false);
+        color_panelActive = false;
+
+
+        if (currentWorm == null)
+        {
+            Debug.LogWarning("Wurm ist null. Setze zuerst einen gültigen Wurm, bevor der Slider geändert wird.");
+            return;
+        }
+
+        if (currentWorm.GetInstanceCount() <= 0)
+        {
+            return;
+        }
+
+        currentWorm.SetSpacing(SmothnesSlider.value);
+
+
     }
     
     //methode um moove/viewNode Modus zu verlassen
@@ -644,12 +682,14 @@ public class BottonManager : MonoBehaviour
         currently_posseble_operations();
     }
 
-    public void on_Change_Apperance_Button_click(){
+    public void on_Change_Apperance_Button_click()
+    {
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
         changeapperance_Button_state = !changeapperance_Button_state;
         apperance_Panel.SetActive(changeapperance_Button_state);
+        wire.GetComponent<MeshRenderer>().material.color = currentWorm.GetColor();
     }
 
 
@@ -672,9 +712,7 @@ public class BottonManager : MonoBehaviour
 
     public void onWormTexture_buttonClick(GameObject artObject)
     {
-        currentWorm.RemoveInstantiateObject();
+        currentWorm.RemoveInstantiateObjects();
         Debug.Log("OnWormTexture_buttonClick");
     }
 }
-
-# endif

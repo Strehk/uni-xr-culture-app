@@ -1,2 +1,32 @@
 fileFormatVersion: 2
 guid: 6585c098e2060364c8dac228505e15b2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - deleteButton: {instanceID: 0}
+  - regenerateButton: {instanceID: 0}
+  - generate_button: {instanceID: 0}
+  - viewNodeButton: {instanceID: 0}
+  - exit_View_Nodes_Button: {instanceID: 0}
+  - connect_Worms_Button: {instanceID: 0}
+  - exit_Connect_Worms_Button: {instanceID: 0}
+  - chatGPT: {fileID: 7403200056121495967, guid: f525e14150aa92a468fbd758d26477d5, type: 3}
+  - gptGenerate_Button: {instanceID: 0}
+  - gpt_ReGen_Button: {instanceID: 0}
+  - start_draw_worm_Button: {instanceID: 0}
+  - end_draw_worm_Button: {instanceID: 0}
+  - cam: {instanceID: 0}
+  - artObjectScript: {fileID: 182132336918577964, guid: 776aefb2604f33d47879b8810e7350b2, type: 3}
+  - slider: {instanceID: 0}
+  - SmothnesSlider: {instanceID: 0}
+  - changeColorButton: {instanceID: 0}
+  - changeapperance_Button: {instanceID: 0}
+  - apperance_Panel: {instanceID: 0}
+  - ColorPanel: {fileID: 7060558059240329257, guid: ff10b88c08a1a5f499e6ef10c0e116ca, type: 3}
+  - inputActionAsset: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

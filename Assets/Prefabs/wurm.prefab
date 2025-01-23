@@ -425,13 +425,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Container: {fileID: 0}
-  m_RebuildOnSplineChange: 0
+  m_RebuildOnSplineChange: 1
   m_RebuildFrequency: 30
   m_UpdateColliders: 1
   m_Sides: 8
-  m_SegmentsPerUnit: 4
+  m_SegmentsPerUnit: 20
   m_Capped: 1
-  m_Radius: 0.25
+  m_Radius: 0.05
   m_Range: {x: 0, y: 1}
 --- !u!1 &3525622695530254182
 GameObject:

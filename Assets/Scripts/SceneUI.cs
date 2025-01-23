@@ -1,4 +1,4 @@
-# if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,4 +52,3 @@ public class SceneUI : MonoBehaviour
         }
     }
 }
-# endif

@@ -200,15 +200,13 @@ public class Wurm : MonoBehaviour
         }
     }
 
+    private GameObject apperiancePrefab;
+
     public void AddInstantiateObject(GameObject prefab)
     {
         RemoveInstantiateObjects();
-        var items = SetRandomColorsOfInstantiableItems(prefab);
-        splineInstantiate.itemsToInstantiate = items;
-        splineInstantiate.Randomize();
-        splineInstantiate.enabled = true;
-        RecallculateInstantiateObjects();
-        UpdateInstances();
+        apperiancePrefab = prefab;
+        Invoke(nameof(AddInstantiateObjects), 0.01f);
         /*
         var items = splineInstantiate.itemsToInstantiate;
         var newItems = new SplineInstantiate.InstantiableItem [items.Length + 1];
@@ -216,6 +214,17 @@ public class Wurm : MonoBehaviour
             newItems[i] = items[i];
         newItems[newItems.Length] = prefab;
         splineInstantiate.itemsToInstantiate = newItems;*/
+    }
+
+    private void AddInstantiateObjects()
+    {
+        var items = SetRandomColorsOfInstantiableItems(apperiancePrefab);
+        apperiancePrefab = null;
+        splineInstantiate.itemsToInstantiate = items;
+        splineInstantiate.enabled = true;
+        splineInstantiate.Randomize();
+        RecallculateInstantiateObjects();
+        UpdateInstances();
     }
     
     public void RemoveInstantiateObjects()

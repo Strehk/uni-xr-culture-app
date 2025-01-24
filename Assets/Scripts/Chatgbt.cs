@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using UnityEngine.InputSystem;
 using System;
+using System.IO;
 using NaughtyAttributes;
 
 public class ChatGPT : MonoBehaviour
@@ -46,8 +47,15 @@ public class ChatGPT : MonoBehaviour
     }
     void Start()
     {
-
-        apiKey = PlayerPrefs.GetString("ApiKey");
+        apiKey = ReadKeyFromFile("key");
+        Debug.Log("Load Key from TextFile");
+        if (String.IsNullOrEmpty(apiKey))
+        {
+            apiKey = PlayerPrefs.GetString("ApiKey");
+            Debug.Log("Load Key from Playerprefs");
+        }
+            
+        
 
     }
     [Button]
@@ -146,5 +154,27 @@ public class ChatGPT : MonoBehaviour
     {
         public string role;
         public string content;
+    }
+
+    public String ReadKeyFromFile(string filePath)
+    {
+        // Pfad der Datei (im Persistent Data Path von Unity)
+        // filePath = Path.Combine(Application.persistentDataPath, "playerPrefsData.txt");
+
+        // Überprüfen, ob die Datei existiert
+        var textAsset = Resources.Load<TextAsset>(filePath);
+        if (textAsset != null)
+        {
+            
+            // Dateiinhalt auslesen
+            string key = textAsset.text;
+            Debug.Log("Gelesener Key aus der Datei: " + key);
+            return key;
+        }
+        else
+        {
+            Debug.Log("Datei nicht gefunden.");
+            return String.Empty;
+        }
     }
 }

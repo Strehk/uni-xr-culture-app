@@ -45,6 +45,8 @@ public class BottonManager : MonoBehaviour
     [SerializeField] private List<Wurm> worms;
 
     [SerializeField] private GameObject wire;
+
+    [SerializeField] private GameObject drawInstructions;
     
     private bool changeapperance_Button_state;
 
@@ -60,6 +62,7 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
         chatGPT.MessageReceived += MessageReceived;
+        drawInstructions.SetActive(false);
 
         currently_posseble_operations();
 
@@ -88,10 +91,14 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
+        if(AreNodesVisible()==true){
+            OnExitViewNodeButtonClick();
+        }
         
 
         start_draw_worm_Button.gameObject.SetActive(false);
         DeaktivateButtons();
+        drawInstructions.SetActive(true);
         slider.gameObject.SetActive(true);
         SmothnesSlider.gameObject.SetActive(true);
         changeapperance_Button.gameObject.SetActive(true);
@@ -116,6 +123,7 @@ public class BottonManager : MonoBehaviour
     
     public void onEndDrawmodebuttonClick(){
         currentWorm.NodePlacementMode(false);
+        drawInstructions.SetActive(false);
         AktivateButtons();
         end_draw_worm_Button.gameObject.SetActive(false);
     }

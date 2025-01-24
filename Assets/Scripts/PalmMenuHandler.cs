@@ -50,7 +50,7 @@ public class PalmMenuHandler : MonoBehaviour
     public void ToleportUi(){
 
         
-            ContainerObject.transform.position = cam.transform.position + cam.transform.forward * 1f;
+            ui_panel.transform.position = cam.transform.position + cam.transform.forward * 1f;
             ui_panel.transform.rotation = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0);
             if (ContainerObject.activeSelf == false)
             { 

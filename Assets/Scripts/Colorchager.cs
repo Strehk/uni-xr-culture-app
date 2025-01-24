@@ -63,6 +63,15 @@ public class Colorchanger : MonoBehaviour
         }
     }
 
+    public void ChangeToBlack()
+    {
+        Wurm wurm = uiPanel.GetWurm();
+        if (wurm != null)
+        {
+            wurm.SetColor(Color.black);
+        }
+    }
+
     public void ChangeRandomColor()
     {
         Wurm wurm = uiPanel.GetWurm();

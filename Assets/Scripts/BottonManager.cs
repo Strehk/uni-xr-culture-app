@@ -189,10 +189,10 @@ public class BottonManager : MonoBehaviour
         newWurm.SetRandomColor();
         newWurm.CreateNodes();
 
+        worms.Add(newWurm);
         InteractableUnityEventWrapper eventWrapper = newWurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(newWurm));
-        currentWorm = newWurm;
-        worms.Add(currentWorm);
+        OnSelect(newWurm);
         currently_posseble_operations();
     }
     private Vector3[] formate(string input)
@@ -443,7 +443,7 @@ public class BottonManager : MonoBehaviour
                     slider.value = wurm.GetRadius();
                     SmothnesSlider.value = currentWorm.GetInstanceSpace();
                     currently_posseble_operations();
-                    Debug.Log("weder drawmode noch connectmode noch viewmode aber curent wurm !=0");
+                    Debug.Log("weder drawmode noch connectmode noch viewmode aber curentwurm !=0 && currentwurm != newwurm");
                 }
             }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false)
             {

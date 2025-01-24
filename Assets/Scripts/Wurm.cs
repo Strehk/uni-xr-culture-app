@@ -174,39 +174,60 @@ public class Wurm : MonoBehaviour
     {
         if (parentNode == null)
         {
-            parentNode = new GameObject("Nodes");
-            parentNode.transform.SetParent(transform, false);
+            CreateParentNode();
         }
 
-        if (gameObject.GetComponentInChildren<ArtNode>() == null && (nodes == null || nodes.Length == 0))
+        if (nodes == null || nodes.Length == 0 && spline.ToArray().Length > 0)
         {
             var count = 0;
-            nodes = new GameObject[spline.Count];
+            nodes = new GameObject[spline.ToArray().Length];
             foreach (var knot in spline.ToArray())
             {
                 Debug.Log(count + " Knoten: " + knot);
-                var node = Instantiate(preNode, parentNode.transform, false);
-                node.transform.localPosition = knot.Position;
-                var scale = Convert.ToSingle(GetRadius() * 3);
-                node.transform.localScale = new Vector3(scale, scale, scale);
-                node.transform.hasChanged = false;
-                node.GetComponent<ArtNode>().SetIndex(count);
-                node.GetComponent<InteractableUnityEventWrapper>().WhenHover.AddListener(OnNodeHover);
-                node.GetComponent<InteractableUnityEventWrapper>().WhenUnhover.AddListener(OnNodeUnhover);
-                nodes[count] = node;
+                nodes[count] = CreateNode(knot.Position, count);
                 count++;
             }
             ViewNodes(false);
         }
+    }
+    
+    private void CreateParentNode()
+    {
+        parentNode = new GameObject("Nodes");
+        parentNode.transform.SetParent(transform, false);
+    }
+
+    private GameObject CreateNode(Vector3 position, int index)
+    {
+        if (parentNode == null)
+        {
+            CreateParentNode();
+        }
+        var node = Instantiate(preNode, parentNode.transform, false);
+        node.transform.localPosition = parentNode.transform.InverseTransformPoint(position);
+        var scale = Convert.ToSingle(GetRadius() * 3);
+        node.transform.localScale = new Vector3(scale, scale, scale);
+        node.transform.hasChanged = false;
+        node.GetComponent<ArtNode>().SetIndex(index);
+        node.GetComponent<InteractableUnityEventWrapper>().WhenHover.AddListener(OnNodeHover);
+        node.GetComponent<InteractableUnityEventWrapper>().WhenUnhover.AddListener(OnNodeUnhover);
+        return node;
     }
 
     private GameObject apperiancePrefab;
 
     public void AddInstantiateObject(GameObject prefab)
     {
+        if (apperiancePrefab != null)
+            if (apperiancePrefab == prefab)
+            {
+                splineInstantiate.Randomize();
+                UpdateInstances();
+                return;
+            }
         RemoveInstantiateObjects();
         apperiancePrefab = prefab;
-        Invoke(nameof(AddInstantiateObjects), 0.01f);
+        AddInstantiateObjects();
         /*
         var items = splineInstantiate.itemsToInstantiate;
         var newItems = new SplineInstantiate.InstantiableItem [items.Length + 1];
@@ -219,7 +240,6 @@ public class Wurm : MonoBehaviour
     private void AddInstantiateObjects()
     {
         var items = SetRandomColorsOfInstantiableItems(apperiancePrefab);
-        apperiancePrefab = null;
         splineInstantiate.itemsToInstantiate = items;
         splineInstantiate.enabled = true;
         splineInstantiate.Randomize();
@@ -236,6 +256,7 @@ public class Wurm : MonoBehaviour
             Destroy(item.Prefab);
         splineInstantiate.itemsToInstantiate = Array.Empty<SplineInstantiate.InstantiableItem>();
         splineInstantiate.enabled = false;
+        apperiancePrefab = null;
     }
 
     private float baseScale = 0.03f;
@@ -380,7 +401,6 @@ public class Wurm : MonoBehaviour
             CreateNodes();
         if (nodes == null || nodes.Length == 0)
         {
-            Debug.LogError("ViewNodes: nodes is null");
             return;
         }
         foreach (var node in nodes)
@@ -408,11 +428,15 @@ public class Wurm : MonoBehaviour
             SetRandomColor();
             meshRenderer.enabled = false;
         }
+        else
+        {
+            ViewNodes(false);
+        }
     }
 
     private void PlaceNode(InputAction.CallbackContext context)
     {
-        PlaceNode(transform.InverseTransformPoint( OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch )));
+        PlaceNode(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch ));
     }
 
     private GameObject node;
@@ -426,19 +450,19 @@ public class Wurm : MonoBehaviour
     {
         if (enableNodePlacement)
             spline.Add(transform.InverseTransformPoint(position));
-        if (spline.Knots.Count() < 2)
-        {
+        if (spline.ToArray().Length < 2)
             meshRenderer.enabled = false;
-            node = Instantiate(spherePrefab);
-            node.transform.position = position;
-            node.transform.localScale = GetRadius() * Vector3.one;
-        }
         else
-        {
-            if (node != null)
-                Destroy(node);
             meshRenderer.enabled = true;
+        node = CreateNode(position, nodes.Length);
+        if (nodes.Length < spline.ToArray().Length)
+        {
+            var oldNodes = nodes;
+            nodes = new GameObject[spline.ToArray().Length];
+            for (int i = 0; i < oldNodes.Length; i++)
+                nodes[i] = oldNodes[i];
         }
+        nodes[spline.ToArray().Length - 1] = node;
         if (splineInstantiate.itemsToInstantiate.Length > 0)
             RecallculateInstantiateObjects();
     }

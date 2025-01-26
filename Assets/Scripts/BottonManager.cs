@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using Oculus.Interaction;
 using System.Collections.Generic;
 using System;
-using UnityEditor.Rendering.Universal;
 
 public class BottonManager : MonoBehaviour
 {   

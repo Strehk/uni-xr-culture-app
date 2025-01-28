@@ -44,6 +44,8 @@ public class BottonManager : MonoBehaviour
     [SerializeField] private List<Wurm> worms;
 
     [SerializeField] private GameObject wire;
+
+    [SerializeField] private GameObject drawInstructions;
     
     private bool changeapperance_Button_state;
 
@@ -59,6 +61,7 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
         chatGPT.MessageReceived += MessageReceived;
+        drawInstructions.SetActive(false);
 
         currently_posseble_operations();
 
@@ -87,10 +90,14 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
+        if(AreNodesVisible()==true){
+            OnExitViewNodeButtonClick();
+        }
         
 
         start_draw_worm_Button.gameObject.SetActive(false);
         DeaktivateButtons();
+        drawInstructions.SetActive(true);
         slider.gameObject.SetActive(true);
         SmothnesSlider.gameObject.SetActive(true);
         changeapperance_Button.gameObject.SetActive(true);
@@ -115,6 +122,7 @@ public class BottonManager : MonoBehaviour
     
     public void onEndDrawmodebuttonClick(){
         currentWorm.NodePlacementMode(false);
+        drawInstructions.SetActive(false);
         AktivateButtons();
         end_draw_worm_Button.gameObject.SetActive(false);
     }
@@ -367,7 +375,9 @@ public class BottonManager : MonoBehaviour
 
     private void CreateWorm()
     {
-        Wurm newWurm = Instantiate(artObjectScript);
+        var position = transform.position;
+        position.y = 0;
+        Wurm newWurm = Instantiate(artObjectScript, position , Quaternion.identity);
 
         worms.Add(newWurm);
         
@@ -390,13 +400,13 @@ public class BottonManager : MonoBehaviour
             if (wurm != currentWorm)
             {
                 currentWorm.EnableOutline(false);
-                SmothnesSlider.value = currentWorm.GetInstanceSpace();
+                setItemSlieter(currentWorm.GetInstanceSpace());
                 Wurm oldWurm = currentWorm;
                 if (IsConnectModeActive() == true)
                 {
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
-                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
+                    setItemSlieter(currentWorm.GetInstanceSpace());
                     GameObject[] oldnodes = oldWurm.getNodes();
                     GameObject[] newnodes = wurm.getNodes();
                     String nodes = " ";
@@ -422,7 +432,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
-                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
+                    setItemSlieter(currentWorm.GetInstanceSpace());
                     OnViewNodeButtonClick(true);
 
                 } else if (isDrawModeActive()==true)
@@ -432,7 +442,7 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
-                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
+                    setItemSlieter(currentWorm.GetInstanceSpace());
                     Debug.Log("Drwamode nach end");
                     return;
                 }
@@ -441,14 +451,14 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     slider.value = wurm.GetRadius();
-                    SmothnesSlider.value = currentWorm.GetInstanceSpace();
+                    setItemSlieter(currentWorm.GetInstanceSpace());
                     currently_posseble_operations();
                     Debug.Log("weder drawmode noch connectmode noch viewmode aber curentwurm !=0 && currentwurm != newwurm");
                 }
             }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false)
             {
                 currentWorm.EnableOutline(false);
-                SmothnesSlider.value = currentWorm.GetInstanceSpace();
+                setItemSlieter(currentWorm.GetInstanceSpace());
                 currentWorm = null;
                 currently_posseble_operations();
                 Debug.Log("wurm == current wurm");
@@ -459,7 +469,7 @@ public class BottonManager : MonoBehaviour
 
             currentWorm = wurm;
             currentWorm.EnableOutline(true);
-            SmothnesSlider.value = currentWorm.GetInstanceSpace();
+            setItemSlieter(currentWorm.GetInstanceSpace());
             slider.value = wurm.GetRadius();
             currently_posseble_operations();
             Debug.Log("current wurm == null");
@@ -514,6 +524,11 @@ public class BottonManager : MonoBehaviour
         }
     }
 
+    public void setItemSlieter( float value)
+    {
+        SmothnesSlider.value = SmothnesSlider.maxValue + (SmothnesSlider.minValue - value);
+    }
+
     public void OnItemsChanged()
     {
         apperance_Panel.gameObject.SetActive(false);
@@ -534,7 +549,7 @@ public class BottonManager : MonoBehaviour
             return;
         }
 
-        currentWorm.SetSpacing(SmothnesSlider.value);
+        currentWorm.SetSpacing(SmothnesSlider.maxValue + (SmothnesSlider.minValue - SmothnesSlider.value));
 
 
     }
@@ -575,7 +590,7 @@ public class BottonManager : MonoBehaviour
         color_panelActive = false;
 
 
-        currentWorm.ViewNodes(true);
+       
         connect_Worms_Button.gameObject.SetActive(false);
         DeaktivateButtons();
         exit_Connect_Worms_Button.gameObject.SetActive(true);
@@ -595,7 +610,6 @@ public class BottonManager : MonoBehaviour
     
     public void ExitConnectMode()
     {   
-        OnViewNodeButtonClick(false);
         connect_Worms_Button.gameObject.SetActive(true);
         exit_Connect_Worms_Button.gameObject.SetActive(false);
         AktivateButtons();

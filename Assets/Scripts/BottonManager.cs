@@ -375,7 +375,9 @@ public class BottonManager : MonoBehaviour
 
     private void CreateWorm()
     {
-        Wurm newWurm = Instantiate(artObjectScript);
+        var position = transform.position;
+        position.y = 0;
+        Wurm newWurm = Instantiate(artObjectScript, position , Quaternion.identity);
 
         worms.Add(newWurm);
         

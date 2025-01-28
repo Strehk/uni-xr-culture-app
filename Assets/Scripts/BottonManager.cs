@@ -43,7 +43,7 @@ public class BottonManager : MonoBehaviour
 
     [SerializeField] private List<Wurm> worms;
 
-    [SerializeField] private GameObject wire;
+    //[SerializeField] private GameObject wire;
 
     [SerializeField] private GameObject drawInstructions;
     
@@ -553,6 +553,15 @@ public class BottonManager : MonoBehaviour
 
 
     }
+
+    private bool areApearanceobjectsActive(){
+        if (currentWorm != null&& currentWorm.GetInstanceCount() > 0){
+            return true;
+        }else
+        {
+         return false;   
+        }
+    }
     
     //methode um moove/viewNode Modus zu verlassen
     //true wenn:  view nodes aktiv ist, also die nodes sichtbar sind.
@@ -596,6 +605,7 @@ public class BottonManager : MonoBehaviour
         exit_Connect_Worms_Button.gameObject.SetActive(true);
         Debug.Log(exit_Connect_Worms_Button.gameObject.activeSelf);
     }
+
     public bool IsConnectModeActive()
     {
         if (exit_Connect_Worms_Button.gameObject.activeSelf == true)
@@ -639,7 +649,9 @@ public class BottonManager : MonoBehaviour
             gpt_ReGen_Button.interactable = true;
             viewNodeButton.interactable = true;
             slider.gameObject.SetActive(true);
-            SmothnesSlider.gameObject.SetActive(true);
+    
+            SmothnesSlider.gameObject.SetActive(areApearanceobjectsActive());
+
             connect_Worms_Button.interactable = Connect_possible();
             changeapperance_Button.interactable = true;
             changeColorButton.interactable = true;
@@ -703,7 +715,7 @@ public class BottonManager : MonoBehaviour
 
         changeapperance_Button_state = !changeapperance_Button_state;
         apperance_Panel.SetActive(changeapperance_Button_state);
-        wire.GetComponent<MeshRenderer>().material.color = currentWorm.GetColor();
+        //wire.GetComponent<MeshRenderer>().material.color = currentWorm.GetColor();
     }
 
 
@@ -717,16 +729,19 @@ public class BottonManager : MonoBehaviour
     {
         currentWorm.AddInstantiateObject(artObject);
         Debug.Log("OnSphere_buttonClick");
+        currently_posseble_operations();
     }
     public void onCylinder_buttonClick(GameObject artObject)
     {
         currentWorm.AddInstantiateObject(artObject);
         Debug.Log("OnCylinder_buttonClick");
+        currently_posseble_operations();
     }
 
     public void onWormTexture_buttonClick(GameObject artObject)
     {
         currentWorm.RemoveInstantiateObjects();
         Debug.Log("OnWormTexture_buttonClick");
+        currently_posseble_operations();
     }
 }

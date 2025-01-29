@@ -27,7 +27,9 @@ public class BottonManager : MonoBehaviour
     [SerializeField] private Wurm artObjectScript;
     //[SerializeField] private Radiuslider radiuslider;
     [SerializeField] private UnityEngine.UI.Slider slider;
+    [SerializeField] private GameObject sliderParent;
     [SerializeField] private UnityEngine.UI.Slider SmothnesSlider;
+    [SerializeField] private GameObject itemsSliderParent;
 
     [SerializeField] private Toggle changeColorButton;
 
@@ -42,8 +44,6 @@ public class BottonManager : MonoBehaviour
     
 
     [SerializeField] private List<Wurm> worms;
-
-    //[SerializeField] private GameObject wire;
 
     [SerializeField] private GameObject drawInstructions;
     
@@ -653,10 +653,8 @@ public class BottonManager : MonoBehaviour
             regenerateButton.interactable = true;
             gpt_ReGen_Button.interactable = true;
             viewNodeButton.interactable = true;
-            slider.gameObject.SetActive(true);
-    
-            SmothnesSlider.gameObject.SetActive(areApearanceobjectsActive());
-
+            sliderParent.gameObject.SetActive(true);
+            itemsSliderParent.gameObject.SetActive(areApearanceobjectsActive());
             connect_Worms_Button.interactable = Connect_possible();
             changeapperance_Button.interactable = true;
             changeColorButton.interactable = true;
@@ -667,8 +665,8 @@ public class BottonManager : MonoBehaviour
             regenerateButton.interactable = false;
             gpt_ReGen_Button.interactable = false;
             viewNodeButton.interactable = false;
-            slider.gameObject.SetActive(false);
-            SmothnesSlider.gameObject.SetActive(false);
+            sliderParent.gameObject.SetActive(false);
+            itemsSliderParent.gameObject.SetActive(false);
             connect_Worms_Button.interactable = false;
             changeapperance_Button.interactable = false;
             changeColorButton.interactable = false;
@@ -702,7 +700,7 @@ public class BottonManager : MonoBehaviour
         viewNodeButton.gameObject.SetActive(true);
         exit_View_Nodes_Button.gameObject.SetActive(false);
         connect_Worms_Button.gameObject.SetActive(true);
-        slider.gameObject.SetActive(true);
+        slider.gameObject. SetActive(true);
         SmothnesSlider.gameObject.SetActive(true);
         deleteButton.gameObject.SetActive(true);
         exit_Connect_Worms_Button.gameObject.SetActive(false);

@@ -53,6 +53,10 @@ public class BottonManager : MonoBehaviour
     private GameObject gptspawn;
     
 
+    //arrays fuer Connect (Fuer Lovis!!)
+    private GameObject [] oldnodes = null;
+    private GameObject [] newnodes = null;
+
     void Start()
     {   
         
@@ -138,6 +142,7 @@ public class BottonManager : MonoBehaviour
 
     //darf nur von gpt aufgerufen werden 
     private void MessageReceived(string message){
+        Debug.LogWarning("GPT Message: "+message);
         string ChatgbtResponse;
         string Response;
         if(message.Contains(">")){
@@ -276,7 +281,7 @@ public class BottonManager : MonoBehaviour
         Debug.Log("Worms:"+Wurm1+Wurm2);
 
         chatGPT.SendMessageToChatGPT("Erstelle mir einen Spline der folgende zwei Splines miteinander verbinden Soll: Wurm1:"+ Wurm1+
-        "Wurm2:"+ Wurm2 + "Der Spline soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt des anderen sollen verbunden sein. Die Verbindung hat mindestens 8 Positionen und verläuft dynamisch. Startpunkt ist der erste Wert jedes Wurms und der Endpunkt der letzte. Du darfst nur Koordinaten zwischen dem Startpunkt und Endpunkt hinzufügen.Dein Output beinhaltet nur die Verbindung zwischen den Würmern.  Dein Output hat folgendes Format: x,y,z;x,y,z;x,y,z.", Worms);
+        "Wurm2:"+ Wurm2 + "Der Spline soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt des anderen sollen verbunden sein. Die Verbindung hat mindestens 8 Positionen und verläuft dynamisch. Startpunkt ist der erste Wert jedes Wurms und der Endpunkt der letzte. Du darfst nur Koordinaten zwischen dem Startpunkt und Endpunkt hinzufügen.Dein Output beinhaltet nur die Verbindung zwischen den Würmern und nicht die würmer selbst.  Dein Output hat folgendes Format: x,y,z;x,y,z;x,y,z.", Worms);
     }
 
     public void OnGPTREGenerateButtonClick(){
@@ -407,8 +412,8 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     setItemSlieter(currentWorm.GetInstanceSpace());
-                    GameObject[] oldnodes = oldWurm.getNodes();
-                    GameObject[] newnodes = wurm.getNodes();
+                    oldnodes = oldWurm.getNodes();
+                    newnodes = wurm.getNodes();
                     String nodes = " ";
                     foreach (GameObject node in oldnodes)
                     {

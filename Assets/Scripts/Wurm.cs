@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.Surfaces;
@@ -184,7 +183,9 @@ public class Wurm : MonoBehaviour
             foreach (var knot in spline.ToArray())
             {
                 Debug.Log(count + " Knoten: " + knot);
-                nodes[count] = CreateNode(knot.Position, count);
+                Vector3 knotposition = knot.Position;
+                knotposition += transform.position;
+                nodes[count] = CreateNode(knotposition, count);
                 count++;
             }
             ViewNodes(false);
@@ -448,8 +449,9 @@ public class Wurm : MonoBehaviour
 
     public void PlaceNode(Vector3 position)
     {
-        if (enableNodePlacement)
-            spline.Add(transform.InverseTransformPoint(position));
+        if (!enableNodePlacement)
+            return;
+        spline.Add(transform.InverseTransformPoint(position));
         if (spline.ToArray().Length < 2)
             meshRenderer.enabled = false;
         else

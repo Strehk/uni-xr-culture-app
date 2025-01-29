@@ -27,7 +27,9 @@ public class BottonManager : MonoBehaviour
     [SerializeField] private Wurm artObjectScript;
     //[SerializeField] private Radiuslider radiuslider;
     [SerializeField] private UnityEngine.UI.Slider slider;
+    [SerializeField] private GameObject sliderParent;
     [SerializeField] private UnityEngine.UI.Slider SmothnesSlider;
+    [SerializeField] private GameObject itemsSliderParent;
 
     [SerializeField] private Toggle changeColorButton;
 
@@ -43,8 +45,6 @@ public class BottonManager : MonoBehaviour
 
     [SerializeField] private List<Wurm> worms;
 
-    [SerializeField] private GameObject wire;
-
     [SerializeField] private GameObject drawInstructions;
     
     private bool changeapperance_Button_state;
@@ -52,6 +52,10 @@ public class BottonManager : MonoBehaviour
     private Wurm currentWorm;
     private GameObject gptspawn;
     
+
+    //arrays fuer Connect (Fuer Lovis!!)
+    private GameObject [] oldnodes = null;
+    private GameObject [] newnodes = null;
 
     void Start()
     {   
@@ -138,6 +142,7 @@ public class BottonManager : MonoBehaviour
 
     //darf nur von gpt aufgerufen werden 
     private void MessageReceived(string message){
+        Debug.LogWarning("GPT Message: "+message);
         string ChatgbtResponse;
         string Response;
         if(message.Contains(">")){
@@ -276,7 +281,7 @@ public class BottonManager : MonoBehaviour
         Debug.Log("Worms:"+Wurm1+Wurm2);
 
         chatGPT.SendMessageToChatGPT("Erstelle mir einen Spline der folgende zwei Splines miteinander verbinden Soll: Wurm1:"+ Wurm1+
-        "Wurm2:"+ Wurm2 + "Der Spline soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt des anderen sollen verbunden sein. Die Verbindung hat mindestens 8 Positionen und verläuft dynamisch. Startpunkt ist der erste Wert jedes Wurms und der Endpunkt der letzte. Du darfst nur Koordinaten zwischen dem Startpunkt und Endpunkt hinzufügen.Dein Output beinhaltet nur die Verbindung zwischen den Würmern.  Dein Output hat folgendes Format: x,y,z;x,y,z;x,y,z.", Worms);
+        "Wurm2:"+ Wurm2 + "Der Spline soll nicht geschlossen sein. Der Startpunkt des einen Wurms und der Endpunkt des anderen sollen verbunden sein. Die Verbindung hat mindestens 8 Positionen und verläuft dynamisch. Startpunkt ist der erste Wert jedes Wurms und der Endpunkt der letzte. Du darfst nur Koordinaten zwischen dem Startpunkt und Endpunkt hinzufügen.Dein Output beinhaltet nur die Verbindung zwischen den Würmern und nicht die würmer selbst.  Dein Output hat folgendes Format: x,y,z;x,y,z;x,y,z.", Worms);
     }
 
     public void OnGPTREGenerateButtonClick(){
@@ -407,8 +412,8 @@ public class BottonManager : MonoBehaviour
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
                     setItemSlieter(currentWorm.GetInstanceSpace());
-                    GameObject[] oldnodes = oldWurm.getNodes();
-                    GameObject[] newnodes = wurm.getNodes();
+                    oldnodes = oldWurm.getNodes();
+                    newnodes = wurm.getNodes();
                     String nodes = " ";
                     foreach (GameObject node in oldnodes)
                     {
@@ -553,6 +558,15 @@ public class BottonManager : MonoBehaviour
 
 
     }
+
+    private bool areApearanceobjectsActive(){
+        if (currentWorm != null&& currentWorm.GetInstanceCount() > 0){
+            return true;
+        }else
+        {
+         return false;   
+        }
+    }
     
     //methode um moove/viewNode Modus zu verlassen
     //true wenn:  view nodes aktiv ist, also die nodes sichtbar sind.
@@ -596,6 +610,7 @@ public class BottonManager : MonoBehaviour
         exit_Connect_Worms_Button.gameObject.SetActive(true);
         Debug.Log(exit_Connect_Worms_Button.gameObject.activeSelf);
     }
+
     public bool IsConnectModeActive()
     {
         if (exit_Connect_Worms_Button.gameObject.activeSelf == true)
@@ -638,8 +653,8 @@ public class BottonManager : MonoBehaviour
             regenerateButton.interactable = true;
             gpt_ReGen_Button.interactable = true;
             viewNodeButton.interactable = true;
-            slider.gameObject.SetActive(true);
-            SmothnesSlider.gameObject.SetActive(true);
+            sliderParent.gameObject.SetActive(true);
+            itemsSliderParent.gameObject.SetActive(areApearanceobjectsActive());
             connect_Worms_Button.interactable = Connect_possible();
             changeapperance_Button.interactable = true;
             changeColorButton.interactable = true;
@@ -650,8 +665,8 @@ public class BottonManager : MonoBehaviour
             regenerateButton.interactable = false;
             gpt_ReGen_Button.interactable = false;
             viewNodeButton.interactable = false;
-            slider.gameObject.SetActive(false);
-            SmothnesSlider.gameObject.SetActive(false);
+            sliderParent.gameObject.SetActive(false);
+            itemsSliderParent.gameObject.SetActive(false);
             connect_Worms_Button.interactable = false;
             changeapperance_Button.interactable = false;
             changeColorButton.interactable = false;
@@ -685,7 +700,7 @@ public class BottonManager : MonoBehaviour
         viewNodeButton.gameObject.SetActive(true);
         exit_View_Nodes_Button.gameObject.SetActive(false);
         connect_Worms_Button.gameObject.SetActive(true);
-        slider.gameObject.SetActive(true);
+        slider.gameObject. SetActive(true);
         SmothnesSlider.gameObject.SetActive(true);
         deleteButton.gameObject.SetActive(true);
         exit_Connect_Worms_Button.gameObject.SetActive(false);
@@ -703,7 +718,7 @@ public class BottonManager : MonoBehaviour
 
         changeapperance_Button_state = !changeapperance_Button_state;
         apperance_Panel.SetActive(changeapperance_Button_state);
-        wire.GetComponent<MeshRenderer>().material.color = currentWorm.GetColor();
+        //wire.GetComponent<MeshRenderer>().material.color = currentWorm.GetColor();
     }
 
 
@@ -717,16 +732,19 @@ public class BottonManager : MonoBehaviour
     {
         currentWorm.AddInstantiateObject(artObject);
         Debug.Log("OnSphere_buttonClick");
+        currently_posseble_operations();
     }
     public void onCylinder_buttonClick(GameObject artObject)
     {
         currentWorm.AddInstantiateObject(artObject);
         Debug.Log("OnCylinder_buttonClick");
+        currently_posseble_operations();
     }
 
     public void onWormTexture_buttonClick(GameObject artObject)
     {
         currentWorm.RemoveInstantiateObjects();
         Debug.Log("OnWormTexture_buttonClick");
+        currently_posseble_operations();
     }
 }

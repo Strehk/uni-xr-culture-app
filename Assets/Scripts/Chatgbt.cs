@@ -31,9 +31,9 @@ public class ChatGPT : MonoBehaviour
        
     }
     public void SendMessageToChatGPT(string userMessage, string worms)
-    {
-            StartCoroutine(SendRequest(userMessage));
-           this.worms = worms;
+    {   
+        this.worms = worms;
+        StartCoroutine(SendRequest(userMessage));
     }
 
     void OnValidate()

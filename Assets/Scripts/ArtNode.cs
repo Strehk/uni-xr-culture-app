@@ -45,7 +45,7 @@ public class ArtNode : MonoBehaviour
     
     private void Update()
     {
-        if (timer <= 0.5f)
+        if (timer <= 0.5f) // der Timer ist da, weil sonst die Nodes nach dem Erscheinen sich teleportiert haben
             timer += Time.deltaTime;
         if (transform.hasChanged && timer > 0.5f)
         {

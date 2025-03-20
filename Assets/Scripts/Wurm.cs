@@ -54,6 +54,10 @@ public class Wurm : MonoBehaviour
         var nodePlacement = debugActionMap.FindAction("NodePlacement");
         nodePlacement.performed += PlaceNode;
     }
+    
+    /// <summary>
+    /// Für den Fall, das manche Componenten bereits existieren im Gameobject und andere noch nicht.
+    /// </summary>
 
     private void Setup()
     {
@@ -135,6 +139,10 @@ public class Wurm : MonoBehaviour
         grabInteractable.UseClosestPointAsGrabSource = false;
         grabInteractable.InjectRigidbody(rigidbodySpline);
     }
+    
+    /// <summary>
+    /// eine Random generierung eines Wurmes
+    /// </summary>
 
     private void Generate()
     {
@@ -169,6 +177,9 @@ public class Wurm : MonoBehaviour
     
     public void OnButtonClick() { Generate(); }
 
+    /// <summary>
+    /// Die Nodes werden erzeugt.
+    /// </summary>
     public void CreateNodes()
     {
         if (parentNode == null)
@@ -180,6 +191,7 @@ public class Wurm : MonoBehaviour
         {
             var count = 0;
             nodes = new GameObject[spline.ToArray().Length];
+            // Auf jedem Knot des Splines wird ein Node Gameobject erzeugt, damit man eine Visualisierung der Nodes hat
             foreach (var knot in spline.ToArray())
             {
                 Debug.Log(count + " Knoten: " + knot);
@@ -192,6 +204,9 @@ public class Wurm : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Unter diesem GameObject werden die anderen Nodes gespeichert. Die Funktion ist nur da, um im UnityEditor eine bessere Übersicht zu haben.
+    /// </summary>
     private void CreateParentNode()
     {
         parentNode = new GameObject("Nodes");
@@ -216,7 +231,11 @@ public class Wurm : MonoBehaviour
     }
 
     private GameObject apperiancePrefab;
-
+    
+    /// <summary>
+    /// Erzeugt an jedem Node das jeweilige Objekt.
+    /// </summary>
+    /// <param name="prefab"> Objekt welches erzeugt wird. </param>
     public void AddInstantiateObject(GameObject prefab)
     {
         if (apperiancePrefab != null)
@@ -248,6 +267,9 @@ public class Wurm : MonoBehaviour
         UpdateInstances();
     }
     
+    /// <summary>
+    /// Entfernt die Objekte an den Nodes.
+    /// </summary>
     public void RemoveInstantiateObjects()
     {
         if (splineInstantiate.itemsToInstantiate.Length < 1 || splineInstantiate == null)
@@ -262,7 +284,12 @@ public class Wurm : MonoBehaviour
 
     private float baseScale = 0.03f;
     private float yScale = 0.06f;
-
+    
+    /// <summary>
+    /// Verändert die Farbe Random von dem Objekt
+    /// </summary>
+    /// <param name="prefab"> Das Objekt, welches eine andere Farbe haben soll. </param>
+    /// <returns></returns>
     private SplineInstantiate.InstantiableItem[] SetRandomColorsOfInstantiableItems(GameObject prefab)
     {
         if (splineInstantiate == null)
@@ -299,6 +326,9 @@ public class Wurm : MonoBehaviour
         return item;
     }
     
+    /// <summary>
+    /// Updated die Objekte nach dem sie verändert wurden.
+    /// </summary>
     public void RecallculateInstantiateObjects()
     {
         /*var items = splineInstantiate.itemsToInstantiate;
@@ -314,11 +344,15 @@ public class Wurm : MonoBehaviour
         if (item.Prefab.transform.localScale.x.Equals(item.Prefab.transform.localScale.y))
             splineInstantiate.MinPositionOffset = new Vector3(0, (GetRadius() * -1f) -baseScale + 0.022f, 0);
         else
-            splineInstantiate.MinPositionOffset = new Vector3(0, (GetRadius() * -1f) -yScale + 0.038f, 0);
+            splineInstantiate.MinPositionOffset = new Vector3(0, (GetRadius() * -1f) -yScale + 0.038f, 0); // Es wird eine andere Skalierung verwendet, weil das eine Objekt ein Zylinder ist und das andere eine Kugel
         
         splineInstantiate.MaxPositionOffset = splineInstantiate.MinPositionOffset;
     }
 
+    /// <summary>
+    /// Macht Objekte sichtbar/unsichtbar.
+    /// </summary>
+    /// <param name="enable"> True sichtbar, False unsichtbar </param>
     private void EnablePrefabsOfInstantiableItems(bool enable)
     {
         var items = splineInstantiate.itemsToInstantiate;
@@ -336,10 +370,14 @@ public class Wurm : MonoBehaviour
     }
 
     private float oldSpaceing;
-
+    
+    /// <summary>
+    /// Stellt die Distanz zwischen den Node Objekten ein.
+    /// </summary>
+    /// <param name="value"> Abstand der Objekte. </param>
     public void SetSpacing(float value)
     {
-        if (oldSpaceing <= value)
+        if (oldSpaceing <= value) // der Wert kann nicht eingestellt werden, wenn sich die Werte überschneiden. Also Max Wert darf nicht kleiner als Min Wert sein und andersherum.
         {
             splineInstantiate.MaxSpacing = value;
             splineInstantiate.MinSpacing = splineInstantiate.MaxSpacing;
@@ -396,6 +434,10 @@ public class Wurm : MonoBehaviour
         nodes = null;
     }
 
+    /// <summary>
+    /// Die Nodes werden in dieser Funktion sichtbar gemacht, falls die Nodes als Gameobject noch nicht existieren, werden sie erst erzeugt
+    /// </summary>
+    /// <param name="view"> True: sichtbar, False: unsichtbar </param>
     public void ViewNodes(bool view)
     {
         if (nodes == null || nodes.Length == 0)
@@ -411,6 +453,10 @@ public class Wurm : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Die Nodes im Spline werden aktualisiert.
+    /// </summary>
+    /// <param name="artNode"> Der Node welcher verändert wurde, z.B. weil er verschoben wurde </param>
     public void OnNodeChanged(ArtNode artNode)
     {
         var index = artNode.GetIndex();
@@ -421,6 +467,10 @@ public class Wurm : MonoBehaviour
             UpdateInstances();
     }
 
+    /// <summary>
+    /// Aktivert, dass man eigene Nodes erstellt und diese zum Spline hinzugefügt werden.
+    /// </summary>
+    /// <param name="enable"> True: Nodes erstellen aktiviert, False: deaktiviert </param>
     public void NodePlacementMode(bool enable)
     {
         enableNodePlacement = enable;
@@ -447,6 +497,10 @@ public class Wurm : MonoBehaviour
         PlaceNode(hand.transform.position);
     }
 
+    /// <summary>
+    /// Plaziert einen Node und fügt ihn dem Spline hinzu.
+    /// </summary>
+    /// <param name="position"> Position des Nodes. </param>
     public void PlaceNode(Vector3 position)
     {
         if (!enableNodePlacement)
@@ -469,6 +523,10 @@ public class Wurm : MonoBehaviour
             RecallculateInstantiateObjects();
     }
     
+    /// <summary>
+    /// Ersetzt das Material des Splines.
+    /// </summary>
+    /// <param name="newMaterial"> Neues Material </param>
     public void SetMaterial(Material newMaterial)
     {
         var materials = meshRenderer.materials;
@@ -496,13 +554,17 @@ public class Wurm : MonoBehaviour
         meshRenderer.materials = materials;
     }
 
+    /// <summary>
+    /// Aktiviert die Outline des Splines.
+    /// </summary>
+    /// <param name="enable"> True: Outline aktiviert, False: Outline deaktiviert </param>
     public void EnableOutline(bool enable)
     {
         var materials = meshRenderer.materials;
         if (enable)
             materials[0] = outlineMaterial;
         else
-            materials[0] = nullMaterial;
+            materials[0] = nullMaterial; // es wird ein nullMaterial hinzugefügt, statt das Material einfach zu löschen, weil Unity das nicht mag, wenn Materialien zur laufzeit gelöscht werden. Das Material hat aber keine Visuale veränderung des Splines.
         meshRenderer.materials = materials;
     }
 

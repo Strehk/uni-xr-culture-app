@@ -38,7 +38,7 @@ public class BottonManager : MonoBehaviour
     [SerializeField] private GameObject apperance_Panel;
 
     [SerializeField] private Colorchanger ColorPanel;
-    private bool color_panelActive;
+    private bool color_panelActive; //zur speicherung des sichbarkeits zustands des extra panels fuer die farben
 
     [SerializeField] public InputActionAsset inputActionAsset;
     
@@ -47,7 +47,7 @@ public class BottonManager : MonoBehaviour
 
     [SerializeField] private GameObject drawInstructions;
     
-    private bool changeapperance_Button_state;
+    private bool changeapperance_Button_state; //zur speicherung des sichbarkeits zustands des extra panels fuer die lcihterketten
 
     private Wurm currentWorm;
     private GameObject gptspawn;
@@ -59,24 +59,33 @@ public class BottonManager : MonoBehaviour
 
     void Start()
     {   
-        
+        //deaktiviere das extra Panel fuer die Lichterketten zum start
         apperance_Panel.gameObject.SetActive(false);
-        changeapperance_Button_state = false;
-        ColorPanel.gameObject.SetActive(false);
-        color_panelActive = false;
-        chatGPT.MessageReceived += MessageReceived;
-        drawInstructions.SetActive(false);
+        changeapperance_Button_state = false;//aktuellen zustand uebernehmen
 
+        //deaktiviere das extra Panel fuer die Farben zum start
+        ColorPanel.gameObject.SetActive(false);
+        color_panelActive = false; //siehe Zeile: 64
+
+        chatGPT.MessageReceived += MessageReceived;
+        drawInstructions.SetActive(false); //erklaerungstext fuer drawmode ausblenden 
+
+        //alle interaktionen deaktivieren, die im aktuellen zustand nicht moeglich sind
         currently_posseble_operations();
 
+        //wenn noch keine wuermer liste existiert, neue erstellen 
+        //war damals fuer eventuelle speicherung der Szene gedachdacht(also der Plan war: wird keine wurm liste beim start uebergeben heißt das neue leere szene) 
         if (worms==null)
         {
             worms = new List<Wurm>();
 
         }
-        exit_View_Nodes_Button.gameObject.SetActive(false);
+
+        //zum start deaktivieren
+        exit_View_Nodes_Button.gameObject.SetActive(false); 
         viewNodeButton.gameObject.SetActive(true);
 
+        //Spawnbereich fuer die von Chat Gpt erstellten Wurmer im blickfeld erstellen 
         Vector3 spawnpsition = cam.transform.position+cam.transform.forward*1.5f;
         gptspawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
         gptspawn.transform.position = spawnpsition;
@@ -86,30 +95,34 @@ public class BottonManager : MonoBehaviour
         gptspawn.SetActive(false);
     }
 
+    //Aktiviere modus zum zeichnen des Wurms
     public void onDrawmodebuttonClick()
-    {
-        apperance_Panel.gameObject.SetActive(false);
+    {   
+        // Deaktiviere extrapanels(wird bei jedem button des hauptpanels gemacht)
+        apperance_Panel.gameObject.SetActive(false); 
         changeapperance_Button_state = false;
 
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
-        if(AreNodesVisible()==true){
+         
+        if(AreNodesVisible()==true){ //immer false nur sicherhetshalber implementiert 
             OnExitViewNodeButtonClick();
         }
         
 
+        //alle buttons deaktivieren und die fuer die moeglichen aktionen wieder aktivieren
         start_draw_worm_Button.gameObject.SetActive(false);
-        DeaktivateButtons();
+        DeaktivateButtons(); 
         drawInstructions.SetActive(true);
         slider.gameObject.SetActive(true);
         SmothnesSlider.gameObject.SetActive(true);
         changeapperance_Button.gameObject.SetActive(true);
         changeColorButton.gameObject.SetActive(true);
-        Wurm wurm = Instantiate(artObjectScript);
-        OnSelect(wurm);
-        end_draw_worm_Button.gameObject.SetActive(true);
-        wurm.NodePlacementMode(true);
+        Wurm wurm = Instantiate(artObjectScript); //neue instanz vom wurm erstellen
+        OnSelect(wurm); //wurm preselecten fuer die umrandung(noch unsichtbar) 
+        end_draw_worm_Button.gameObject.SetActive(true); // sichbarkeit fuer den exit button aktivieren aktivieren
+        wurm.NodePlacementMode(true); //Node platzierungen aktivieren
 
         worms.Add(wurm);
 

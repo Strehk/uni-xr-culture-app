@@ -46,7 +46,7 @@ public class PalmMenuHandler : MonoBehaviour
     }
 
 
-    //Ui panel (ContainerObject wird sichtbar gemacht und im sichtbereich gespawned)
+    //Ui panel (ContainerObject) wird sichtbar gemacht und im sichtbereich gespawned
     public void ToleportUi(){
 
         

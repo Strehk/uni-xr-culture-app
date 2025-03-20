@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Fuer die extra panels im UI, Sttellt sicher das die extrapanels sich immer mit dem haupt panel bewegen
+/// </summary>
 public class FollowerCanvas : MonoBehaviour
 {
     public RectTransform WurmUI_Panel;

@@ -94,8 +94,10 @@ public class BottonManager : MonoBehaviour
         gptspawn.name = "GPTspawn";
         gptspawn.SetActive(false);
     }
-
-    //Aktiviere modus zum zeichnen des Wurms
+    
+    /// <summary>
+    /// Aktiviere modus zum zeichnen des Wurms
+    /// </summary>
     public void onDrawmodebuttonClick()
     {   
         // Deaktiviere extrapanels(wird bei jedem button des hauptpanels gemacht)
@@ -124,8 +126,9 @@ public class BottonManager : MonoBehaviour
         end_draw_worm_Button.gameObject.SetActive(true); // sichbarkeit fuer den exit button aktivieren aktivieren
         wurm.NodePlacementMode(true); //Node platzierungen aktivieren
 
-        worms.Add(wurm);
+        worms.Add(wurm); //wurm zur Liste hinzufuegen
 
+        //Dem wurm einen Listener hinzufuegen, damit er beim Selcted werden kann 
         InteractableUnityEventWrapper eventWrapper = wurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(wurm));
         
@@ -137,6 +140,9 @@ public class BottonManager : MonoBehaviour
             currentWorm.PlaceNode(hand);
     }
     
+    /// <summary>
+    /// Deaktiviere modus zum zeichnen des Wurms und Erklaerungstext ausblenden
+    /// </summary>
     public void onEndDrawmodebuttonClick(){
         currentWorm.NodePlacementMode(false);
         drawInstructions.SetActive(false);
@@ -263,6 +269,9 @@ public class BottonManager : MonoBehaviour
         return result.ToArray();
     }
 
+    /// <summary>
+    /// Startet die ChatGPT wurm generierung
+    /// </summary>
     public void OnGPTGenerateButtonClick(){
 
         apperance_Panel.gameObject.SetActive(false);
@@ -325,7 +334,9 @@ public class BottonManager : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// Regenerierung des Wurms
+    /// </summary>
     public void OnRegenerateButtonClick()
     {
         apperance_Panel.gameObject.SetActive(false);
@@ -342,7 +353,10 @@ public class BottonManager : MonoBehaviour
             currentWorm.OnButtonClick();
         }
     }
-
+    
+    /// <summary>
+    /// Neuen Wurm generieren
+    /// </summary>
     public void OnNewWormButtonClick()
     {   
         apperance_Panel.gameObject.SetActive(false);
@@ -351,9 +365,12 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
-        CreateWorm();
+        CreateWorm(); //Generierungsmethode
     }
 
+    /// <summary>
+    /// Loeschen des ausgewaehlten Wurms
+    /// </summary>
     public void OnDeleteButtonClick()
     {   
         apperance_Panel.gameObject.SetActive(false);
@@ -362,7 +379,7 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
-
+        //suche in der Wurmliste nach dem ausgewaehlten Wurm und loesche ihn
         if (worms.Count > 0 && worms.Contains(currentWorm))
         {
             int i = worms.FindIndex(x => x == currentWorm);
@@ -373,6 +390,9 @@ public class BottonManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loeschen eines bestimmten Wurms
+    /// </summary>
      public void OnDeleteButtonClick(Wurm wurm)
     {  
         apperance_Panel.gameObject.SetActive(false);
@@ -381,7 +401,8 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
-        if (worms.Count > 0 && worms.Contains(wurm))
+        //stelle sicher das wurm existiert und loesche ihn
+        if (worms.Count > 0 && worms.Contains(wurm)) 
         {
             int i = worms.FindIndex(x => x == wurm);
             Destroy(worms[i].gameObject);
@@ -391,6 +412,9 @@ public class BottonManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Wurm generieren
+    /// </summary>
     private void CreateWorm()
     {
         var position = transform.position;
@@ -400,11 +424,18 @@ public class BottonManager : MonoBehaviour
         worms.Add(newWurm);
         
         newWurm.OnButtonClick();
+
+        //Dem wurm einen Listener hinzufuegen, damit er beim Selcted werden kann 
         InteractableUnityEventWrapper eventWrapper = newWurm.GetComponentInChildren<InteractableUnityEventWrapper>();
         eventWrapper.WhenSelect.AddListener(() => OnSelect(newWurm));
         
         OnSelect(newWurm);
     }
+
+
+    /// <summary>
+    /// Wurm Auswaehlen
+    /// </summary>
     public void OnSelect(Wurm wurm)
     {
         apperance_Panel.gameObject.SetActive(false);
@@ -413,18 +444,20 @@ public class BottonManager : MonoBehaviour
         ColorPanel.gameObject.SetActive(false);
         color_panelActive = false;
 
-        if (currentWorm != null)
+        if (currentWorm != null) // true Wenn ein wurm bereits Ausgewaehlt ist
         {
-            if (wurm != currentWorm)
+            if (wurm != currentWorm) // true Wenn ein anderer  wurm ausgewaehlt wurde
             {
-                currentWorm.EnableOutline(false);
+                currentWorm.EnableOutline(false); // outline des alten wurms ausschalten
                 setItemSlieter(currentWorm.GetInstanceSpace());
                 Wurm oldWurm = currentWorm;
+
+                //wenn beim alten wurm der connect modus aktiv ist, werden die node-positionen beider Wuemer an die Connect-Methode (und diese uegibt sie Gpt) uebergeben
                 if (IsConnectModeActive() == true)
                 {
                     currentWorm = wurm;
-                    currentWorm.EnableOutline(true);
-                    setItemSlieter(currentWorm.GetInstanceSpace());
+                    currentWorm.EnableOutline(true); // outline des neuen wurms einschalten
+                    setItemSlieter(currentWorm.GetInstanceSpace()); //objekt slider des neuen wurms setzen (Slider fuer die Kugelanzahl bei der Lichterkette))
                     oldnodes = oldWurm.getNodes();
                     newnodes = wurm.getNodes();
                     String nodes = " ";
@@ -444,7 +477,8 @@ public class BottonManager : MonoBehaviour
                     Connect(nodes);
                     return;
                 }
-                else if (AreNodesVisible() == true)
+                //sind bei dem alten wurm die nodes sichtbar sollen sie es auch beim neuen sein. (Beim alten werden die nodes unsichtbar)
+                else if (AreNodesVisible() == true) 
                 {
                     oldWurm.ViewNodes(false);
                     currentWorm = wurm;
@@ -452,7 +486,8 @@ public class BottonManager : MonoBehaviour
                     slider.value = wurm.GetRadius();
                     setItemSlieter(currentWorm.GetInstanceSpace());
                     OnViewNodeButtonClick(true);
-
+                
+                //ist beim alten wurm der Zeichenmodus aktiv soll er deaktiviert werden und der neue wurm im normalen modusaktiviert werden
                 } else if (isDrawModeActive()==true)
                 {   
                     Debug.Log("Drwamode vor end");
@@ -464,7 +499,7 @@ public class BottonManager : MonoBehaviour
                     Debug.Log("Drwamode nach end");
                     return;
                 }
-                else
+                else //setze die slider auf denn neuen wurm und aktivere die buttons fuer alle momentan moeglichen aktionen 
                 {
                     currentWorm = wurm;
                     currentWorm.EnableOutline(true);
@@ -473,7 +508,9 @@ public class BottonManager : MonoBehaviour
                     currently_posseble_operations();
                     Debug.Log("weder drawmode noch connectmode noch viewmode aber curentwurm !=0 && currentwurm != newwurm");
                 }
-            }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false)
+                
+            //wenn der wurm, der ausgewaelt wurde der gleiche ist wie der der momentan ausgewaelt ist, wird die ouline entfernt
+            }else if (isDrawModeActive() == false && IsConnectModeActive() == false && AreNodesVisible() == false) 
             {
                 currentWorm.EnableOutline(false);
                 setItemSlieter(currentWorm.GetInstanceSpace());
@@ -482,9 +519,8 @@ public class BottonManager : MonoBehaviour
                 Debug.Log("wurm == current wurm");
             }
         }
-        else
+        else //wenn vorher kein wurm ausgewaelt wurde(wenn kein wurm die outline hat), sollen die buttons fuer alle moeglichen aktionen aktiviert werden und die outline sichtbar werden
         {   
-
             currentWorm = wurm;
             currentWorm.EnableOutline(true);
             setItemSlieter(currentWorm.GetInstanceSpace());
@@ -494,15 +530,20 @@ public class BottonManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sichtbarkeit des Farbpanels ein/ausschalten
+    /// </summary>
     public void OnColoreButtonClick(){
         apperance_Panel.gameObject.SetActive(false);
         changeapperance_Button_state = false;
 
-        color_panelActive = !color_panelActive;
+        color_panelActive = !color_panelActive; //wenn die farbpanel aktiv ist wird sie deaktiviert und umgekehrt
         ColorPanel.gameObject.SetActive(color_panelActive);
     }
 
-    
+    /// <summary>
+    /// Anzeigen der Nodes
+    /// </summary>
     public void OnViewNodeButtonClick(bool view)
     {   
         apperance_Panel.gameObject.SetActive(false);
@@ -518,7 +559,9 @@ public class BottonManager : MonoBehaviour
         
     }
 
-    //radiusslider-Methode
+    /// <summary>
+    /// radiusslider-Methode
+    /// </summary>
     public void OnValueChanged()
     {
         apperance_Panel.gameObject.SetActive(false);
@@ -542,11 +585,17 @@ public class BottonManager : MonoBehaviour
         }
     }
 
+   
     public void setItemSlieter( float value)
     {
-        SmothnesSlider.value = SmothnesSlider.maxValue + (SmothnesSlider.minValue - value);
+        // In Unity waren die farben der Slider falsch da man den abstand zwischen den Items einstellt. Also Maximum ist grßer abstand, also geringste anzahl an Items/Bulbs.
+        //deswegen hier die Umrechnung damit es in unity richtig aussieht
+        SmothnesSlider.value = SmothnesSlider.maxValue + (SmothnesSlider.minValue - value); 
     }
 
+    /// <summary>
+    /// wenn sliderbewegt wird, wird der Abstand zwischen den Items entsprechend geandert
+    /// </summary>
     public void OnItemsChanged()
     {
         apperance_Panel.gameObject.SetActive(false);
@@ -571,7 +620,9 @@ public class BottonManager : MonoBehaviour
 
 
     }
-
+    /// <summary>
+    /// Pruefe, ob die Apearance-Objekte aktiv sind
+    /// </summary>
     private bool areApearanceobjectsActive(){
         if (currentWorm != null&& currentWorm.GetInstanceCount() > 0){
             return true;
@@ -609,6 +660,9 @@ public class BottonManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Methode zum aktivieren des Connect-Modus
+    /// </summary>
     public void ConnectMode(){
         apperance_Panel.gameObject.SetActive(false);
         changeapperance_Button_state = false;
@@ -648,6 +702,7 @@ public class BottonManager : MonoBehaviour
         return currentWorm;
     }
 
+    //true Wenn es 2 oder mehr Wuemer gibt
     private bool Connect_possible()
     {
         if (currentWorm != null && worms.Count > 1)
@@ -659,6 +714,9 @@ public class BottonManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Alle Buttens und Slider, die aktionen ausfuehren konnen, die momentan moeglich sind, werden aktiviert gemacht und die die es nicht koennen werden werden aktiviert
+    /// </summary>
     private void currently_posseble_operations()
     {
         if (currentWorm != null)
@@ -735,12 +793,10 @@ public class BottonManager : MonoBehaviour
     }
 
 
-    ///
-    ///
-    ///Florans Space
-    ///
-    ///
-    //nach moeglichkeit bitte keiene wuermer loeschen. Wenn loeschen eiziger weg, bitte onDeleteButtonClick() aufrufen und neuen Wurm zu worms[] hinzufuegen!!!
+    //nach moeglichkeit bitte keiene wuermer loeschen. Wenn loeschen eiziger weg, bitte onDeleteButtonClick(Wurm wurm), und neuen Wurm zu worms[] hinzufuegen!!!
+    /// <summary>
+    /// Ersaetzt die wurm textur dur das ausgewaehlte Objekt (Wird vom appearence panel gesteuert)
+    /// </summary>
     public void onSphere_buttonClick(GameObject artObject)
     {
         currentWorm.AddInstantiateObject(artObject);
